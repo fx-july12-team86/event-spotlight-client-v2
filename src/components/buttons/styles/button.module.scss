@@ -1,0 +1,42 @@
+.buttonMain {
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    letter-spacing: .01rem;
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid $color-main-purple;
+
+    cursor: pointer;
+}
+
+.buttonHollow {
+    color: $color-main-purple;
+    background-color: #fff;
+    border: 2px solid $color-main-purple;
+    border-radius: .2rem;
+
+    transition: all .4s;
+
+    &:hover {
+        background-color: $color-main-purple;
+        color: #fff
+    }
+}
+
+.buttonNotHollow {
+    background-color: $color-main-purple;
+    border-radius: .2rem;
+
+    color: #fff;
+    transition: all .4s;
+
+    &:hover {
+        color: $color-main-purple;
+        background-color: #fff
+    }
+}

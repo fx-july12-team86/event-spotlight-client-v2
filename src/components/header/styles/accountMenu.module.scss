@@ -1,0 +1,147 @@
+.box {
+    opacity: 1;
+    transition: all .4s ease-in-out;
+
+    width: 23.6rem;
+    height: 32rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3rem;
+
+
+    position: absolute;
+    right: 21.6rem;
+
+    &__account,
+    &__favorites,
+    &__events,
+    &__exit {
+        text-decoration: none;
+
+        color: $color-medium-grey;
+
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.8rem;
+        letter-spacing: .01rem;
+
+        // margin: 0 auto;
+        margin-left: 5rem;
+
+        cursor: pointer;
+
+        transition: all .4s;
+
+        &:hover {
+            color: $color-main-purple;
+        }
+
+        &::before {
+            transform: translateY(.2rem);
+        }
+    }
+
+    &__account {
+
+        &::before {
+            content: '';
+            width: 1.8rem;
+            height: 1.8rem;
+            display: inline-block;
+
+            background-image: url('/icons/header/accountMenu/account.svg');
+
+
+            margin-right: 1.5rem;
+        }
+
+        &:hover {
+            &::before {
+                background-image: url('/icons/header/accountMenu/accountSelected.svg');
+            }
+        }
+    }
+
+    &__favorites {
+        &::before {
+            content: '';
+            width: 2rem;
+            height: 2rem;
+            display: inline-block;
+
+            background-image: url('/icons/header/accountMenu/favorites.svg');
+
+            transform: translateY(.4rem);
+
+            margin-right: 1.5rem;
+
+            background-repeat: no-repeat;
+        }
+
+        &:hover {
+            &::before {
+                background-image: url('/icons/header/accountMenu/favoritesSelected.svg');
+            }
+        }
+    }
+
+    &__events {
+        &::before {
+            content: '';
+            width: 2rem;
+            height: 2rem;
+            display: inline-block;
+
+            background-image: url('/icons/header/accountMenu/events.svg');
+
+            transform: translateY(.3rem);
+
+            margin-right: 1.5rem;
+            background-repeat: no-repeat;
+
+        }
+
+        &:hover {
+            &::before {
+                background-image: url('/icons/header/accountMenu/eventsSelected.svg');
+            }
+        }
+    }
+
+    &__exit {
+        border: none;
+        background-color: #fff;
+
+        margin-top: 4.9rem;
+
+        &::before {
+            content: '';
+            width: 1.8rem;
+            height: 1.8rem;
+            display: inline-block;
+
+            background-image: url('/icons/header/accountMenu/exit.svg');
+
+            transform: translateY(.3rem);
+
+
+            margin-right: 1.5rem;
+        }
+
+        transition: all .4s;
+
+        &:hover {
+            &::before {
+                background-image: url('/icons/header/accountMenu/exitSelected.svg');
+            }
+        }
+    }
+}
+
+.Hidden {
+    opacity: 0;
+    pointer-events: none;
+}
