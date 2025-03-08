@@ -3,55 +3,42 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 const DataContext = createContext();
 
 const initialState = {
-  questions: [],
+  city: "Оберіть місто",
+  selectCity: false,
   // "loading", "error", "ready", "active", "finished"
   status: "loading",
-  index: 0,
-  answer: null,
-  points: 0,
-  highscore: 0,
-  seconsdRemaining: null,
 };
 
 function reducer(state, action) {
   switch (action.type) {
+    case "city/new":
+      if (action.payload.length <= 3) return state;
+      return { ...state, city: action.payload };
+    case "city/select":
+      return { ...state, selectCity: !state.selectCity };
     default:
       throw new Error("Action unknown");
   }
 }
 
-function QuizProvider({ children }) {
+function MainContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {
-    questions,
-    status,
-    index,
-    answer,
-    points,
-    highscore,
-    seconsdRemaining,
-  } = state;
+  const { city, status, selectCity } = state;
 
-  useEffect(function () {
-    fetch("http://localhost:8000/questions")
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataRecieved", payload: data }))
-      .catch((err) => dispatch({ type: "dataFailed" }));
-  }, []);
+  // useEffect(function () {
+  //   fetch("http://localhost:8000/questions")
+  //     .then((res) => res.json())
+  //     .then((data) => dispatch({ type: "dataRecieved", payload: data }))
+  //     .catch((err) => dispatch({ type: "dataFailed" }));
+  // }, []);
 
   return (
     <DataContext.Provider
       value={{
         dispatch,
+        city,
         status,
-        questions,
-        index,
-        answer,
-        points,
-        highscore,
-        seconsdRemaining,
-        numQuestions,
-        maxPossiblePoints,
+        selectCity,
       }}>
       {children}
     </DataContext.Provider>
@@ -67,4 +54,4 @@ function useDataContext() {
   return context;
 }
 
-export { QuizProvider, useDataContext };
+export { MainContextProvider, useDataContext };

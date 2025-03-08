@@ -3,14 +3,9 @@ import Header from "../components/header/Header";
 import { useState } from "react";
 
 function AppLayout() {
-  const [city, setCity] = useState(null);
-
   return (
     <>
-      <Header
-        onSetCity={setCity}
-        city={city}
-      />
+      <Header />
       <main>
         <Outlet />
       </main>

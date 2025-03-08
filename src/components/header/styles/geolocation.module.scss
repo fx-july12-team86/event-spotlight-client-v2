@@ -4,6 +4,7 @@
     height: 28.8rem;
 
     position: absolute;
+    z-index: 3;
 
     border-left: 2px solid $color-main-dark;
     border-right: 2px solid $color-main-dark;
@@ -29,7 +30,7 @@
         font-size: 1.8rem;
         letter-spacing: .01rem;
 
-        color: $color-medium-grey;
+        color: $color-dark-grey;
     }
 
     &__city {
@@ -38,7 +39,7 @@
         font-size: 4rem;
         letter-spacing: .01rem;
 
-        color: $color-medium-grey;
+        color: $color-dark-grey;
     }
 
     &__change {

@@ -29,7 +29,9 @@ function SearchEvent({ width, heigh, paddingLeft, handleClickCross }) {
         value={query}
         onChange={(event) => setQuery(event.target.value)}
       />
-      <label onClick={handleClickCross}></label>
+      <label
+        className={styles.label}
+        onClick={handleClickCross}></label>
     </form>
   );
 }

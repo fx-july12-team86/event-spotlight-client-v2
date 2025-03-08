@@ -1,20 +1,24 @@
 import styles from "./styles/geolocation.module.scss";
 import { getAddress } from "../../services/apiGeocoding";
 import { useEffect, useState } from "react";
+import { useDataContext } from "../../Context/Context";
 
-function Geolocation({ isHidden, city, onSetCity }) {
+function Geolocation({ isHidden, onSetIsHiddenGeo }) {
+  const { dispatch, city } = useDataContext();
+
   useEffect(() => {
     async function fetchCity() {
       try {
         const data = await getAddress();
-        onSetCity(data.city);
+        dispatch({ type: "city/new", payload: data.city });
       } catch (err) {
-        onSetCity("Оберіть місто");
+        console.log(err.message);
+        dispatch({ type: "city/new", payload: "Оберіть місто" });
       }
     }
 
     fetchCity();
-  }, [onSetCity]);
+  }, [dispatch]);
 
   return (
     <div
@@ -23,7 +27,11 @@ function Geolocation({ isHidden, city, onSetCity }) {
       <p className={styles.box__city}>{city}</p>
       <button
         type="button"
-        className={styles.box__change}>
+        className={styles.box__change}
+        onClick={() => {
+          dispatch({ type: "city/select" });
+          onSetIsHiddenGeo(true);
+        }}>
         Обрати інше місто
       </button>
     </div>

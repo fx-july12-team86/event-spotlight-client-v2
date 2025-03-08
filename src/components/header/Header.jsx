@@ -6,12 +6,15 @@ import Calendar from "./Calendar";
 import AccountMenu from "./AccountMenu";
 import SearchEvent from "./SearchEvent";
 import SetCity from "./SetCity";
+import { useDataContext } from "../../Context/Context";
 
-function Header({ city, onSetCity }) {
+function Header() {
   const [isHiddenGeo, setIsHiddenGeo] = useState(true);
   const [isHiddenCalendar, setIsHiddedCalendar] = useState(true);
   const [isHiddenAccountMenu, setIsHiddenAccountMenu] = useState(true);
   const [isHiddenSearchInput, setIsHiddedSearchInput] = useState(true);
+
+  const { city, selectCity } = useDataContext();
 
   function handleOpenChangleGeo() {
     setIsHiddenGeo(!isHiddenGeo);
@@ -47,13 +50,12 @@ function Header({ city, onSetCity }) {
             className={`${styles.header__boxLeft__geolocation} ${
               !isHiddenGeo ? styles.header__boxLeft__geolocation__isActive : ""
             }`}
-            onMouseEnter={handleOpenChangleGeo}>
+            onClick={handleOpenChangleGeo}>
             {city}
           </span>
           <Geolocation
             isHidden={isHiddenGeo}
-            city={city}
-            onSetCity={onSetCity}
+            onSetIsHiddenGeo={setIsHiddenGeo}
           />
         </div>
         <div className={styles.header__boxRight}>
@@ -80,7 +82,7 @@ function Header({ city, onSetCity }) {
                 ? styles.header__boxRight__calendar__isActive
                 : ""
             }`}
-            onMouseEnter={handleOpenCalendar}>
+            onClick={handleOpenCalendar}>
             <svg className={`${styles.svgSizeNormalize} ${styles.svgFill}`}>
               <use href="../../../public/icons/header/navBar/icons.svg#calendar"></use>
             </svg>
@@ -91,7 +93,7 @@ function Header({ city, onSetCity }) {
                 ? styles.header__boxRight__account__isActive
                 : ""
             }`}
-            onMouseEnter={handleOpenAccountMenu}>
+            onClick={handleOpenAccountMenu}>
             <svg className={`${styles.svgSizeNormalize} ${styles.svgFill}`}>
               <use href="../../../public/icons/header/navBar/icons.svg#account"></use>
             </svg>

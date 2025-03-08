@@ -83,6 +83,17 @@
 
             }
 
+            &:hover {
+
+                background-color: #fff;
+
+                color: black;
+
+                &::before {
+                    filter: invert(1);
+                }
+            }
+
             &__isActive {
                 transition: all .7s;
 
@@ -111,6 +122,16 @@
             background-color: transparent;
             border: none;
             cursor: pointer;
+
+            &:hover {
+                background-color: #fff;
+
+                .svgFill {
+                    transition: all .4s ease-in-out;
+                    fill: black;
+                }
+            }
+
         }
 
         &__search {
@@ -128,15 +149,6 @@
 
             transition: all .4s ease-in-out;
             fill: #fff;
-
-            &:hover {
-                background-color: #fff;
-
-                .svgFill {
-                    transition: all .4s ease-in-out;
-                    fill: black;
-                }
-            }
 
 
         }
@@ -186,6 +198,7 @@
 
             transition: all .4s;
             fill: #fff;
+
 
             &__isActive {
                 background-color: #fff;

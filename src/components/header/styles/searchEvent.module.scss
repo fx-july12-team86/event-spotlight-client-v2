@@ -1,4 +1,4 @@
-input {
+.input {
     // width: 48rem;
     // height: 4.4rem;
 
@@ -30,7 +30,7 @@ input {
     transform: translateX(3.5rem);
 }
 
-label {
+.label {
     &::after {
         content: '';
         width: 1.4rem;
