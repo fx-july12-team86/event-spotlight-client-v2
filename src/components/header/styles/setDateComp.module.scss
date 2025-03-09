@@ -1,10 +1,13 @@
 .totalBox {
-    width: 82.4rem;
+    max-width: 82.4rem;
 
     position: absolute;
     right: 23rem;
+    z-index: 3;
 
     transition: all .4s ease-in-out;
+
+    background-color: #fff;
 }
 
 .box {

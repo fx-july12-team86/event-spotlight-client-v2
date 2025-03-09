@@ -3,7 +3,13 @@ import { useNavigate } from "react-router";
 
 import styles from "./styles/searchEvent.module.scss";
 
-function SearchEvent({ width, heigh, paddingLeft, handleClickCross }) {
+function SearchEvent({
+  width,
+  heigh,
+  paddingLeft,
+  handleClickCross,
+  isHiddenSearchInput,
+}) {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
@@ -16,7 +22,9 @@ function SearchEvent({ width, heigh, paddingLeft, handleClickCross }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className={isHiddenSearchInput ? styles.isHidden : ""}>
       <input
         style={{
           width: `${width}rem`,

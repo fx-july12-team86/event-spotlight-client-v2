@@ -8,7 +8,6 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-        @import "/src/sass/_global.scss";
         @import "/src/sass/_variables.scss";
         @import "/src/fonts/_OswaldFont.scss";
         `

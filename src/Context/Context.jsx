@@ -7,6 +7,7 @@ const initialState = {
   selectCity: false,
   // "loading", "error", "ready", "active", "finished"
   status: "loading",
+  date: null,
 };
 
 function reducer(state, action) {
@@ -16,6 +17,9 @@ function reducer(state, action) {
       return { ...state, city: action.payload };
     case "city/select":
       return { ...state, selectCity: !state.selectCity };
+    case "date/new":
+      return { ...state, date: action.payload };
+    case "":
     default:
       throw new Error("Action unknown");
   }

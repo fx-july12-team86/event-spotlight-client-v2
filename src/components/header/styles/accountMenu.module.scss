@@ -11,9 +11,12 @@
     justify-content: center;
     gap: 3rem;
 
+    background-color: #fff;
 
     position: absolute;
     right: 21.6rem;
+
+    z-index: 999;
 
     &__account,
     &__favorites,
@@ -46,33 +49,44 @@
 
     &__account {
 
+        transition: all .4s;
+
         &::before {
+            transition: all .4s;
+
             content: '';
             width: 1.8rem;
             height: 1.8rem;
             display: inline-block;
 
-            background-image: url('/icons/header/accountMenu/account.svg');
-
+            mask-image: url('/icons/header/accountMenu/account.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $color-dark-grey;
 
             margin-right: 1.5rem;
         }
 
-        &:hover {
-            &::before {
-                background-image: url('/icons/header/accountMenu/accountSelected.svg');
-            }
+        &:hover::before {
+            background-color: $color-main-purple;
         }
+
     }
 
     &__favorites {
         &::before {
+            transition: all .4s;
+
+
             content: '';
             width: 2rem;
             height: 2rem;
             display: inline-block;
 
-            background-image: url('/icons/header/accountMenu/favorites.svg');
+            mask-image: url('/icons/header/accountMenu/favorites.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $color-dark-grey;
 
             transform: translateY(.4rem);
 
@@ -81,21 +95,25 @@
             background-repeat: no-repeat;
         }
 
-        &:hover {
-            &::before {
-                background-image: url('/icons/header/accountMenu/favoritesSelected.svg');
-            }
+        &:hover::before {
+            background-color: $color-main-purple;
         }
+
     }
 
     &__events {
         &::before {
+            transition: all .4s;
+
             content: '';
             width: 2rem;
             height: 2rem;
             display: inline-block;
 
-            background-image: url('/icons/header/accountMenu/events.svg');
+            mask-image: url('/icons/header/accountMenu/events.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $color-dark-grey;
 
             transform: translateY(.3rem);
 
@@ -104,10 +122,8 @@
 
         }
 
-        &:hover {
-            &::before {
-                background-image: url('/icons/header/accountMenu/eventsSelected.svg');
-            }
+        &:hover::before {
+            background-color: $color-main-purple;
         }
     }
 
@@ -118,12 +134,17 @@
         margin-top: 4.9rem;
 
         &::before {
+            transition: all .4s;
+
             content: '';
             width: 1.8rem;
             height: 1.8rem;
             display: inline-block;
 
-            background-image: url('/icons/header/accountMenu/exit.svg');
+            mask-image: url('/icons/header/accountMenu/exit.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $color-dark-grey;
 
             transform: translateY(.3rem);
 
@@ -133,10 +154,8 @@
 
         transition: all .4s;
 
-        &:hover {
-            &::before {
-                background-image: url('/icons/header/accountMenu/exitSelected.svg');
-            }
+        &:hover::before {
+            background-color: $color-main-purple;
         }
     }
 }
