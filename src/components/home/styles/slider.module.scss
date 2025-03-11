@@ -1,3 +1,77 @@
 .container {
     margin-top: 3rem;
+
+    position: relative;
+
+    overflow: hidden;
+
+    &__slides {
+        // display: flex;
+        // gap: 1.6rem;
+        max-width: 100%;
+        // overflow-x: auto;
+        // scroll-behavior: smooth;
+        scrollbar-width: none; // Скрыть скролл в Firefox
+
+        // &::-webkit-scrollbar {
+        //     display: none; // Скрыть скролл в Chrome
+        // }
+
+        height: 54.7rem;
+
+    }
+
+    &__svgSizeNormalise {
+        width: 1.1rem;
+        height: 1.7rem;
+    }
+
+    &__buttonPrev {
+        position: absolute;
+        top: 50%;
+        z-index: 2;
+        transform: translate(-50%, -50%);
+
+        width: 6.4rem;
+        height: 6.4rem;
+
+        border-radius: 50%;
+        border: none;
+
+        background-color: #EBEBED;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &__postionArrow {
+            transform: translateX(-2px);
+        }
+    }
+
+
+    &__buttonNext {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translate(50%, -50%);
+
+        width: 6.4rem;
+        height: 6.4rem;
+
+        border-radius: 50%;
+        border: none;
+
+        background-color: #EBEBED;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &__postionArrow {
+            transform: translateX(2px);
+        }
+    }
 }

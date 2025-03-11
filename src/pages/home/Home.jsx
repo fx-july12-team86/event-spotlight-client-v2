@@ -1,11 +1,15 @@
+import styles from "./styles/home.module.scss";
+
 import Filter from "../../components/home/Filter";
 import Slider from "../../components/home/Slider";
 
 function Home() {
   return (
-    <div>
+    <div className={styles.container}>
       <Filter />
-      <Slider />
+      <div className={styles.container__slider}>
+        <Slider />
+      </div>
     </div>
   );
 }
