@@ -2,11 +2,11 @@ import { Link } from "react-router";
 import styles from "./styles/header.module.scss";
 import Geolocation from "./Geolocation";
 import { useState } from "react";
-import Calendar from "./Calendar";
 import AccountMenu from "./AccountMenu";
 import SearchEvent from "./SearchEvent";
 import SetCity from "./SetCity";
-import { useDataContext } from "../../Context/Context";
+import SetDateComp from "./SetDateComp";
+import { useSelector } from "react-redux";
 
 function Header() {
   const [isHiddenGeo, setIsHiddenGeo] = useState(true);
@@ -14,8 +14,7 @@ function Header() {
   const [isHiddenAccountMenu, setIsHiddenAccountMenu] = useState(true);
   const [isHiddenSearchInput, setIsHiddedSearchInput] = useState(true);
 
-  const { city, selectCity } = useDataContext();
-
+  const { city } = useSelector((store) => store.city);
   function handleOpenChangleGeo() {
     setIsHiddenGeo(!isHiddenGeo);
   }
@@ -69,12 +68,7 @@ function Header() {
             </svg>
           </button>
           {isHiddenSearchInput || (
-            <SearchEvent
-              width={48}
-              heigh={4.4}
-              paddingLeft={6.2}
-              handleClickCross={handleOpenSearchInput}
-            />
+            <SearchEvent handleClickCross={handleOpenSearchInput} />
           )}
           <button
             className={`${styles.header__boxRight__calendar} ${
@@ -103,7 +97,7 @@ function Header() {
           </button>
         </div>
       </header>
-      <Calendar isHidden={isHiddenCalendar} />
+      <SetDateComp isHidden={isHiddenCalendar} />
       <AccountMenu isHidden={isHiddenAccountMenu} />
       <SetCity />
     </>

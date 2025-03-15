@@ -1,0 +1,235 @@
+.container {
+    width: 100%;
+    // height: 11.2rem;
+    height: 100%;
+
+    // padding: 2.4rem;
+
+    background-color: $color-main-dark;
+
+    &__form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+
+        padding: 2.4rem;
+        height: 100%;
+
+        &__input {
+
+            width: 81.9rem;
+            height: 6.4rem;
+
+            font-family: Inter, sans-serif;
+            font-weight: 400;
+            font-size: 2rem;
+            letter-spacing: .01rem;
+            color: $color-medium-grey;
+
+            padding-left: 7.4rem;
+
+            &::placeholder {
+
+                font-family: Inter, sans-serif;
+                font-weight: 400;
+                font-size: 1.8rem;
+                letter-spacing: .01rem;
+                text-indent: 2px;
+
+                // text-indent: .5rem;
+            }
+
+            &:focus,
+            &:active {
+                outline: none;
+                border: 2px solid $color-main-purple;
+            }
+        }
+
+        &__searchIcon {
+            // position: relative;
+
+            transform: translate(5rem, .2rem);
+
+            &__svgSizeNormalise {
+                width: 2.1rem;
+                height: 2.1rem;
+            }
+
+            // &::after {
+            //     content: '';
+            //     display: inline-block;
+            //     width: 2.1rem;
+            //     height: 2.1rem;
+
+            //     mask-image: url('/icons/main/search/search.svg');
+            //     background-color: black;
+
+            //     position: absolute;
+            //     left: 2.8rem;
+            //     top: -1rem;
+            // }
+        }
+
+        &__btnFilters {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+
+
+            width: 15.7rem;
+            height: 6.4rem;
+            border-radius: 2px;
+            border: none;
+
+            background-color: #F5F5F7;
+
+            cursor: pointer;
+
+            font-family: Inter, sans-serif;
+            font-weight: 600;
+            font-size: 2rem;
+            letter-spacing: .01rem;
+
+            color: $color-dark-grey;
+
+            &__icon {
+                width: 2.2rem;
+                height: 2.4rem;
+                transform: translate(-1rem, .1rem);
+            }
+        }
+
+        &__btnLocation {
+            width: 15.7rem;
+            height: 6.4rem;
+            border-radius: 2px;
+            border: none;
+
+            background-color: #F5F5F7;
+
+            cursor: pointer;
+
+            font-family: Inter, sans-serif;
+            font-weight: 600;
+            font-size: 2rem;
+            letter-spacing: .01rem;
+
+            color: $color-dark-grey;
+
+
+            &__icon {
+                width: 2.2rem;
+                height: 2.4rem;
+                transform: translate(-1rem, .7rem);
+            }
+        }
+
+        &__btnSbmt {
+            width: 14.6rem;
+            height: 6.4rem;
+            border-radius: 2px;
+            padding: 2.2rem 4rem;
+
+            background-color: #C8FA03;
+
+
+            font-family: Inter, sans-serif;
+            font-weight: 600;
+            font-size: 2rem;
+            letter-spacing: .01rem;
+
+            color: $color-main-dark;
+
+            margin-left: 2rem;
+            margin-right: 2.1rem;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            transition: all .4s;
+
+            &:hover {
+                background-color: transparent;
+                border: 2px solid #C8FA03;
+
+                color: #fff;
+            }
+        }
+    }
+
+    &__containerFilters {
+        padding-left: 4.4rem;
+        padding-right: 4.4rem;
+
+        &__count {
+            color: #fff;
+            font-family: Inter, sans-serif;
+            font-weight: 700;
+            font-size: 2.8rem;
+            letter-spacing: .01rem;
+            margin-bottom: 3.2rem;
+
+            & span {
+                color: #fff;
+                font-family: Inter, sans-serif;
+                font-weight: 400;
+                font-size: 1.9rem;
+            }
+        }
+
+        & h4 {
+            color: $color-main-dark;
+
+            font-family: Inter, sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: .01rem;
+
+            margin-top: 6rem;
+            margin-bottom: 3.2rem;
+
+        }
+
+        &__filters {
+            background-color: #fff;
+            padding: 4rem;
+        }
+
+
+        &__event {
+            list-style: none;
+            color: $color-main-dark;
+
+
+            font-family: Inter, sans-serif;
+            font-weight: 400;
+            font-size: 1.6rem;
+            letter-spacing: .01rem;
+
+            border: 1px solid $color-main-dark;
+            border-radius: 800px;
+            display: inline-block;
+
+            padding: 1.1rem 2.4rem;
+
+            margin-right: 1.2rem;
+            margin-bottom: 1.2rem;
+
+            cursor: pointer;
+
+            transition: all .4s;
+
+            &:hover {
+                background-color: $color-main-purple;
+                color: #fff;
+
+                border: 1px solid $color-main-purple;
+            }
+        }
+    }
+}

@@ -2,4 +2,19 @@
     &__slider {
         position: relative;
     }
+
+    & h2 {
+        margin-top: 11.2rem;
+        margin-bottom: 6.4rem;
+
+        font-family: Oswald, sans-serif;
+        font-weight: 600;
+        font-size: 8rem;
+        letter-spacing: .01rem;
+        text-transform: uppercase;
+
+        & span {
+            color: $color-main-purple;
+        }
+    }
 }

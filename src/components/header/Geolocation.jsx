@@ -1,19 +1,22 @@
 import styles from "./styles/geolocation.module.scss";
 import { getAddress } from "../../services/apiGeocoding";
 import { useEffect, useState } from "react";
-import { useDataContext } from "../../Context/Context";
+import { useDispatch, useSelector } from "react-redux";
+
+import { cityDetected, IsSelectCity } from "../../Context/citySlice";
 
 function Geolocation({ isHidden, onSetIsHiddenGeo }) {
-  const { dispatch, city } = useDataContext();
+  const dispatch = useDispatch();
+  const { city } = useSelector((state) => state.city);
 
   useEffect(() => {
     async function fetchCity() {
       try {
         const data = await getAddress();
-        dispatch({ type: "city/new", payload: data.city });
+        dispatch(cityDetected(data.city));
       } catch (err) {
         console.log(err.message);
-        dispatch({ type: "city/new", payload: "Оберіть місто" });
+        dispatch(cityDetected("Оберіть місто"));
       }
     }
 
@@ -29,7 +32,7 @@ function Geolocation({ isHidden, onSetIsHiddenGeo }) {
         type="button"
         className={styles.box__change}
         onClick={() => {
-          dispatch({ type: "city/select" });
+          dispatch(IsSelectCity(true));
           onSetIsHiddenGeo(true);
         }}>
         Обрати інше місто

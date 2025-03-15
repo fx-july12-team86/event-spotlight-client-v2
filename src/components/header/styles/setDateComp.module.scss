@@ -11,54 +11,7 @@
     background-color: #fff;
 }
 
-.box {
-    display: flex;
-    gap: 3.9rem;
 
-    height: auto;
-    margin-top: 4rem;
-    margin-left: 7.2rem;
-
-
-    ul {
-        list-style: none;
-
-
-        li {
-            display: flex;
-            align-items: center;
-
-            padding-left: 2rem;
-
-            width: 22rem;
-            height: 5rem;
-
-            font-family: Inter, sans-serif;
-            font-weight: 400;
-            font-size: 1.8rem;
-            letter-spacing: .01rem;
-
-            color: $color-dark-grey;
-            background-color: $color-light-grey;
-            border-radius: 2px;
-
-            cursor: pointer;
-
-            transition: all .4s;
-
-            &:hover {
-                background-color: $color-main-purple;
-                color: #fff;
-            }
-
-        }
-
-        li:not(:last-child) {
-            margin-bottom: 2rem;
-        }
-    }
-
-}
 
 .buttonsBox {
     display: flex;

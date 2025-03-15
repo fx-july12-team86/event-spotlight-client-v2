@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import styles from "./styles/setCity.module.scss";
-import { useDataContext } from "../../Context/Context";
+import { toggleSelectCity, citySelect } from "../../Context/citySlice";
 
 const cities = [
   { city: "Усі міста" },
@@ -39,8 +41,8 @@ const cities = [
 
 function SetCity() {
   const [chosenCity, setChosenCity] = useState("");
-  const { dispatch, selectCity } = useDataContext();
-
+  const dispatch = useDispatch();
+  const { selectCity } = useSelector((store) => store.city);
   return (
     <div
       className={`${styles.background} ${!selectCity ? styles.isHidden : ""}`}>
@@ -49,7 +51,7 @@ function SetCity() {
           <h2>Обери місто</h2>
           <button
             className={styles.background__box__closeBtn}
-            onClick={() => dispatch({ type: "city/select" })}>
+            onClick={() => dispatch(toggleSelectCity(false))}>
             <svg className={styles.svgSizeNormalize}>
               <use href="/icons/header/navBar/icons.svg#cross"></use>
             </svg>
@@ -62,16 +64,14 @@ function SetCity() {
           value={chosenCity}
           onChange={(event) => {
             setChosenCity(event.target.value);
-            dispatch({ type: "city/new", payload: event.target.value });
+            dispatch(citySelect(event.target.value));
           }}
         />
         <ul className={styles.background__box__citiesList}>
           {cities.map((city) => (
             <li
               key={city.city}
-              onClick={() =>
-                dispatch({ type: "city/new", payload: city.city })
-              }>
+              onClick={() => dispatch(citySelect(city.city))}>
               {city.city}
             </li>
           ))}
