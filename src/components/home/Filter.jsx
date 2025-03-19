@@ -18,14 +18,14 @@ function Filter() {
   }
 
   return (
-    <nav className={styles.container}>
-      <ul className={styles.container__nav}>
+    <nav className={styles["container"]}>
+      <ul className={styles["container__nav"]}>
         {categories.map((category) => (
           <li key={category}>{category}</li>
         ))}
       </ul>
       <button
-        className={!isHidden ? styles.isActive : ""}
+        className={!isHidden ? styles["isActive"] : ""}
         onClick={handleHidden}>
         Інше
       </button>

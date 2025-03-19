@@ -38,16 +38,18 @@ function Header() {
 
   return (
     <>
-      <header className={styles.header}>
-        <div className={styles.header__boxLeft}>
+      <header className={styles["header"]}>
+        <div className={styles["header__boxLeft"]}>
           <Link
             to="/"
-            className={styles.header__boxLeft__company}>
+            className={styles["header__boxLeft__company"]}>
             EventSpotlight
           </Link>
           <span
-            className={`${styles.header__boxLeft__geolocation} ${
-              !isHiddenGeo ? styles.header__boxLeft__geolocation__isActive : ""
+            className={`${styles["header__boxLeft__geolocation"]} ${
+              !isHiddenGeo
+                ? styles["header__boxLeft__geolocation__isActive"]
+                : ""
             }`}
             onClick={handleOpenChangleGeo}>
             {city}
@@ -57,13 +59,14 @@ function Header() {
             onSetIsHiddenGeo={setIsHiddenGeo}
           />
         </div>
-        <div className={styles.header__boxRight}>
+        <div className={styles["header__boxRight"]}>
           <button
-            className={styles.header__boxRight__search}
+            className={styles["header__boxRight__search"]}
             onClick={handleOpenSearchInput}
             disabled={!isHiddenSearchInput}
             style={{ display: `${!isHiddenSearchInput ? "none" : ""}` }}>
-            <svg className={`${styles.svgSizeNormalize} ${styles.svgFill}`}>
+            <svg
+              className={`${styles["svgSizeNormalize"]} ${styles["svgFill"]}`}>
               <use href="../../../public/icons/header/navBar/icons.svg#search"></use>
             </svg>
           </button>
@@ -71,13 +74,14 @@ function Header() {
             <SearchEvent handleClickCross={handleOpenSearchInput} />
           )}
           <button
-            className={`${styles.header__boxRight__calendar} ${
+            className={`${styles["header__boxRight__calendar"]} ${
               !isHiddenCalendar
-                ? styles.header__boxRight__calendar__isActive
+                ? styles["header__boxRight__calendar__isActive"]
                 : ""
             }`}
             onClick={handleOpenCalendar}>
-            <svg className={`${styles.svgSizeNormalize} ${styles.svgFill}`}>
+            <svg
+              className={`${styles["svgSizeNormalize"]} ${styles["svgFill"]}`}>
               <use href="../../../public/icons/header/navBar/icons.svg#calendar"></use>
             </svg>
           </button>
@@ -88,11 +92,12 @@ function Header() {
                 : ""
             }`}
             onClick={handleOpenAccountMenu}>
-            <svg className={`${styles.svgSizeNormalize} ${styles.svgFill}`}>
+            <svg
+              className={`${styles["svgSizeNormalize"]} ${styles["svgFill"]}`}>
               <use href="../../../public/icons/header/navBar/icons.svg#account"></use>
             </svg>
           </button>
-          <button className={styles.header__boxRight__addEvent}>
+          <button className={styles["header__boxRight__addEvent"]}>
             Додати подію
           </button>
         </div>

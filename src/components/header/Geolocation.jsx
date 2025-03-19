@@ -25,12 +25,14 @@ function Geolocation({ isHidden, onSetIsHiddenGeo }) {
 
   return (
     <div
-      className={`${styles.box} ${isHidden ? styles.hidden : styles.visible}`}>
-      <p className={styles.box__text}>Ми визначили твоє місто</p>
-      <p className={styles.box__city}>{city}</p>
+      className={`${styles["box"]} ${
+        isHidden ? styles["hidden"] : styles["visible"]
+      }`}>
+      <p className={styles["box__text"]}>Ми визначили твоє місто</p>
+      <p className={styles["box__city"]}>{city}</p>
       <button
         type="button"
-        className={styles.box__change}
+        className={styles["box__change"]}
         onClick={() => {
           dispatch(IsSelectCity(true));
           onSetIsHiddenGeo(true);

@@ -24,7 +24,7 @@ function SearchEvent({
   return (
     <form
       onSubmit={handleSubmit}
-      className={isHiddenSearchInput ? styles.isHidden : ""}>
+      className={isHiddenSearchInput ? styles["isHidden"] : ""}>
       <input
         style={{
           width: `${width}rem`,
@@ -38,7 +38,7 @@ function SearchEvent({
         onChange={(event) => setQuery(event.target.value)}
       />
       <label
-        className={styles.label}
+        className={styles["label"]}
         onClick={handleClickCross}></label>
     </form>
   );

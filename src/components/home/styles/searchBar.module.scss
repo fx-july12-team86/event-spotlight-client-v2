@@ -4,7 +4,6 @@
     height: 100%;
 
     // padding: 2.4rem;
-
     background-color: $color-main-dark;
 
     &__form {
@@ -13,7 +12,7 @@
         justify-content: center;
         gap: 4px;
 
-        padding: 2.4rem;
+        padding: 2.4rem 0 2.4rem 0;
         height: 100%;
 
         &__input {
@@ -94,6 +93,13 @@
 
             color: $color-dark-grey;
 
+            transition: all .4s;
+
+            &:hover {
+                background-color: #DEDFE2;
+            }
+
+
             &__icon {
                 width: 2.2rem;
                 height: 2.4rem;
@@ -102,6 +108,11 @@
         }
 
         &__btnLocation {
+
+            align-items: center;
+            display: flex;
+            justify-content: center;
+
             width: 15.7rem;
             height: 6.4rem;
             border-radius: 2px;
@@ -119,10 +130,16 @@
             color: $color-dark-grey;
 
 
+            transition: all .4s;
+
+            &:hover {
+                background-color: #DEDFE2;
+            }
+
             &__icon {
-                width: 2.2rem;
-                height: 2.4rem;
-                transform: translate(-1rem, .7rem);
+                width: 1.5rem;
+                height: 2rem;
+                transform: translate(-1rem, .1rem);
             }
         }
 
@@ -133,7 +150,7 @@
             padding: 2.2rem 4rem;
 
             background-color: #C8FA03;
-
+            border: 2px solid #C8FA03;
 
             font-family: Inter, sans-serif;
             font-weight: 600;
@@ -163,8 +180,68 @@
     }
 
     &__containerFilters {
-        padding-left: 4.4rem;
-        padding-right: 4.4rem;
+        transition: all 1s;
+        padding: 0 2.4rem 2.4rem 2.4rem;
+        width: 97.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2.4rem;
+
+        &__drop {
+            transition: all 1s;
+            overflow: hidden;
+        }
+
+        &__filtersList {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.6rem;
+
+            // margin-bottom: 3.2rem;
+
+            &__item {
+                font-family: Inter, sans-serif;
+                font-weight: 400;
+                font-size: 1.8rem;
+                letter-spacing: .01rem;
+
+                color: #fff;
+
+                border: 1px solid #fff;
+                border-radius: 800px;
+
+                padding: 1.2rem 3.3rem 1.2rem 2.8rem;
+
+                cursor: pointer;
+
+
+                &::after {
+                    content: '';
+                    display: inline-block;
+
+                    width: 1.4rem;
+                    height: 1.4rem;
+
+                    mask-image: url('/icons/main/navBar/cross.svg');
+                    mask-size: contain;
+                    mask-repeat: no-repeat;
+                    background-color: #fff;
+
+
+                    margin-left: 2.1rem;
+
+                    transform: translateY(1px);
+                }
+            }
+        }
+
+        &__filters {
+            // margin-top: 3.2rem;
+            background-color: #fff;
+            padding: 4rem;
+            transition: all 1s;
+        }
 
         &__count {
             color: #fff;
@@ -172,7 +249,7 @@
             font-weight: 700;
             font-size: 2.8rem;
             letter-spacing: .01rem;
-            margin-bottom: 3.2rem;
+            margin-bottom: 2rem;
 
             & span {
                 color: #fff;
@@ -190,15 +267,14 @@
             font-size: 2rem;
             letter-spacing: .01rem;
 
-            margin-top: 6rem;
             margin-bottom: 3.2rem;
+        }
+
+        & h4:not(:first-of-type) {
+            margin-top: 6rem;
 
         }
 
-        &__filters {
-            background-color: #fff;
-            padding: 4rem;
-        }
 
 
         &__event {
@@ -224,6 +300,12 @@
 
             transition: all .4s;
 
+            &__selected {
+                background-color: $color-main-purple;
+                color: #fff;
+                border: 1px solid $color-main-purple;
+            }
+
             &:hover {
                 background-color: $color-main-purple;
                 color: #fff;
@@ -231,5 +313,9 @@
                 border: 1px solid $color-main-purple;
             }
         }
+    }
+
+    &__calendar {
+        margin-left: 3.7rem;
     }
 }

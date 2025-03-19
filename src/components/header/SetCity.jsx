@@ -60,14 +60,14 @@ function SetCity() {
         <input
           type="text"
           placeholder="Пошук"
-          className={styles.background__box__input}
+          className={styles["background__box__input"]}
           value={chosenCity}
           onChange={(event) => {
             setChosenCity(event.target.value);
             dispatch(citySelect(event.target.value));
           }}
         />
-        <ul className={styles.background__box__citiesList}>
+        <ul className={styles["background__box__citiesList"]}>
           {cities.map((city) => (
             <li
               key={city.city}
