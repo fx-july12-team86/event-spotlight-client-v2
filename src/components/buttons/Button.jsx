@@ -5,13 +5,18 @@ function Button({
   width,
   height,
   isHollow = false,
+  isCenter = false,
 }) {
   return (
     <button
-      className={`${styles.buttonMain} ${
-        isHollow ? styles.buttonHollow : styles.buttonNotHollow
+      className={`${styles["button-main"]} ${
+        isHollow ? styles["button-hollow"] : styles["button-not-hollow"]
       }`}
-      style={{ width: `${width}rem`, height: `${height}rem` }}>
+      style={{
+        width: `${width}rem`,
+        height: `${height}rem`,
+        margin: isCenter ? "0 auto" : undefined,
+      }}>
       {children}
     </button>
   );

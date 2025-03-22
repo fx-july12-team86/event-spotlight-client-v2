@@ -9,8 +9,8 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
-        @import "/src/sass/_variables.scss";
-        @import "/src/fonts/_OswaldFont.scss";
+        @import "/src/sass/variables.scss";
+        @import "/src/fonts/OswaldFont.scss";
         `
       }
     }

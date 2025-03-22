@@ -1,4 +1,4 @@
-.buttonMain {
+.button-main {
     font-family: Inter, sans-serif;
     font-weight: 600;
     font-size: 2rem;
@@ -14,7 +14,7 @@
     cursor: pointer;
 }
 
-.buttonHollow {
+.button-hollow {
     color: $color-main-purple;
     background-color: #fff;
     border: 2px solid $color-main-purple;
@@ -28,7 +28,7 @@
     }
 }
 
-.buttonNotHollow {
+.button-not-hollow {
     background-color: $color-main-purple;
     border-radius: .2rem;
 

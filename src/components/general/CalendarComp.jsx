@@ -1,8 +1,10 @@
-import styles from "./styles/calendarComp.module.scss";
-import "./styles/Calendar.css";
-import Calendar from "react-calendar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Calendar from "react-calendar";
+import { isEqual } from "lodash";
+
+import styles from "./styles/calendarComp.module.scss";
+import "./styles/Calendar.css";
 import ArrowNextIcon from "/public/icons/header/calendar/arrowNext.svg?react";
 
 import {
@@ -10,7 +12,7 @@ import {
   formatToLocalISODateTimeArray,
   updateSelectedDate,
   updateRangeDate,
-} from "../../Context/dateSlice";
+} from "../../Context/filtersSlice";
 
 function ArrowNext() {
   return <ArrowNextIcon className="" />;
@@ -19,7 +21,7 @@ function ArrowNext() {
 function ArrowPrev() {
   return (
     <img
-      src="/icons/header/calendar/arrowPrev.svg"
+      src="/icons/Header/calendar/arrowPrev.svg"
       alt="button previous"
     />
   );
@@ -27,7 +29,7 @@ function ArrowPrev() {
 
 function CalendarComp({ selectRange = false }) {
   const dispatch = useDispatch();
-  const { selectedDate, datesRange } = useSelector((store) => store.date);
+  const { selectedDate, datesRange } = useSelector((store) => store.filters);
 
   const [localSelectedDate, setLocalSelectedDate] = useState(
     selectedDate || formatToLocalISODateTime(new Date())
@@ -35,11 +37,16 @@ function CalendarComp({ selectRange = false }) {
   const [localDateRange, setLocalDateRange] = useState(datesRange || []);
 
   useEffect(() => {
-    // Синхронизация локального состояния с Redux
-    if (selectRange && localDateRange !== datesRange) {
-      dispatch(updateRangeDate(formatToLocalISODateTimeArray(localDateRange)));
-    } else if (!selectRange && localSelectedDate !== selectedDate) {
-      dispatch(updateSelectedDate(formatToLocalISODateTime(localSelectedDate)));
+    if (selectRange) {
+      const formattedLocalRange = formatToLocalISODateTimeArray(localDateRange);
+      if (!isEqual(formattedLocalRange, datesRange)) {
+        dispatch(updateRangeDate(formattedLocalRange));
+      }
+    } else {
+      const formattedLocal = formatToLocalISODateTime(localSelectedDate);
+      if (formattedLocal !== selectedDate) {
+        dispatch(updateSelectedDate(formattedLocal));
+      }
     }
   }, [
     localSelectedDate,
@@ -83,13 +90,13 @@ function CalendarComp({ selectRange = false }) {
         tileClassName={({ date, view }) => {
           if (view === "month" && selectRange && localDateRange.length === 2) {
             if (date >= localDateRange[0] && date <= localDateRange[1]) {
-              return styles.highlight; // Используем SCSS-модуль
+              return styles["highlight"];
             }
           }
           return null;
         }}
       />
-      <ul className={styles.dateOptions}>
+      <ul className={styles["dateOptions"]}>
         <li onClick={handleToday}>На сьогодні</li>
         <li onClick={handleTomorrow}>На завтра</li>
         <li>На вихідні</li>

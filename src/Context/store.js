@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import cityReducer from './citySlice'
-import dateReducer from './dateSlice'
 import filtersReducer from './filtersSlice'
+import dataEventsReducer from './dataEventsSlice'
 
 const store = configureStore({
     reducer: {
         city: cityReducer,
-        date: dateReducer,
         filters: filtersReducer,
+        events: dataEventsReducer,
     }
 })
 

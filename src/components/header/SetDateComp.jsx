@@ -1,17 +1,17 @@
-import Button from "../buttons/Button";
+import Button from "../Buttons/Button";
 
 import styles from "./styles/setDateComp.module.scss";
 import CalendarComp from "../general/CalendarComp";
 function SetDateComp({ isHidden }) {
   return (
     <div
-      className={`${styles["totalBox"]} ${
+      className={`${styles["total-box"]} ${
         isHidden ? styles["hidden"] : styles["visible"]
       }`}>
-      <div className={styles.totalBox__calendar}>
+      <div className={styles["total-box__calendar"]}>
         <CalendarComp />
       </div>
-      <div className={styles.buttonsBox}>
+      <div className={styles["buttons-box"]}>
         <Button
           width={24.8}
           height={6.4}>

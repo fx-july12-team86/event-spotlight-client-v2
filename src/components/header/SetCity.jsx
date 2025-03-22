@@ -67,7 +67,7 @@ function SetCity() {
             dispatch(citySelect(event.target.value));
           }}
         />
-        <ul className={styles["background__box__citiesList"]}>
+        <ul className={styles["background__box__cities-list"]}>
           {cities.map((city) => (
             <li
               key={city.city}

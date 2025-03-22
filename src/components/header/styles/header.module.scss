@@ -7,7 +7,7 @@
 
     height: 8rem;
 
-    &__boxLeft {
+    &__box-left {
         display: flex;
         align-content: center;
         flex-wrap: wrap;
@@ -16,7 +16,7 @@
         height: 100%;
         margin-left: 2.4rem;
 
-        &__company {
+        &__logo {
             display: flex;
             flex-wrap: wrap;
             align-content: center;
@@ -77,7 +77,7 @@
 
                 width: 1.4rem;
                 height: 2rem;
-                background-image: url('/icons/header/navBar/geolocation.svg');
+                background-image: url('/icons/Header/navBar/geolocation.svg');
 
                 margin-right: 1.3rem;
 
@@ -108,7 +108,7 @@
         }
     }
 
-    &__boxRight {
+    &__box-right {
         display: flex;
         align-content: center;
         align-items: center;
