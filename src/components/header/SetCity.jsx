@@ -53,7 +53,7 @@ function SetCity() {
             className={styles.background__box__closeBtn}
             onClick={() => dispatch(toggleSelectCity(false))}>
             <svg className={styles.svgSizeNormalize}>
-              <use href="/icons/header/navBar/icons.svg#cross"></use>
+              <use href="/icons/Header/navBar/icons.svg#cross"></use>
             </svg>
           </button>
         </div>

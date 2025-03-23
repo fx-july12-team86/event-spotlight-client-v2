@@ -43,7 +43,7 @@ function SearchBar() {
     event.preventDefault();
 
     if (!query) return;
-    navigate(`/events/${query}`);
+    navigate(`/catalog?search=${query}`);
     setQuery("");
   }
 
@@ -53,7 +53,9 @@ function SearchBar() {
 
   return (
     <nav className={styles["container"]}>
-      <form className={styles["container__form"]}>
+      <form
+        onSubmit={handleSubmit}
+        className={styles["container__form"]}>
         <label
           htmlFor="search"
           className={styles["container__form__searchIcon"]}>
@@ -67,6 +69,7 @@ function SearchBar() {
           placeholder="Пошук"
           className={styles["container__form__input"]}
           id="search"
+          onChange={(event) => setQuery(event.target.value)}
         />
         <button
           type="button"

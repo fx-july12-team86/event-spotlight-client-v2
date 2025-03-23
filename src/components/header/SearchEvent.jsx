@@ -17,7 +17,7 @@ function SearchEvent({
     event.preventDefault();
 
     if (!query) return;
-    navigate(`/events/${query}`);
+    navigate(`/catalog?query=${query}`);
     setQuery("");
   }
 

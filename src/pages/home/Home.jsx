@@ -1,9 +1,9 @@
 import styles from "./styles/home.module.scss";
 
-import Filter from "../../components/home/Filter/Filter";
-import Slider from "../../components/home/Slider/Slider";
-import SearchBar from "../../components/home/SearchBar/SearchBar";
-import EventList from "../../components/home/Eventlist/EventList";
+import Filter from "../../components/Home/Filter/Filter";
+import Slider from "../../components/Home/Slider/Slider";
+import SearchBar from "../../components/Home/SearchBar/SearchBar";
+import EventList from "../../components/Home/Eventlist/EventList";
 import { useSelector } from "react-redux";
 import Button from "../../components/Buttons/Button";
 import Organizer from "../../components/Home/Organizer/Organizer";
