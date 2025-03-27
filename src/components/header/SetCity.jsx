@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles/setCity.module.scss";
 import { toggleSelectCity, citySelect } from "../../Context/citySlice";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const cities = [
   { city: "Усі міста" },
   { city: "Одеса" },
@@ -53,7 +55,8 @@ function SetCity() {
             className={styles.background__box__closeBtn}
             onClick={() => dispatch(toggleSelectCity(false))}>
             <svg className={styles.svgSizeNormalize}>
-              <use href="/icons/header/navBar/icons.svg#cross"></use>
+              <use
+                href={`${BASE_URL}/icons/Header/navBar/icons.svg#cross`}></use>
             </svg>
           </button>
         </div>

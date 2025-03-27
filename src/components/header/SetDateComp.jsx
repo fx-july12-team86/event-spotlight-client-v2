@@ -1,7 +1,7 @@
 import Button from "../Buttons/Button";
 
 import styles from "./styles/setDateComp.module.scss";
-import CalendarComp from "../general/CalendarComp";
+import CalendarComp from "../Calendar/CalendarComp";
 function SetDateComp({ isHidden }) {
   return (
     <div
@@ -21,7 +21,7 @@ function SetDateComp({ isHidden }) {
           width={24.8}
           height={6.4}
           isHollow={true}>
-          Очістити
+          Очистити
         </Button>
       </div>
     </div>

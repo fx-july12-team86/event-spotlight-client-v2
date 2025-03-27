@@ -1,5 +1,7 @@
-import Button from "../../Buttons/Button";
+import Button from "../../../../components/Buttons/Button";
 import styles from "./styles/organizer.module.scss";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function Organizer() {
   return (
@@ -19,25 +21,25 @@ function Organizer() {
       </div>
       <div className={styles["organizer-container__right"]}>
         <img
-          src="/icons/Home/organizer/photo1.webp"
+          src={`${BASE_URL}/icons/Home/organizer/photo1.webp`}
           alt="image"
           className={`
             ${styles["organizer-container__image"]}   ${styles["organizer-container__image--1"]}`}
         />
         <img
-          src="/icons/Home/organizer/photo2.webp"
+          src={`${BASE_URL}/icons/Home/organizer/photo2.webp`}
           alt="image"
           className={`
             ${styles["organizer-container__image"]}   ${styles["organizer-container__image--2"]}`}
         />
         <img
-          src="/icons/Home/organizer/photo3.webp"
+          src={`${BASE_URL}/icons/Home/organizer/photo3.webp`}
           alt="image"
           className={`
             ${styles["organizer-container__image"]}   ${styles["organizer-container__image--3"]}`}
         />
         <img
-          src="/icons/Home/organizer/photo4.webp"
+          src={`${BASE_URL}/icons/Home/organizer/photo4.webp`}
           alt="image"
           className={`
             ${styles["organizer-container__image"]}   ${styles["organizer-container__image--4"]}`}

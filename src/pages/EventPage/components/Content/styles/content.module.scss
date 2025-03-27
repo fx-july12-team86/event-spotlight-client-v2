@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    margin: 8rem 16.6rem 12.4rem 16.6rem;
+    gap: 9.2rem;
+
+    &__nav-list {
+        list-style: none;
+    }
+
+    &__list-item {
+        font-weight: 600;
+        font-size: 4.8rem;
+        letter-spacing: .01rem;
+        text-transform: uppercase;
+
+        color: $color-medium-grey;
+        transition: all .4s;
+
+        cursor: pointer;
+
+        &:not(.container__list-item--selected):hover {
+            color: #6B6C70; // Белый текст при hover
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 2.4rem;
+        }
+    }
+
+    &__list-item--selected {
+        color: $color-dark-grey;
+    }
+}

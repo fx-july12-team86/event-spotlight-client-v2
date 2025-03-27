@@ -10,9 +10,10 @@ export default defineConfig({
       scss: {
         additionalData: `
         @import "/src/sass/variables.scss";
-        @import "/src/fonts/OswaldFont.scss";
+        @import "/public/fonts/OswaldFont.scss";
         `
       }
     }
-  }
+  },
+  base: '/event-spotlight-client-v2'
 })

@@ -1,10 +1,16 @@
+import { Link } from "react-router";
+
 import styles from "./styles/eventItem.module.scss";
 import eventPhoto from "./TestPhoto/EventPhotoTest.webp";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 function EventItem({ data }) {
-  const { category, title, date, time, location, price } = data;
+  const { id, category, title, date, time, location, price } = data;
   return (
-    <div className={styles["event-item"]}>
+    <Link
+      to={`/event/${id}`}
+      className={styles["event-item"]}>
       <img
         className={styles["event-item__image"]}
         src={eventPhoto}
@@ -14,8 +20,10 @@ function EventItem({ data }) {
         <div className={styles["event-item__header"]}>
           <p className={styles["event-item__category"]}>{category}</p>
           <div className={styles["event-item__icon"]}>
-            <svg className={styles["event-item__svgSizeNormalize"]}>
-              <use href="/icons/Home/eventList/favorites.svg#favorites"></use>
+            <svg
+              className={`${styles["event-item__svgSizeNormalize"]} ${styles["event-item__icon-fill"]}`}>
+              <use
+                href={`${BASE_URL}/icons/Home/event/favorites.svg#favorites`}></use>
             </svg>
           </div>
         </div>
@@ -33,7 +41,7 @@ function EventItem({ data }) {
           </article>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

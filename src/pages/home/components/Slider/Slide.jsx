@@ -16,9 +16,7 @@ function Slide({ info, translate }) {
         className={styles["container__photo"]}
       />
       <article className={styles["container__description"]}>
-        <span className={styles["container__description__category"]}>
-          {category}
-        </span>
+        <p className={styles["container__description__category"]}>{category}</p>
         <p className={styles["container__description__name"]}>{name}</p>
         <div className={styles["container__description__datetime"]}>
           <p className={styles["container__description__datetime__date"]}>

@@ -7,7 +7,8 @@
     transition: all .7s;
     overflow: hidden;
 
-
+    text-decoration: none;
+    color: $color-main-dark;
 
     cursor: pointer;
 
@@ -71,6 +72,11 @@
         &:hover {
             transform: scale(1.1);
         }
+    }
+
+    &__icon-fill {
+        fill: $color-main-dark;
+
     }
 
     &__svgSizeNormalize {

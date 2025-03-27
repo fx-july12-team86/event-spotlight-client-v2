@@ -2,9 +2,11 @@ import styles from "./styles/searchBar.module.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import Select from "../Select/Select";
-import CalendarComp from "../../general/CalendarComp";
+import CalendarComp from "../../../../components/Calendar/CalendarComp";
 import { useDispatch, useSelector } from "react-redux";
-import { updateFilters } from "../../../Context/filtersSlice";
+import { updateFilters, formatDate } from "../../../../Context/filtersSlice";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const events = [
   "Всі події",
@@ -36,14 +38,21 @@ function SearchBar() {
 
   const dispatch = useDispatch();
   const { city } = useSelector((state) => state.city);
-  const { filters } = useSelector((store) => store.filters);
-  const amountOfFilters = filters.length;
+  const { filters, datesRange } = useSelector((store) => store.filters);
+
+  const combinedFilters = [
+    ...filters,
+    datesRange !== null && datesRange !== undefined
+      ? datesRange.map((date) => formatDate(date)).join(" - ")
+      : null,
+  ];
+  const amountOfFilters = combinedFilters.length;
 
   function handleSubmit(event) {
     event.preventDefault();
 
     if (!query) return;
-    navigate(`/events/${query}`);
+    navigate(`/catalog?search=${query}`);
     setQuery("");
   }
 
@@ -53,13 +62,15 @@ function SearchBar() {
 
   return (
     <nav className={styles["container"]}>
-      <form className={styles["container__form"]}>
+      <form
+        onSubmit={handleSubmit}
+        className={styles["container__form"]}>
         <label
           htmlFor="search"
           className={styles["container__form__searchIcon"]}>
           <svg
             className={styles["container__form__searchIcon__svgSizeNormalise"]}>
-            <use href="/icons/Home/search/icons.svg#search"></use>
+            <use href={`${BASE_URL}/icons/Home/search/icons.svg#search`}></use>
           </svg>
         </label>
         <input
@@ -67,13 +78,14 @@ function SearchBar() {
           placeholder="Пошук"
           className={styles["container__form__input"]}
           id="search"
+          onChange={(event) => setQuery(event.target.value)}
         />
         <button
           type="button"
           className={styles["container__form__btnFilters"]}
           onClick={() => setIsOpen((isOpen) => !isOpen)}>
           <svg className={styles["container__form__btnFilters__icon"]}>
-            <use href="/icons/Home/search/icons.svg#filters"></use>
+            <use href={`${BASE_URL}/icons/Home/search/icons.svg#filters`}></use>
           </svg>
           Фільтри
         </button>
@@ -81,7 +93,8 @@ function SearchBar() {
           type="button"
           className={styles["container__form__btnLocation"]}>
           <svg className={styles["container__form__btnLocation__icon"]}>
-            <use href="/icons/Home/search/icons.svg#geolocation"></use>
+            <use
+              href={`${BASE_URL}/icons/Home/search/icons.svg#geolocation`}></use>
           </svg>
           {city}
         </button>
@@ -95,13 +108,13 @@ function SearchBar() {
       <div
         className={styles["container__containerFilters"]}
         style={{ paddingBottom: isOpen ? `${2.4}rem` : "0" }}>
-        {filters.length > 0 ? (
+        {combinedFilters.length > 0 ? (
           <div>
             <h3 className={styles["container__containerFilters__count"]}>
               Фільтри <span>({amountOfFilters})</span>
             </h3>
             <ul className={styles["container__containerFilters__filtersList"]}>
-              {filters.map((filter) => (
+              {combinedFilters.map((filter) => (
                 <li
                   onClick={() => handleUpdateFilters(filter)}
                   key={filter}

@@ -2,10 +2,10 @@ import styles from "./styles/slider.module.scss";
 import { useState } from "react";
 
 import Slide from "./Slide";
-
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const data = [
   {
-    imgURL: "/icons/Home/slider/halloween.webp",
+    imgURL: `${BASE_URL}/icons/Home/slider/halloween.webp`,
     category: "Вечірки",
     name: "halloween party для дорослих",
     date: "24 липня 2024",
@@ -14,7 +14,7 @@ const data = [
     price: 350,
   },
   {
-    imgURL: "/icons/Home/slider/soup.webp",
+    imgURL: `${BASE_URL}/icons/Home/slider/soup.webp`,
     category: "Майстер-класи",
     name: "halloween party для дорослих",
     date: "24 липня 2024",
@@ -23,7 +23,7 @@ const data = [
     price: 600,
   },
   {
-    imgURL: "/icons/Home/slider/art-perfomance.webp",
+    imgURL: `${BASE_URL}/icons/Home/slider/art-perfomance.webp`,
     category: "Виставки",
     name: "Арт-Перформанс",
     date: "5 вересня 2024",
@@ -32,7 +32,7 @@ const data = [
     price: 250,
   },
   {
-    imgURL: "/icons/Home/slider/jazz-cutted.webp",
+    imgURL: `${BASE_URL}/icons/Home/slider/jazz-cutted.webp`,
     category: "Концерти",
     name: "Jazz Night",
     date: "15 жовтня 2024",
@@ -60,7 +60,8 @@ function Slider() {
         onClick={prevSlide}>
         <svg
           className={`${styles["container__svgSizeNormalise"]} ${styles["container__buttonPrev__postionArrow"]}`}>
-          <use href="/icons/Home/slider/svg/arrows.svg#arrowPrev"></use>
+          <use
+            href={`${BASE_URL}/icons/Home/slider/svg/arrows.svg#arrowPrev`}></use>
         </svg>
       </button>
       <div className={styles["container"]}>
@@ -78,7 +79,8 @@ function Slider() {
         className={styles["container__buttonNext"]}
         onClick={nextSlide}>
         <svg className={`${styles["container__svgSizeNormalise"]}`}>
-          <use href="/icons/Home/slider/svg/arrows.svg#arrowNext"></use>
+          <use
+            href={`${BASE_URL}/icons/Home/slider/svg/arrows.svg#arrowNext`}></use>
         </svg>
       </button>
     </>

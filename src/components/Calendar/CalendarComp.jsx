@@ -5,7 +5,6 @@ import { isEqual } from "lodash";
 
 import styles from "./styles/calendarComp.module.scss";
 import "./styles/Calendar.css";
-import ArrowNextIcon from "/public/icons/header/calendar/arrowNext.svg?react";
 
 import {
   formatToLocalISODateTime,
@@ -14,14 +13,21 @@ import {
   updateRangeDate,
 } from "../../Context/filtersSlice";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 function ArrowNext() {
-  return <ArrowNextIcon className="" />;
+  return (
+    <img
+      src={`${BASE_URL}/icons/Header/calendar/arrowNext.svg`}
+      alt="button next"
+    />
+  );
 }
 
 function ArrowPrev() {
   return (
     <img
-      src="/icons/Header/calendar/arrowPrev.svg"
+      src={`${BASE_URL}/icons/Header/calendar/arrowPrev.svg`}
       alt="button previous"
     />
   );

@@ -24,6 +24,10 @@ export function formatToLocalISODateTimeArray(isoArray) {
     });
 }
 
+export function formatDate(date) {
+    return date.split("T")[0].replaceAll("-", ".").split(".").reverse().join(".");;
+}
+
 const initialState = {
     filters: [],
     sort: null,

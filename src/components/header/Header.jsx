@@ -8,6 +8,8 @@ import SetCity from "./SetCity";
 import SetDateComp from "./SetDateComp";
 import { useSelector } from "react-redux";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 function Header() {
   const [isHiddenGeo, setIsHiddenGeo] = useState(true);
   const [isHiddenCalendar, setIsHiddedCalendar] = useState(true);
@@ -67,7 +69,8 @@ function Header() {
             style={{ display: `${!isHiddenSearchInput ? "none" : ""}` }}>
             <svg
               className={`${styles["svgSizeNormalize"]} ${styles["svgFill"]}`}>
-              <use href="../../../public/icons/Header/navBar/icons.svg#search"></use>
+              <use
+                href={` ${BASE_URL}/icons/Header/navBar/icons.svg#search`}></use>
             </svg>
           </button>
           {isHiddenSearchInput || (
@@ -82,7 +85,8 @@ function Header() {
             onClick={handleOpenCalendar}>
             <svg
               className={`${styles["svgSizeNormalize"]} ${styles["svgFill"]}`}>
-              <use href="../../../public/icons/Header/navBar/icons.svg#calendar"></use>
+              <use
+                href={` ${BASE_URL}/icons/Header/navBar/icons.svg#calendar`}></use>
             </svg>
           </button>
           <button
@@ -94,7 +98,8 @@ function Header() {
             onClick={handleOpenAccountMenu}>
             <svg
               className={`${styles["svgSizeNormalize"]} ${styles["svgFill"]}`}>
-              <use href="../../../public/icons/Header/navBar/icons.svg#account"></use>
+              <use
+                href={` ${BASE_URL}/icons/Header/navBar/icons.svg#account`}></use>
             </svg>
           </button>
           <button className={styles["header__box-right__addEvent"]}>
