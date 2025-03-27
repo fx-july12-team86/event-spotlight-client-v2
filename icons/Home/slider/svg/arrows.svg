@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="0" height="0">
+<symbol id="arrowPrev" width="11" height="17" viewBox="0 0 11 17" fill="none">
+<path d="M4.44367 8.5L10.6662 2.2775L8.88867 0.5L0.888672 8.5L8.88867 16.5L10.6662 14.7225L4.44367 8.5Z" fill="#181A23"/>
+</symbol>
+
+<symbol id="arrowNext" width="11" height="17" viewBox="0 0 11 17" fill="none">
+<path d="M6.55633 8.5L0.333831 2.2775L2.11133 0.5L10.1113 8.5L2.11133 16.5L0.33383 14.7225L6.55633 8.5Z" fill="#181A23"/>
+</symbol>
+
+</svg>
