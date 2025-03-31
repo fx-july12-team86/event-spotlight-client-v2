@@ -3,15 +3,20 @@
 
     margin-top: 4rem;
 
+    & img {
+        width: 51rem;
+        height: 100%;
+    }
+
     &__description {
         width: 100%;
         background-color: $color-main-dark;
         color: #fff;
-        padding: 4.4rem;
+        padding: 4.2rem;
     }
 
     &__article {
-        margin-bottom: 9.2rem;
+        margin-bottom: 4.2rem;
     }
 
     &__wrapper {
@@ -176,7 +181,7 @@
 
 
     &__share-button {
-        width: 17rem;
+        min-width: 17rem;
         height: 2.4rem;
 
         background-color: transparent;

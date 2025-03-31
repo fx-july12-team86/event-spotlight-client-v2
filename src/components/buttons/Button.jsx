@@ -6,6 +6,7 @@ function Button({
   height,
   isHollow = false,
   isCenter = false,
+  type = "button",
 }) {
   return (
     <button
@@ -16,7 +17,8 @@ function Button({
         width: `${width}rem`,
         height: `${height}rem`,
         margin: isCenter ? "0 auto" : undefined,
-      }}>
+      }}
+      type={type}>
       {children}
     </button>
   );

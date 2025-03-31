@@ -1,0 +1,78 @@
+.background {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 999;
+
+    display: flex;
+
+
+    background-color: rgba(0, 0, 0, 0.425);
+
+    opacity: 1;
+    transition: all 0.4s ease-in-out;
+
+    &__visible {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &__container {
+        margin: auto auto;
+        background-color: #fff;
+
+        padding: 4rem;
+
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4rem;
+
+        & h2 {
+            font-family: Oswald;
+            font-weight: 600;
+            font-size: 4rem;
+            letter-spacing: .01rem;
+            text-transform: uppercase;
+
+            color: $color-main-dark;
+        }
+
+        & button {
+            width: 1.4rem;
+            height: 1.4rem;
+
+            background-color: transparent;
+            border: none;
+
+            cursor: pointer;
+
+        }
+    }
+
+    &__btn {
+        background-color: transparent;
+        border: none;
+
+        cursor: pointer;
+
+        display: block;
+
+        margin: 0 auto;
+
+        color: $color-dark-grey;
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.6rem;
+        letter-spacing: .01rem;
+
+        margin-top: 2rem;
+
+        padding-bottom: 2px;
+        border-bottom: 1px solid $color-dark-grey;
+    }
+}

@@ -1,0 +1,199 @@
+.box {
+    opacity: 1;
+    transition: all .4s ease-in-out;
+
+    width: 23.6rem;
+    // height: 32rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3rem;
+
+    background-color: #fff;
+
+    position: absolute;
+    right: 21.6rem;
+
+    z-index: 6;
+    box-shadow: 0px 3px 7px -1px rgba(0, 0, 0, 0.75);
+
+    &__account,
+    &__favorites,
+    &__events,
+    &__exit,
+    &__login {
+        text-decoration: none;
+
+        color: $color-dark-grey;
+
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.8rem;
+        letter-spacing: .01rem;
+
+        // margin: 0 auto;
+        margin-left: 5rem;
+
+        cursor: pointer;
+
+        transition: all .4s;
+
+        &:hover {
+            color: $color-main-purple;
+        }
+
+        &::before {
+            transform: translateY(.2rem);
+        }
+    }
+
+    &__account {
+
+        transition: all .4s;
+
+        &::before {
+            transition: all .4s;
+
+            content: '';
+            width: 1.8rem;
+            height: 1.8rem;
+            display: inline-block;
+
+            mask-image: url('/icons/Header/accountMenu/account.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $color-dark-grey;
+
+            margin-right: 1.5rem;
+        }
+
+        &:hover::before {
+            background-color: $color-main-purple;
+        }
+
+    }
+
+    &__favorites {
+        &::before {
+            transition: all .4s;
+
+
+            content: '';
+            width: 2rem;
+            height: 2rem;
+            display: inline-block;
+
+            mask-image: url('/icons/Header/accountMenu/favorites.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $color-dark-grey;
+
+            transform: translateY(.4rem);
+
+            margin-right: 1.5rem;
+
+            background-repeat: no-repeat;
+        }
+
+        &:hover::before {
+            background-color: $color-main-purple;
+        }
+
+    }
+
+    &__events {
+        &::before {
+            transition: all .4s;
+
+            content: '';
+            width: 2rem;
+            height: 2rem;
+            display: inline-block;
+
+            mask-image: url('/icons/Header/accountMenu/events.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $color-dark-grey;
+
+            transform: translateY(.3rem);
+
+            margin-right: 1.5rem;
+            background-repeat: no-repeat;
+
+        }
+
+        &:hover::before {
+            background-color: $color-main-purple;
+        }
+    }
+
+    &__exit {
+        border: none;
+        background-color: #fff;
+
+        margin-top: 4.9rem;
+
+        &::before {
+            transition: all .4s;
+
+            content: '';
+            width: 1.8rem;
+            height: 1.8rem;
+            display: inline-block;
+
+            mask-image: url('/icons/Header/accountMenu/exit.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $color-dark-grey;
+
+            transform: translateY(.3rem);
+
+
+            margin-right: 1.5rem;
+        }
+
+        transition: all .4s;
+
+        &:hover::before {
+            background-color: $color-main-purple;
+        }
+    }
+
+    &__login {
+        border: none;
+        background-color: #fff;
+        margin-left: 4rem;
+
+        &::before {
+            transition: all .4s;
+
+            content: '';
+            width: 1.8rem;
+            height: 1.8rem;
+            display: inline-block;
+
+            mask-image: url('/icons/Header/accountMenu/exit.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-color: $color-dark-grey;
+
+            transform: translateY(.3rem);
+
+
+            margin-right: 1.5rem;
+        }
+
+        transition: all .4s;
+
+        &:hover::before {
+            background-color: $color-main-purple;
+        }
+    }
+}
+
+.Hidden {
+    opacity: 0;
+    pointer-events: none;
+}

@@ -1,0 +1,36 @@
+.total-box {
+    max-width: 82.4rem;
+    height: 59.6rem;
+
+    position: absolute;
+    right: 23rem;
+    z-index: 6;
+
+    transition: all .4s ease-in-out;
+
+    background-color: #fff;
+
+    &__calendar {
+        margin-top: 4rem;
+        margin-left: 7.2rem;
+    }
+}
+
+
+
+.buttons-box {
+    display: flex;
+    gap: 2rem;
+
+    margin-top: 4rem;
+    margin-left: 4rem;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.visible {
+    opacity: 1;
+}

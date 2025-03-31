@@ -43,7 +43,7 @@ function CalendarComp({ selectRange = false }) {
   const [localDateRange, setLocalDateRange] = useState(datesRange || []);
 
   useEffect(() => {
-    if (selectRange) {
+    if (selectRange && localDateRange.length === 2) {
       const formattedLocalRange = formatToLocalISODateTimeArray(localDateRange);
       if (!isEqual(formattedLocalRange, datesRange)) {
         dispatch(updateRangeDate(formattedLocalRange));
@@ -54,6 +54,7 @@ function CalendarComp({ selectRange = false }) {
         dispatch(updateSelectedDate(formattedLocal));
       }
     }
+    console.log(localDateRange);
   }, [
     localSelectedDate,
     localDateRange,
@@ -94,7 +95,7 @@ function CalendarComp({ selectRange = false }) {
         nextLabel={<ArrowNext />}
         prevLabel={<ArrowPrev />}
         tileClassName={({ date, view }) => {
-          if (view === "month" && selectRange && localDateRange.length === 2) {
+          if (view === "month" && localDateRange.length === 2) {
             if (date >= localDateRange[0] && date <= localDateRange[1]) {
               return styles["highlight"];
             }

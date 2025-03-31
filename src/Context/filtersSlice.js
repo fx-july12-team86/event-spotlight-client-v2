@@ -59,14 +59,14 @@ const filtersSlice = createSlice({
         setSelectedDate(state, action) {
             state.selectedDate = action.payload
         },
-        setRangeDate(state, action) {
-            if (action.payload[0] === action.payload[1]) {
-                state.rangeDate = null
-            }
-            else {
-                state.rangeDate = action.payload
-            }
-        },
+        // setRangeDate(state, action) {
+        //     if (action.payload[0] === action.payload[1]) {
+        //         state.rangeDate = null
+        //     }
+        //     else {
+        //         state.rangeDate = action.payload
+        //     }
+        // },
     }
 })
 

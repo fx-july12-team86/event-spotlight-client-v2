@@ -1,5 +1,5 @@
 import styles from "./styles/searchBar.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Select from "../Select/Select";
 import CalendarComp from "../../../../components/Calendar/CalendarComp";
@@ -40,13 +40,14 @@ function SearchBar() {
   const { city } = useSelector((state) => state.city);
   const { filters, datesRange } = useSelector((store) => store.filters);
 
-  const combinedFilters = [
-    ...filters,
-    datesRange !== null && datesRange !== undefined
-      ? datesRange.map((date) => formatDate(date)).join(" - ")
-      : null,
-  ];
-  const amountOfFilters = combinedFilters.length;
+  const amountOfFilters = filters.length;
+
+  useEffect(() => {
+    if (datesRange === null) return;
+    dispatch(
+      updateFilters(datesRange.map((date) => formatDate(date)).join(" - "))
+    );
+  }, [dispatch, datesRange]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -108,13 +109,13 @@ function SearchBar() {
       <div
         className={styles["container__containerFilters"]}
         style={{ paddingBottom: isOpen ? `${2.4}rem` : "0" }}>
-        {combinedFilters.length > 0 ? (
+        {filters.length > 0 ? (
           <div>
             <h3 className={styles["container__containerFilters__count"]}>
               Фільтри <span>({amountOfFilters})</span>
             </h3>
             <ul className={styles["container__containerFilters__filtersList"]}>
-              {combinedFilters.map((filter) => (
+              {filters.map((filter) => (
                 <li
                   onClick={() => handleUpdateFilters(filter)}
                   key={filter}

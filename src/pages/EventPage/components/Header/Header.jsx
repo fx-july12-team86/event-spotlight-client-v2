@@ -3,7 +3,7 @@ import eventPhoto from "../../TestPhoto/EventPagePhoto.webp";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-function Header() {
+function Header({ title }) {
   return (
     <div className={styles["container"]}>
       <img
@@ -20,9 +20,7 @@ function Header() {
                 href={`${BASE_URL}/icons/Home/event/favorites.svg#favorites`}></use>
             </svg>
           </div>
-          <p className={styles["container__title"]}>
-            Майстер-класс з миловаріння
-          </p>
+          <p className={styles["container__title"]}>{title}</p>
           <div className={styles["container__datetime"]}>
             <p className={styles["container__date"]}>24 липня 2025</p>
             <p>18:00</p>
