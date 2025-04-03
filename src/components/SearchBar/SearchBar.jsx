@@ -1,10 +1,13 @@
-import styles from "./styles/searchBar.module.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import Select from "../Select/Select";
-import CalendarComp from "../../../../components/Calendar/CalendarComp";
 import { useDispatch, useSelector } from "react-redux";
-import { updateFilters, formatDate } from "../../../../Context/filtersSlice";
+
+import styles from "./styles/searchBar.module.scss";
+
+import Select from "../../pages/Home/components/Select/Select";
+import CalendarComp from "../Calendar/CalendarComp";
+
+import { updateFilters, formatDate } from "../../Context/filtersSlice";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -31,7 +34,7 @@ const events = [
   "Інше",
 ];
 
-function SearchBar() {
+function SearchBar({ isError = false }) {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -62,7 +65,9 @@ function SearchBar() {
   }
 
   return (
-    <nav className={styles["container"]}>
+    <nav
+      className={styles["container"]}
+      style={{ width: isError ? "98rem" : "" }}>
       <form
         onSubmit={handleSubmit}
         className={styles["container__form"]}>
@@ -78,6 +83,7 @@ function SearchBar() {
           type="text"
           placeholder="Пошук"
           className={styles["container__form__input"]}
+          style={{ width: isError ? "48.6rem" : "" }}
           id="search"
           onChange={(event) => setQuery(event.target.value)}
         />

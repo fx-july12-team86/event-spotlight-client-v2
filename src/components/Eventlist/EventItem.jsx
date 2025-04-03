@@ -1,24 +1,59 @@
 import { Link } from "react-router";
+import { useState } from "react";
 
 import styles from "./styles/eventItem.module.scss";
-import eventPhoto from "./TestPhoto/EventPhotoTest.webp";
+import { formatUkrainianDate } from "../../helpers/date";
+import Spinner from "../Spinner/Spinner";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function EventItem({ data }) {
-  const { id, category, title, date, time, location, price } = data;
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { id, photos, title, categories, startTime, address, price } = data;
+
+  const coverImgURL = photos.at(0).sharedUrl.replace("dl=0", "raw=1");
+
+  const [date, time] = startTime.split("T");
+
+  const formatedDate = formatUkrainianDate(date);
+  const formatedTime = time.slice(0, -3);
+
+  const location = `${address.street} ${address.number}, м. ${address.cityName}`;
+
   return (
     <Link
       to={`/event/${id}`}
       className={styles["event-item"]}>
+      {isLoading && (
+        <div
+          style={{
+            width: "100%",
+            height: "40%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+          <Spinner />
+        </div>
+      )}
       <img
         className={styles["event-item__image"]}
-        src={eventPhoto}
+        src={coverImgURL}
         alt="Photo of event"
+        onLoad={() => setIsLoading(false)}
       />
       <div className={styles["event-item__description"]}>
         <div className={styles["event-item__header"]}>
-          <p className={styles["event-item__category"]}>{category}</p>
+          {categories.map((category) => {
+            return (
+              <p
+                key={category.id}
+                className={styles["event-item__category"]}>
+                {category.name}
+              </p>
+            );
+          })}
           <div className={styles["event-item__icon"]}>
             <svg
               className={`${styles["event-item__svgSizeNormalize"]} ${styles["event-item__icon-fill"]}`}>
@@ -32,8 +67,8 @@ function EventItem({ data }) {
           <article className={styles["event-item__details"]}>
             <ul className={styles["event-item__details-list"]}>
               <li className={styles["event-item__datetime"]}>
-                <p className={styles["event-item__date"]}>{date}</p>
-                <p className={styles["event-item__time"]}>{time}</p>
+                <p className={styles["event-item__date"]}>{formatedDate}</p>
+                <p className={styles["event-item__time"]}>{formatedTime}</p>
               </li>
               <li className={styles["event-item__location"]}>{location}</li>
               <li className={styles["event-item__price"]}>{price} ₴</li>

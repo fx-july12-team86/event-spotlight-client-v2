@@ -54,7 +54,7 @@ function CalendarComp({ selectRange = false }) {
         dispatch(updateSelectedDate(formattedLocal));
       }
     }
-    console.log(localDateRange);
+    // console.log(localDateRange);
   }, [
     localSelectedDate,
     localDateRange,

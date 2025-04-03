@@ -15,5 +15,5 @@ export default defineConfig({
       }
     }
   },
-  base: '/event-spotlight-client-v2'
+  base: '/event-spotlight-client-v2',
 })

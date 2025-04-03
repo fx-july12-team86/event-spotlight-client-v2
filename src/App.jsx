@@ -1,18 +1,20 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AppLayout from "./app/AppLayout";
-import Home from "./pages/Home/Home";
+import Home, { loader as generalEventsLoader } from "./pages/Home/Home";
 import EventPage from "./pages/EventPage/EventPage";
+import Error from "./components/Error/Error";
 
 const router = createBrowserRouter(
   [
     {
-      path: "/",
       element: <AppLayout />,
       children: [
         {
-          index: true,
+          path: "/",
           element: <Home />,
+          errorElement: <Error />,
+          loader: generalEventsLoader,
         },
         {
           path: "event/:id",
