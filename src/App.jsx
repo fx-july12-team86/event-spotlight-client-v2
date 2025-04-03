@@ -20,6 +20,10 @@ const router = createBrowserRouter(
           path: "event/:id",
           element: <EventPage />,
         },
+        {
+          path: "*",
+          element: <Error />,
+        },
       ],
     },
   ],
