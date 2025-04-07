@@ -30,10 +30,11 @@ export function formatDate(date) {
 
 const initialState = {
     filters: [],
-    sort: null,
+    sortBy: null,
     today: formatToLocalISODateTime(new Date()),
     selectedDate: formatToLocalISODateTime(new Date()),
-    datesRange: null
+    datesRange: [],
+    datesRangeFormatted: [],
 }
 
 const filtersSlice = createSlice({
@@ -48,29 +49,31 @@ const filtersSlice = createSlice({
             } else {
                 // Если есть — удаляем  
                 state.filters.splice(index, 1);
+
+                // Видалення діапазону при видаленні рядка
+                // if (action.payload === state.datesRangeFormatted) {
+                //     state.datesRange = [];
+                //     state.datesRangeFormatted = null;
+                // }
             }
         },
         setDateRange(state, action) {
             state.datesRange = action.payload
+
+            const formatted = action.payload.map((date) => formatDate(date)).join(" - ");
+            state.datesRangeFormatted = formatted;
         },
         setDate(state, action) {
             state.date = action.payload
         },
         setSelectedDate(state, action) {
-            state.selectedDate = action.payload
+            state.selectedDate = action.payload;
         },
-        // setRangeDate(state, action) {
-        //     if (action.payload[0] === action.payload[1]) {
-        //         state.rangeDate = null
-        //     }
-        //     else {
-        //         state.rangeDate = action.payload
-        //     }
-        // },
     }
 })
 
-export const { filters, datesRange, selectedDate } = filtersSlice.actions
+export const { filters, datesRange, datesRangeFormatted, selectedDate } = filtersSlice.actions
+
 export default filtersSlice.reducer
 
 export function updateFilters(element) {

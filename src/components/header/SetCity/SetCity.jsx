@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./styles/setCity.module.scss";
-import { toggleSelectCity, citySelect } from "../../../Context/citySlice";
+import {
+  toggleSelectCity,
+  toggleCurrentCity,
+} from "../../../Context/citySlice";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -69,14 +72,14 @@ function SetCity() {
           value={chosenCity}
           onChange={(event) => {
             setChosenCity(event.target.value);
-            dispatch(citySelect(event.target.value));
+            dispatch(toggleCurrentCity(event.target.value));
           }}
         />
         <ul className={styles["background__box__cities-list"]}>
           {cities.map((city) => (
             <li
               key={city.city}
-              onClick={() => dispatch(citySelect(city.city))}>
+              onClick={() => dispatch(toggleCurrentCity(city.city))}>
               {city.city}
             </li>
           ))}

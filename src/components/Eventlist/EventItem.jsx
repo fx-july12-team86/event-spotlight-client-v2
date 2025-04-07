@@ -10,16 +10,16 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 function EventItem({ data }) {
   const [isLoading, setIsLoading] = useState(true);
 
-  const { id, photos, title, categories, startTime, address, price } = data;
+  const { id, photo, title, categoryName, startTime, address, price } = data;
 
-  const coverImgURL = photos.at(0).sharedUrl.replace("dl=0", "raw=1");
+  const coverImgURL = photo.sharedUrl.replace("dl=0", "raw=1");
 
   const [date, time] = startTime.split("T");
 
   const formatedDate = formatUkrainianDate(date);
   const formatedTime = time.slice(0, -3);
 
-  const location = `${address.street} ${address.number}, м. ${address.cityName}`;
+  const location = address.cityName;
 
   return (
     <Link
@@ -45,15 +45,8 @@ function EventItem({ data }) {
       />
       <div className={styles["event-item__description"]}>
         <div className={styles["event-item__header"]}>
-          {categories.map((category) => {
-            return (
-              <p
-                key={category.id}
-                className={styles["event-item__category"]}>
-                {category.name}
-              </p>
-            );
-          })}
+          <p className={styles["event-item__category"]}>{categoryName}</p>
+
           <div className={styles["event-item__icon"]}>
             <svg
               className={`${styles["event-item__svgSizeNormalize"]} ${styles["event-item__icon-fill"]}`}>

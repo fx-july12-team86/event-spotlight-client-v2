@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,7 +7,7 @@ import styles from "./styles/searchBar.module.scss";
 import Select from "../../pages/Home/components/Select/Select";
 import CalendarComp from "../Calendar/CalendarComp";
 
-import { updateFilters, formatDate } from "../../Context/filtersSlice";
+import { updateFilters, updateRangeDate } from "../../Context/filtersSlice";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -41,16 +41,18 @@ function SearchBar({ isError = false }) {
 
   const dispatch = useDispatch();
   const { city } = useSelector((state) => state.city);
-  const { filters, datesRange } = useSelector((store) => store.filters);
+  const { filters, datesRangeFormatted } = useSelector(
+    (store) => store.filters
+  );
+  let tottalFilters;
 
-  const amountOfFilters = filters.length;
+  if (datesRangeFormatted) {
+    tottalFilters = [...filters, datesRangeFormatted];
+  } else {
+    tottalFilters = [...filters];
+  }
 
-  useEffect(() => {
-    if (datesRange === null) return;
-    dispatch(
-      updateFilters(datesRange.map((date) => formatDate(date)).join(" - "))
-    );
-  }, [dispatch, datesRange]);
+  const amountOfFilters = tottalFilters.length;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -61,7 +63,12 @@ function SearchBar({ isError = false }) {
   }
 
   function handleUpdateFilters(filter) {
-    dispatch(updateFilters(filter));
+    if (filter.length > 10) {
+      dispatch(updateRangeDate([]));
+    } else {
+      console.log("filter");
+      dispatch(updateFilters(filter));
+    }
   }
 
   return (
@@ -115,13 +122,13 @@ function SearchBar({ isError = false }) {
       <div
         className={styles["container__containerFilters"]}
         style={{ paddingBottom: isOpen ? `${2.4}rem` : "0" }}>
-        {filters.length > 0 ? (
+        {tottalFilters.length > 0 ? (
           <div>
             <h3 className={styles["container__containerFilters__count"]}>
               Фільтри <span>({amountOfFilters})</span>
             </h3>
             <ul className={styles["container__containerFilters__filtersList"]}>
-              {filters.map((filter) => (
+              {tottalFilters.map((filter) => (
                 <li
                   onClick={() => handleUpdateFilters(filter)}
                   key={filter}

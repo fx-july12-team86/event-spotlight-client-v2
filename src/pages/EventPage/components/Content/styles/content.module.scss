@@ -1,7 +1,11 @@
 .container {
-    display: flex;
+    // display: flex;
+    // gap: 9.2rem;
+    display: grid;
+    grid-template-columns: 27.3rem auto;
+    column-gap: 9.2rem;
+
     margin: 8rem 16.6rem 12.4rem 16.6rem;
-    gap: 9.2rem;
 
     &__nav-list {
         list-style: none;
@@ -19,7 +23,7 @@
         cursor: pointer;
 
         &:not(.container__list-item--selected):hover {
-            color: #6B6C70; // Белый текст при hover
+            color: #6B6C70;
         }
 
         &:not(:last-child) {
@@ -29,5 +33,175 @@
 
     &__list-item--selected {
         color: $color-dark-grey;
+    }
+
+    &__description {
+        &>p {
+            font-family: Inter, sans-serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            letter-spacing: .01rem;
+
+            margin-bottom: 4rem;
+
+            color: $color-dark-grey;
+        }
+
+        &>img {
+            width: 30rem;
+            height: 30rem;
+
+            &:not(:last-child) {
+                margin-right: 1.5rem;
+            }
+        }
+    }
+
+    &__location {
+        display: inline-block;
+
+
+        // border-bottom: 1px solid $color-dark-grey;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+
+        margin-bottom: 3rem;
+
+        &::before {
+            content: '';
+            display: inline-block;
+
+            mask-image: url('/icons/Home/eventDetails/geolocation.svg');
+            mask-repeat: no-repeat;
+
+            width: 1.5rem;
+            height: 2rem;
+
+            background-color: $color-dark-grey;
+
+            margin-right: 1.4rem;
+
+            transform: translateY(3px);
+        }
+    }
+
+    &__contacts {
+        list-style: none;
+
+        &>li {
+            &:not(:last-child) {
+                margin-bottom: 2.8rem;
+            }
+        }
+
+        & a {
+            font-family: Inter, sans-serif;
+            font-weight: 400;
+            font-size: 1.8rem;
+            letter-spacing: .01rem;
+
+
+            color: $color-dark-grey;
+
+            text-decoration: none;
+
+            transition: all .4s;
+
+            &:hover {
+                color: $color-medium-grey;
+            }
+        }
+    }
+
+    &__phoneNumber {
+        &::before {
+            content: '';
+            display: inline-block;
+
+            background-image: url('/icons/EventPage/phone.svg');
+            background-repeat: no-repeat;
+
+            width: 1.8rem;
+            height: 1.9rem;
+
+
+            margin-right: 1.9rem;
+
+            transform: translateY(5px);
+
+        }
+    }
+
+    &__email {
+        &::before {
+            content: '';
+            display: inline-block;
+
+            background-image: url('/icons/EventPage/email.svg');
+            background-repeat: no-repeat;
+
+            width: 2.4rem;
+            height: 2.4rem;
+
+
+            margin-right: 1.4rem;
+
+            transform: translateY(5px);
+        }
+    }
+
+    &__instagram {
+        &::before {
+            content: '';
+            display: inline-block;
+
+            background-image: url('/icons/EventPage/instagram.svg');
+            background-repeat: no-repeat;
+
+            width: 2.4rem;
+            height: 2.4rem;
+
+            // background-color: $color-main-dark;
+
+            margin-right: 1.4rem;
+
+            transform: translateY(5px);
+        }
+    }
+
+    &__telegram {
+        &::before {
+            content: '';
+            display: inline-block;
+
+            background-image: url('/icons/EventPage/telegram.svg');
+            background-repeat: no-repeat;
+
+            width: 2.4rem;
+            height: 2.4rem;
+
+
+            margin-right: 1.4rem;
+
+            transform: translateY(5px);
+        }
+    }
+
+    &__facebook {
+        &::before {
+            content: '';
+            display: inline-block;
+
+            background-image: url('/icons/EventPage/facebook.svg');
+            background-repeat: no-repeat;
+
+            width: 2.4rem;
+            height: 2.4rem;
+
+
+            margin-right: 1.4rem;
+
+            transform: translateY(7px);
+        }
     }
 }

@@ -1,7 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, current } from '@reduxjs/toolkit'
+
 import cityReducer from './citySlice'
 import filtersReducer from './filtersSlice'
 import dataEventsReducer from './dataEventsSlice'
+import currentEventReducer from './currentEventSlice'
 import userReducer from './userSlice'
 
 const store = configureStore({
@@ -9,6 +11,7 @@ const store = configureStore({
         city: cityReducer,
         filters: filtersReducer,
         events: dataEventsReducer,
+        currentEvent: currentEventReducer,
         user: userReducer,
     }
 })

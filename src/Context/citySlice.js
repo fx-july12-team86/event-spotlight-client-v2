@@ -14,29 +14,23 @@ const citySlice = createSlice({
   name: "city",
   initialState,
   reducers: {
-    select(state, action) {
+    updateCurrentcity(state, action) {
       if (action.payload.length <= 3) return;
       state.city = action.payload
     },
-    detected(state, action) {
-      state.city = action.payload
-    },
-    toggleSelectCity(state, action) {
+    updateSelectCity(state, action) {
       state.selectCity = action.payload
     },
   },
 });
 
 
-export function citySelect(city) {
-  return { type: 'city/select', payload: city };
+export function toggleCurrentCity(city) {
+  return { type: 'city/updateCurrentcity', payload: city };
 }
-export function cityDetected(city) {
-  return { type: 'city/detected', payload: city }
+export function toggleSelectCity(is) {
+  return { type: 'city/updateSelectCity', payload: is }
 }
-export function IsSelectCity(is) {
-  return { type: 'city/toggleSelectCity', payload: is }
-}
-export const { select, detected, toggleSelectCity } = citySlice.actions
+export const { city, selectCity } = citySlice.actions
 
 export default citySlice.reducer

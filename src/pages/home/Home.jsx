@@ -11,21 +11,47 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import EventList from "../../components/Eventlist/EventList";
 import Button from "../../components/Buttons/Button";
 import Organizer from "./components/Organizer/Organizer";
-import { updateGeneralEvents } from "../../Context/dataEventsSlice";
 
-import { getEvents } from "../../services/apiEvents";
+import {
+  updateGeneralEvents,
+  updateTopEventsCity,
+  updateOnlineEvents,
+} from "../../Context/dataEventsSlice";
+
+import {
+  getEvents,
+  getEventsCity,
+  getEventsOnline,
+} from "../../services/apiEvents";
 import Spinner from "../../components/Spinner/Spinner";
 
 function Home() {
   const dispatch = useDispatch();
-  const data = useLoaderData();
+
+  const { city } = useSelector((state) => state.city);
+  const [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch] =
+    useLoaderData();
 
   const { generalEvents, topEventsCity, onlineEvents, closestEvents, status } =
     useSelector((store) => store.events);
 
   useEffect(() => {
-    dispatch(updateGeneralEvents(data));
-  }, [dispatch, data]);
+    dispatch(updateGeneralEvents(generalEventsFetch));
+    dispatch(updateTopEventsCity(topEventsCityFetch));
+    dispatch(updateOnlineEvents(eventsOnlineFetch));
+  }, [dispatch, generalEventsFetch, topEventsCityFetch, eventsOnlineFetch]);
+
+  useEffect(() => {
+    async function fetchCityEvents() {
+      try {
+        const data = await getEventsCity(city);
+        dispatch(updateTopEventsCity(data));
+      } catch (err) {
+        console.log(err.message);
+      }
+    }
+    fetchCityEvents();
+  }, [dispatch, city]);
 
   return (
     <div className={styles["container"]}>
@@ -40,7 +66,7 @@ function Home() {
       {status === "loading" && <Spinner />}
       {status === "ready" && <EventList events={generalEvents} />}
       <h2 className={styles["container__title"]}>
-        Топа події <span>Київ</span>
+        Топ події <span>{city}</span>
       </h2>
       <EventList events={topEventsCity} />
       <Button
@@ -65,7 +91,7 @@ function Home() {
       <h2 className={styles["container__title"]}>
         <span>Найближчі</span> події
       </h2>
-      <EventList events={closestEvents} />
+      <EventList events={topEventsCity} />
       <Button
         isHollow={true}
         width={31.2}
@@ -78,8 +104,14 @@ function Home() {
 }
 
 export async function loader() {
-  const data = await getEvents();
-  return data;
+  const [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch] =
+    await Promise.all([getEvents(), getEventsCity("Київ"), getEventsOnline()]);
+  return [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch];
 }
+// export async function loader() {
+//   const data = await getEvents();
+
+//   return data;
+// }
 
 export default Home;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Calendar from "react-calendar";
 import { isEqual } from "lodash";
@@ -40,29 +40,17 @@ function CalendarComp({ selectRange = false }) {
   const [localSelectedDate, setLocalSelectedDate] = useState(
     selectedDate || formatToLocalISODateTime(new Date())
   );
-  const [localDateRange, setLocalDateRange] = useState(datesRange || []);
+  const [localDateRange, setLocalDateRange] = useState(datesRange);
 
   useEffect(() => {
-    if (selectRange && localDateRange.length === 2) {
-      const formattedLocalRange = formatToLocalISODateTimeArray(localDateRange);
-      if (!isEqual(formattedLocalRange, datesRange)) {
-        dispatch(updateRangeDate(formattedLocalRange));
-      }
-    } else {
-      const formattedLocal = formatToLocalISODateTime(localSelectedDate);
-      if (formattedLocal !== selectedDate) {
-        dispatch(updateSelectedDate(formattedLocal));
-      }
+    dispatch(updateRangeDate(formatToLocalISODateTimeArray(localDateRange)));
+  }, [dispatch, localDateRange]);
+
+  useEffect(() => {
+    if (datesRange.length === 0 && localDateRange.length !== 0) {
+      setLocalDateRange([]);
     }
-    // console.log(localDateRange);
-  }, [
-    localSelectedDate,
-    localDateRange,
-    dispatch,
-    selectedDate,
-    datesRange,
-    selectRange,
-  ]);
+  }, [datesRange]);
 
   function handleToday() {
     const today = new Date();
