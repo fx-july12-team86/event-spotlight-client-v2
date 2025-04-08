@@ -1,1 +1,13 @@
-.container {}
+.container {
+
+    &>h2 {
+        font-weight: 600;
+        font-size: 6.4rem;
+        letter-spacing: .01rem;
+        text-transform: uppercase;
+
+        color: $color-main-dark;
+
+        margin-bottom: 6.4rem;
+    }
+}

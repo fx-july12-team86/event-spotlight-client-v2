@@ -8,29 +8,26 @@ import Header from "./components/Header/Header";
 import Content from "./components/Content/Content";
 import Spinner from "../../components/Spinner/Spinner";
 
-import { getEventById } from "../../services/apiEvents";
+import { getEventById, getEventsByFilter } from "../../services/apiEvents";
 import { updateCurrentEventData } from "../../Context/currentEventSlice";
+import EventList from "../../components/Eventlist/EventList";
 
 function EventPage() {
   const dispatch = useDispatch();
-  const currentEventFetch = useLoaderData();
+  const [eventDataFetch, similarEventsWithoutCurrent] = useLoaderData();
 
   const eventData = useSelector((store) => store.currentEvent.data);
 
   useEffect(() => {
-    dispatch(updateCurrentEventData(currentEventFetch));
-  }, [dispatch, currentEventFetch]);
+    dispatch(updateCurrentEventData(eventDataFetch));
+  }, [dispatch, eventDataFetch]);
 
   return (
     <div className={styles["container"]}>
-      {!eventData ? (
-        <Spinner />
-      ) : (
-        <>
-          <Header />
-          <Content />
-        </>
-      )}
+      <Header />
+      <Content />
+      <h2>подібні події</h2>
+      <EventList events={similarEventsWithoutCurrent} />
     </div>
   );
 }
@@ -39,6 +36,16 @@ export default EventPage;
 
 export async function loader({ params }) {
   const { id } = params;
-  const data = await getEventById(id);
-  return data;
+
+  const eventDataFetch = await getEventById(id);
+
+  const similarEventsFetch = await getEventsByFilter({
+    categories: [`${eventDataFetch.categories.at(0).name}`],
+  });
+
+  const similarEventsWithoutCurrent = await similarEventsFetch.filter(
+    (event) => event.id !== Number(id)
+  ); // Исключает из массива событий событие, которые пользователь открыл
+
+  return [eventDataFetch, similarEventsWithoutCurrent];
 }
