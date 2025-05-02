@@ -1,0 +1,126 @@
+.container {
+    &__title {
+        color: $color-main-dark;
+        font-weight: 600;
+        font-size: 6.4rem;
+        text-transform: uppercase;
+
+        padding-top: 2rem;
+    }
+
+    &__info {
+        display: flex;
+        gap: 7.2rem;
+
+        margin-top: 6rem;
+    }
+
+    &__info-title {
+        font-weight: 600;
+        font-size: 4rem;
+        text-transform: uppercase;
+
+        color: $color-dark-grey;
+
+        display: block;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 5.6rem;
+            height: 5.6rem;
+
+            background-image: url("/icons/Profile/profileInfo.svg");
+
+            margin-right: 1.6rem;
+
+            transform: translateY(12px);
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    &__form-group {
+        display: flex;
+        flex-direction: column;
+
+        & label {
+            font-family: Inter, sans-serif;
+            font-weight: 400;
+            font-size: 1.6rem;
+
+            color: $color-dark-grey;
+
+            margin-bottom: 8px;
+        }
+
+        & input {
+            width: 40rem;
+            height: 6.4rem;
+
+            padding-left: 2.4rem;
+
+            &::placeholder {
+                font-family: Inter, sans-serif;
+                font-weight: 400;
+                font-size: 1.8rem;
+
+                color: $color-dark-grey;
+            }
+        }
+    }
+
+    &__password {
+        display: flex;
+        gap: 7.2rem;
+
+        margin-top: 6rem;
+    }
+
+    &__password-title {
+        width: 29.217rem;
+
+        font-weight: 600;
+        font-size: 4rem;
+        text-transform: uppercase;
+
+        color: $color-dark-grey;
+
+        display: block;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 5.6rem;
+            height: 5.6rem;
+
+            background-image: url("/icons/Profile/secure.svg");
+
+            margin-right: 1.6rem;
+
+            transform: translateY(12px);
+        }
+    }
+
+    &__password-container {
+        position: relative;
+    }
+
+    &__img {
+        width: 2.8rem;
+        height: 1.9rem;
+
+        position: absolute;
+
+        top: 50%;
+        right: 5%;
+
+        transform: translateY(-50%);
+
+        cursor: pointer;
+    }
+}

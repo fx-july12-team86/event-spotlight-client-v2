@@ -30,7 +30,7 @@ function AccountMenu({ isHidden, onHandleToggleLogin }) {
       {isAuthenticated ? (
         <>
           <Link
-            to="/"
+            to="/profile"
             className={styles["box__account"]}>
             Мій профіль
           </Link>

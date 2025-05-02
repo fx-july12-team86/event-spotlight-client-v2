@@ -29,7 +29,7 @@ function Login({ onHandleToggleLogin }) {
 
     try {
       const data = await LogIn(email, password);
-      console.log(data);
+
       dispatch(updateIsAuthenticated(true));
       dispatch(updateToken(data.token));
 

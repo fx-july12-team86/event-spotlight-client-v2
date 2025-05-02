@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-import styles from "./styles/filterOpen.module.scss";
+import styles from "./styles/filterFull.module.scss";
 
 const categories = [
   "Танці",
@@ -14,17 +14,22 @@ const categories = [
 
 function FilterOpen({ isHidden }) {
   return (
-    <ul
-      className={`${styles["categoryList"]} ${
-        isHidden ? styles["isHidden"] : ""
-      }`}
-      style={{ height: `${isHidden ? 0 : 59}rem` }}>
-      {categories.map((category) => (
-        <li key={category}>
-          <Link to={`/catalog?filter=${category}`}>{category}</Link>
-        </li>
-      ))}
-    </ul>
+    <div
+      className={styles["container-list"]}
+      style={{ height: `${isHidden ? 0 : 40}rem` }}>
+      <ul
+        className={`${styles["container-list__category-list"]} ${
+          isHidden ? styles["isHidden"] : ""
+        }`}
+        // style={{ height: `${isHidden ? 0 : 40}rem` }}>
+        style={{ transform: `translateY(${isHidden ? "-100%" : "0"})` }}>
+        {categories.map((category) => (
+          <li key={category}>
+            <Link to={`/catalog?filter=${category}`}>{category}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

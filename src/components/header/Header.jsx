@@ -119,7 +119,7 @@ function Header() {
             <svg
               className={`${styles["svgSizeNormalize"]} ${styles["svgFill"]}`}>
               <use
-                href={` ${BASE_URL}/icons/Header/navBar/icons.svg#calendar`}></use>
+                href={`${BASE_URL}/icons/Header/navBar/icons.svg#calendar`}></use>
             </svg>
           </button>
           <button
