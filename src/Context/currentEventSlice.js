@@ -14,7 +14,6 @@ const CurrentEventSlice = createSlice({
     }
 })
 
-export const { data } = CurrentEventSlice.actions
 export default CurrentEventSlice.reducer
 
 export function updateCurrentEventData(data) {

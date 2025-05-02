@@ -1,24 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { set } from "lodash"
 
 const initialState = {
-    user: null,
-    token: null,
-    isAuthenticated: false,
+    token: localStorage.getItem("token") || null,
+    isAuthenticated: localStorage.getItem("isAuthenticated") ? true : false,
 }
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setUser(state, action) {
-            state.isAuthenticated = true
+        setIsAuthenticated(state, action) {
+            state.isAuthenticated = action.payload
         },
-        removeUser(state) {
-            state.isAuthenticated = false
-            state.user = null
-        },
+        setToken(state, action) {
+            state.token = action.payload
+        }
     },
 })
 
-export const { user, isAuthenticated } = userSlice.actions
 export default userSlice.reducer
+
+export function updateIsAuthenticated(action) {
+    if (action) {
+        localStorage.setItem("isAuthenticated", true);
+    }
+    else {
+        localStorage.removeItem("isAuthenticated");
+    }
+    return { type: "user/setIsAuthenticated", payload: action }
+}
+export function updateToken(token) {
+    if (token) {
+        localStorage.setItem("token", token);
+    }
+    else {
+        localStorage.removeItem("token");
+    }
+    return { type: "user/setToken", payload: token }
+}

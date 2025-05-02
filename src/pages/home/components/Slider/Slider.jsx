@@ -1,7 +1,9 @@
-import styles from "./styles/slider.module.scss";
 import { useState } from "react";
 
+import styles from "./styles/slider.module.scss";
+
 import Slide from "./Slide";
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const data = [
   {
@@ -59,9 +61,8 @@ function Slider() {
         className={styles["container__buttonPrev"]}
         onClick={prevSlide}>
         <svg
-          className={`${styles["container__svgSizeNormalise"]} ${styles["container__buttonPrev__postionArrow"]}`}>
-          <use
-            href={`${BASE_URL}/icons/Home/slider/svg/arrows.svg#arrowPrev`}></use>
+          className={`${styles["svgSizeNormalize"]} ${styles["container__buttonPrev__postionArrow"]}`}>
+          <use href={`${BASE_URL}/icons/General//arrows.svg#arrowPrev`}></use>
         </svg>
       </button>
       <div className={styles["container"]}>
@@ -78,9 +79,8 @@ function Slider() {
       <button
         className={styles["container__buttonNext"]}
         onClick={nextSlide}>
-        <svg className={`${styles["container__svgSizeNormalise"]}`}>
-          <use
-            href={`${BASE_URL}/icons/Home/slider/svg/arrows.svg#arrowNext`}></use>
+        <svg className={`${styles["svgSizeNormalize"]}`}>
+          <use href={`${BASE_URL}/icons/General/arrows.svg#arrowNext`}></use>
         </svg>
       </button>
     </>

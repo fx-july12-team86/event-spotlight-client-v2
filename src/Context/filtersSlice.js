@@ -1,16 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-export function formatToLocalISODateTime(isoString) {
-    const date = new Date(isoString);
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-}
 export function formatToLocalISODateTimeArray(isoArray) {
     return isoArray.map((isoDate) => {
         const date = new Date(isoDate);
@@ -30,11 +19,9 @@ export function formatDate(date) {
 
 const initialState = {
     filters: [],
-    sortBy: null,
-    today: formatToLocalISODateTime(new Date()),
-    selectedDate: formatToLocalISODateTime(new Date()),
+    sortBy: ["startTime", "asc"],
     datesRange: [],
-    datesRangeFormatted: [],
+    datesRangeFormatted: "",
 }
 
 const filtersSlice = createSlice({
@@ -42,6 +29,11 @@ const filtersSlice = createSlice({
     initialState,
     reducers: {
         setFilters(state, action) {
+            if (!state.filters.find(filter => filter === action.payload)) {
+                state.filters.push(action.payload);
+            }
+        },
+        toggleFilters(state, action) {
             const index = state.filters.indexOf(action.payload);
             if (index === -1) {
                 // Если фильтра нет, добавляем
@@ -49,39 +41,53 @@ const filtersSlice = createSlice({
             } else {
                 // Если есть — удаляем  
                 state.filters.splice(index, 1);
-
-                // Видалення діапазону при видаленні рядка
-                // if (action.payload === state.datesRangeFormatted) {
-                //     state.datesRange = [];
-                //     state.datesRangeFormatted = null;
-                // }
             }
         },
         setDateRange(state, action) {
-            state.datesRange = action.payload
+            const formattedToLocalISODateTimeArray = formatToLocalISODateTimeArray(action.payload)
+            state.datesRange = formattedToLocalISODateTimeArray
 
-            const formatted = action.payload.map((date) => formatDate(date)).join(" - ");
+            const formatted = formattedToLocalISODateTimeArray.map((date) => formatDate(date)).join(" - ");
             state.datesRangeFormatted = formatted;
         },
-        setDate(state, action) {
-            state.date = action.payload
-        },
-        setSelectedDate(state, action) {
-            state.selectedDate = action.payload;
-        },
+        setSortBy(state, action) {
+            state.sortBy = action.payload;
+        }
     }
 })
 
-export const { filters, datesRange, datesRangeFormatted, selectedDate } = filtersSlice.actions
 
 export default filtersSlice.reducer
 
 export function updateFilters(element) {
     return { type: 'filter/setFilters', payload: element }
 }
-export function updateSelectedDate(date) {
-    return { type: 'filter/setSelectedDate', payload: date }
+export function toggleFilters(element) {
+    return { type: 'filter/toggleFilters', payload: element }
 }
 export function updateRangeDate(range) {
     return { type: 'filter/setDateRange', payload: range }
+}
+export function updateSortBy(option) {
+    let optionFilter;;
+
+    switch (option) {
+        case "За датою":
+            optionFilter = ["startTime", "asc"];
+            break;
+        case "За назвою (від А до Я)":
+            optionFilter = ["title", "asc"];
+            break;
+        case "За популярністю":
+            optionFilter = ["popularity", "asc"];
+            break;
+        case "За ціною (від найменшої)":
+            optionFilter = ["price", 'asc'];
+            break;
+        case "За ціною (від найбільшої)":
+            optionFilter = ["price", 'desc'];
+            break;
+    }
+
+    return { type: 'filter/setSortBy', payload: optionFilter }
 }

@@ -1,0 +1,31 @@
+.container {
+    &__city {
+        display: inline-block;
+
+        font-weight: 600;
+        font-size: 6.4rem;
+        letter-spacing: .01rem;
+        text-transform: uppercase;
+
+
+        color: $color-main-dark;
+
+        margin-top: 3.2rem;
+        margin-bottom: 4rem;
+    }
+
+    &__events-list {
+        &>h2 {
+            display: inline-block;
+
+            margin-top: 6.4rem;
+
+            font-weight: 600;
+            font-size: 4rem;
+            letter-spacing: 0.01rem;
+
+            text-transform: uppercase;
+
+        }
+    }
+}

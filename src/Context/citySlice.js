@@ -1,10 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  city: "Оберіть місто",
+  city: "",
   selectCity: false,
-  // "loading", "error", "ready", "active", "finished"
-  // status: "loading",
 };
 
 
@@ -31,6 +29,5 @@ export function toggleCurrentCity(city) {
 export function toggleSelectCity(is) {
   return { type: 'city/updateSelectCity', payload: is }
 }
-export const { city, selectCity } = citySlice.actions
 
 export default citySlice.reducer

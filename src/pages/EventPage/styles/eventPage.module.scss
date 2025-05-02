@@ -10,4 +10,14 @@
 
         margin-bottom: 6.4rem;
     }
+
+    &>a {
+        display: flex;
+        justify-content: center;
+
+        margin: 0 auto;
+        margin-top: 4rem;
+
+        text-decoration: none;
+    }
 }

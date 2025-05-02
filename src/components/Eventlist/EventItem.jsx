@@ -1,16 +1,38 @@
-import { Link } from "react-router";
-import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import styles from "./styles/eventItem.module.scss";
+
 import { formatUkrainianDate } from "../../helpers/date";
+
 import Spinner from "../Spinner/Spinner";
+
+import FavoriteIcon from "../../assets/favorite/favorite.svg?react";
+
+import { addFavorite, removeFavorite } from "../../services/apiEvents";
+import { set } from "lodash";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function EventItem({ data }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const {
+    id,
+    photo,
+    title,
+    categoryName,
+    startTime,
+    address,
+    price,
+    isFavorite: isFavoriteBack,
+  } = data;
 
-  const { id, photo, title, categoryName, startTime, address, price } = data;
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(isFavoriteBack);
+
+  const navigate = useNavigate();
+
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   const coverImgURL = photo.sharedUrl.replace("dl=0", "raw=1");
 
@@ -21,9 +43,26 @@ function EventItem({ data }) {
 
   const location = address.cityName;
 
+  async function handleUpdateFavorite(event) {
+    event.stopPropagation();
+
+    let response;
+
+    if (!isAuthenticated) return;
+
+    if (isFavorite) {
+      response = await removeFavorite(id);
+    } else {
+      response = await addFavorite(id);
+    }
+
+    setIsFavorite((prev) => !prev);
+    console.log("favorite changed");
+  }
+
   return (
-    <Link
-      to={`/event/${id}`}
+    <div
+      onClick={() => navigate(`/event/${id}`)}
       className={styles["event-item"]}>
       {isLoading && (
         <div
@@ -48,11 +87,14 @@ function EventItem({ data }) {
           <p className={styles["event-item__category"]}>{categoryName}</p>
 
           <div className={styles["event-item__icon"]}>
-            <svg
-              className={`${styles["event-item__svgSizeNormalize"]} ${styles["event-item__icon-fill"]}`}>
+            {/* <svg className={`${styles["event-item__svgSizeNormalize"]}`}>
               <use
-                href={`${BASE_URL}/icons/Home/event/favorites.svg#favorites`}></use>
-            </svg>
+                href={`${BASE_URL}/icons/Home/event/favorite.svg#filled`}></use>
+            </svg> */}
+            <FavoriteIcon
+              onClick={handleUpdateFavorite}
+              className={isFavorite ? styles["event-item__icon-fill"] : ""}
+            />
           </div>
         </div>
         <div className={styles["event-item__content"]}>
@@ -69,7 +111,7 @@ function EventItem({ data }) {
           </article>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 

@@ -21,11 +21,6 @@
 
     }
 
-    &__svgSizeNormalise {
-        width: 1.1rem;
-        height: 1.7rem;
-    }
-
     &__buttonPrev {
         position: absolute;
         top: 50%;
@@ -48,6 +43,12 @@
         &__postionArrow {
             transform: translateX(-2px);
         }
+
+        // transition: all .4s;
+
+        // &:hover {
+        //     background-color: $color-main-purple;
+        // }
     }
 
 
@@ -73,5 +74,16 @@
         &__postionArrow {
             transform: translateX(2px);
         }
+
+        // transition: all .4s;
+
+        // &:hover {
+        //     background-color: $color-main-purple;
+        // }
     }
+}
+
+.svgSizeNormalize {
+    width: 1.1rem;
+    height: 1.7rem;
 }

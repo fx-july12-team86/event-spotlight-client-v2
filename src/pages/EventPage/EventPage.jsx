@@ -1,5 +1,5 @@
-import { useLoaderData } from "react-router";
-import { useEffect } from "react";
+import { useLoaderData, Link } from "react-router";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./styles/eventPage.module.scss";
@@ -7,27 +7,46 @@ import styles from "./styles/eventPage.module.scss";
 import Header from "./components/Header/Header";
 import Content from "./components/Content/Content";
 import Spinner from "../../components/Spinner/Spinner";
+import EventList from "../../components/Eventlist/EventList";
+import Button from "../../components/Buttons/Button";
 
 import { getEventById, getEventsByFilter } from "../../services/apiEvents";
 import { updateCurrentEventData } from "../../Context/currentEventSlice";
-import EventList from "../../components/Eventlist/EventList";
 
 function EventPage() {
+  const [selected, setSelected] = useState("details");
+
   const dispatch = useDispatch();
   const [eventDataFetch, similarEventsWithoutCurrent] = useLoaderData();
-
-  const eventData = useSelector((store) => store.currentEvent.data);
 
   useEffect(() => {
     dispatch(updateCurrentEventData(eventDataFetch));
   }, [dispatch, eventDataFetch]);
 
+  const scrollTo = useRef(null);
+
   return (
     <div className={styles["container"]}>
-      <Header />
-      <Content />
+      <Header
+        onSetSelected={setSelected}
+        scrollTo={scrollTo}
+      />
+      <Content
+        selected={selected}
+        onSetSelected={setSelected}
+        scrollTo={scrollTo}
+      />
       <h2>подібні події</h2>
       <EventList events={similarEventsWithoutCurrent} />
+
+      <Link to="/catalog">
+        <Button
+          width={31}
+          height={6.4}
+          isHollow={true}>
+          Більше подій
+        </Button>
+      </Link>
     </div>
   );
 }

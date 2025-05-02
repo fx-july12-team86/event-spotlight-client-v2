@@ -1,14 +1,18 @@
-import { Link } from "react-router";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { Link, useSearchParams } from "react-router";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./styles/header.module.scss";
-import Geolocation from "./Geolocation/Geolocation";
-import AccountMenu from "./AccountMenu/AccountMenu";
-import SearchEvent from "./SearchEvent/SearchEvent";
-import SetCity from "./SetCity/SetCity";
-import SetDateComp from "./SetDateComp/SetDateComp";
-import Authentication from "./Authentication/Authentication";
+
+import Geolocation from "./components/Geolocation/Geolocation";
+import AccountMenu from "./components/AccountMenu/AccountMenu";
+import SearchEvent from "./components/SearchEvent/SearchEvent";
+import SetCity from "./components/SetCity/SetCity";
+import SetDateComp from "./components/SetDateComp/SetDateComp";
+import Authentication from "./components/Authentication/Authentication";
+
+import { toggleCurrentCity } from "../../context/citySlice";
+import { getAddress } from "../../services/apiGeocoding";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -19,7 +23,12 @@ function Header() {
   const [isHiddenSearchInput, setIsHiddedSearchInput] = useState(true);
   const [isHiddenLogin, setIsHiddenLogin] = useState(true);
 
+  const [_, setSearchParams] = useSearchParams();
+
+  const dispatch = useDispatch();
+
   const { city } = useSelector((store) => store.city);
+  const { isAuthenticated } = useSelector((store) => store.user);
 
   function handleToggleChangeGeo() {
     setIsHiddenGeo(!isHiddenGeo);
@@ -49,12 +58,25 @@ function Header() {
     }
   }
 
+  useEffect(() => {
+    async function fetchCity() {
+      try {
+        const data = await getAddress();
+        dispatch(toggleCurrentCity(data.city));
+      } catch (err) {
+        dispatch(toggleCurrentCity("Місто"));
+      }
+    }
+
+    fetchCity();
+  }, []);
+
   return (
     <>
       <header className={styles["header"]}>
         <div className={styles["header__box-left"]}>
           <Link
-            to="/"
+            to={{ pathname: "/", search: "" }}
             className={styles["header__box-left__logo"]}>
             EventSpotlight
           </Link>
@@ -65,7 +87,7 @@ function Header() {
                 : ""
             }`}
             onClick={handleToggleChangeGeo}>
-            {city}
+            {city.length === 0 ? "Місто" : city}
           </span>
           <Geolocation
             isHidden={isHiddenGeo}
@@ -113,7 +135,11 @@ function Header() {
                 href={` ${BASE_URL}/icons/Header/navBar/icons.svg#account`}></use>
             </svg>
           </button>
-          <button className={styles["header__box-right__addEvent"]}>
+          <button
+            className={styles["header__box-right__addEvent"]}
+            onClick={() => {
+              !isAuthenticated ? setIsHiddenLogin(false) : "";
+            }}>
             Додати подію
           </button>
         </div>

@@ -7,9 +7,21 @@ import { formatUkrainianDate } from "../../../../helpers/date";
 
 import Spinner from "../../../../components/Spinner/Spinner";
 
+function copyCurrentUrl() {
+  const currentUrl = window.location.href;
+  navigator.clipboard
+    .writeText(currentUrl)
+    .then(() => {
+      alert("Посилання скопійовано!");
+    })
+    .catch((err) => {
+      console.error("Помилка копіювання: ", err);
+    });
+}
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-function Header() {
+function Header({ onSetSelected, scrollTo }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const eventData = useSelector((store) => store.currentEvent.data);
@@ -74,10 +86,22 @@ function Header() {
               <p className={styles["container__price"]}>{price} ₴</p>
             </article>
             <div className={styles["container__buttons"]}>
-              <button className={styles["container__contact-button"]}>
+              <button
+                className={styles["container__contact-button"]}
+                onClick={() => {
+                  onSetSelected("contacts");
+
+                  // Если без setTimeout, то scrollTo в useRef не успевает инициализироваться
+
+                  setTimeout(() => {
+                    scrollTo?.current?.scrollIntoView({ behavior: "smooth" });
+                  });
+                }}>
                 Зв’язатись з орагнізатором
               </button>
-              <button className={styles["container__share-button"]}>
+              <button
+                className={styles["container__share-button"]}
+                onClick={copyCurrentUrl}>
                 Поділитись з друзями
               </button>
             </div>

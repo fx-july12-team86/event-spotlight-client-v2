@@ -29,7 +29,11 @@
 
     padding: 4rem;
 
-    & li {
+    & a {
+        display: inline-block;
+
+        text-decoration: none;
+
         cursor: pointer;
 
         font-family: Inter, sans-serif;
@@ -39,16 +43,14 @@
 
         color: $color-main-dark;
 
-        // text-align: center;
+        text-align: center;
         transition: all .4s;
 
-        padding-left: 5rem;
+        // padding-left: 5rem;
 
         &:hover {
             color: $color-main-purple
         }
-
-
     }
 
 }

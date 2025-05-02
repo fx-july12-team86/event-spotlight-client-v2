@@ -193,7 +193,8 @@
 }
 
 .react-calendar__tile--hasActive {
-  background: #76baff;
+  color: #fff;
+  background: #6B1AEE;
 }
 
 .react-calendar__tile--hasActive:enabled:hover,

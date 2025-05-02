@@ -1,5 +1,5 @@
-import { use, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useRef, useEffect, useState } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./styles/searchBar.module.scss";
@@ -7,41 +7,49 @@ import styles from "./styles/searchBar.module.scss";
 import Select from "../../pages/Home/components/Select/Select";
 import CalendarComp from "../Calendar/CalendarComp";
 
-import { updateFilters, updateRangeDate } from "../../Context/filtersSlice";
+import {
+  updateFilters,
+  updateRangeDate,
+  toggleFilters,
+} from "../../context/filtersSlice";
+
+import { getEventsCatalog } from "../../services/apiEvents";
+
+import { isValidDateRange } from "../../helpers/date";
+
+import { updateCatalogEvents } from "../../Context/dataEventsSlice";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const events = [
-  "Всі події",
+const categories = [
   "Концерти",
-  "Майстер-класи",
-  "Фестивалі",
-  "Онлайн події",
-  "Для дітей",
-  "Вечірки",
-  "Виставки",
   "Театр",
-  "Кіно",
+  "Стендап",
+  "Діти",
+  "Фестивалі",
+  "Танці",
+  "Вечірки",
+  "Семінари і тренінги",
   "Спорт",
-  "Семінари",
   "Екскурсії",
-  "Конференції",
-  "Тренінги",
-  "Стендапи",
-  "Музеї",
-  "Шоу",
-  "Безкоштовні події",
+  "Творчій вечір",
   "Інше",
 ];
 
 function SearchBar({ isError = false }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  const location = useLocation();
+
   const { city } = useSelector((state) => state.city);
-  const { filters, datesRangeFormatted } = useSelector(
+  const { filters, datesRangeFormatted, datesRange } = useSelector(
     (store) => store.filters
   );
   let tottalFilters;
@@ -54,22 +62,94 @@ function SearchBar({ isError = false }) {
 
   const amountOfFilters = tottalFilters.length;
 
-  function handleSubmit(event) {
+  // async function handleSubmit(event) {
+  //   event.preventDefault();
+
+  //   if (!query && !filters && !datesRange) return;
+  //   const params = new URLSearchParams(searchParams);
+
+  //   params.set("search", query);
+
+  //   setSearchParams(params, { replace: true });
+  //   setQuery("");
+
+  //   const data = await getEventsCatalog(
+  //     { categories: filters, dateRange: [...datesRange.slice("-")] },
+  //     0
+  //   );
+  //   dispatch(updateCatalogEvents(data.events));
+  // }
+
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!query) return;
-    navigate(`/catalog?search=${query}`);
+    if (!query && !filters.length && !datesRange.length) return;
+
+    const params = new URLSearchParams(searchParams);
+
+    if (query) {
+      params.set("search", query);
+    }
+
+    const paramsString = params.toString();
+
+    if (location.pathname !== "/catalog") {
+      navigate(`/catalog?${paramsString}`, { replace: true });
+    } else {
+      setSearchParams(params, { replace: true });
+    }
+
     setQuery("");
+
+    const data = await getEventsCatalog(
+      { categories: filters, dateRange: [...datesRange.slice("-")] },
+      0
+    );
+    dispatch(updateCatalogEvents(data.events));
   }
 
   function handleUpdateFilters(filter) {
-    if (filter.length > 10) {
+    if (isValidDateRange(filter)) {
       dispatch(updateRangeDate([]));
     } else {
-      console.log("filter");
-      dispatch(updateFilters(filter));
+      dispatch(toggleFilters(filter));
     }
   }
+
+  function handleAddAllFilters() {
+    categories.forEach((category) => {
+      dispatch(updateFilters(category));
+    });
+  }
+  useEffect(() => {
+    const params = new URLSearchParams();
+
+    filters.forEach((filter) => {
+      params.append("filter", filter);
+    });
+
+    if (datesRange.length === 2) {
+      const [from, to] = datesRange;
+      params.set("dateFrom", from);
+      params.set("dateTo", to);
+    }
+
+    setSearchParams(params, { replace: true });
+  }, [filters, datesRange]);
+
+  useEffect(() => {
+    const filtersFromUrl = searchParams.getAll("filter");
+    const dateFrom = searchParams.get("dateFrom");
+    const dateTo = searchParams.get("dateTo");
+
+    if (JSON.stringify(filtersFromUrl) !== JSON.stringify(filters)) {
+      filtersFromUrl.forEach((filter) => dispatch(updateFilters(filter)));
+    }
+
+    if (dateFrom && dateTo) {
+      dispatch(updateRangeDate([dateFrom, dateTo]));
+    }
+  }, []);
 
   return (
     <nav
@@ -92,6 +172,7 @@ function SearchBar({ isError = false }) {
           className={styles["container__form__input"]}
           style={{ width: isError ? "48.6rem" : "" }}
           id="search"
+          value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
         <button
@@ -155,7 +236,17 @@ function SearchBar({ isError = false }) {
             }}>
             <h4>Тип події</h4>
             <ul>
-              {events.map((event) => (
+              <li
+                onClick={handleAddAllFilters}
+                key="Всі події"
+                className={`${styles["container__containerFilters__event"]} ${
+                  categories.length === filters.length
+                    ? styles["container__containerFilters__event__selected"]
+                    : ""
+                }`}>
+                Всі події
+              </li>
+              {categories.map((event) => (
                 <li
                   onClick={() => handleUpdateFilters(event)}
                   key={event}

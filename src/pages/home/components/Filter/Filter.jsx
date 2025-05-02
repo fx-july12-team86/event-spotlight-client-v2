@@ -1,14 +1,12 @@
+import { useDispatch } from "react-redux";
 import { useState } from "react";
-import FilterOpen from "./FilterOpen";
+import { Link } from "react-router";
+
 import styles from "./styles/filter.module.scss";
 
-const categories = [
-  "Концерти",
-  "Майстер-класи",
-  "Фестивалі",
-  "Виставки",
-  "Для дітей",
-];
+import FilterFull from "./FilterFull";
+
+const categories = ["Концерти", "Театр", "Стендап", "Діти", "Фестивалі"];
 
 function Filter() {
   const [isHidden, setIsHidden] = useState(true);
@@ -21,7 +19,9 @@ function Filter() {
     <nav className={styles["container"]}>
       <ul className={styles["container__nav"]}>
         {categories.map((category) => (
-          <li key={category}>{category}</li>
+          <li key={category}>
+            <Link to={`/catalog?filter=${category}`}>{category}</Link>
+          </li>
         ))}
       </ul>
       <button
@@ -29,7 +29,7 @@ function Filter() {
         onClick={handleHidden}>
         Інше
       </button>
-      <FilterOpen isHidden={isHidden} />
+      <FilterFull isHidden={isHidden} />
     </nav>
   );
 }

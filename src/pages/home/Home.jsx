@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData, useSearchParams } from "react-router";
 import { get } from "lodash";
 
 import styles from "./styles/home.module.scss";
@@ -20,20 +20,24 @@ import {
 
 import {
   getEvents,
-  getEventsCity,
+  getEventsByCity,
   getEventsOnline,
 } from "../../services/apiEvents";
 import Spinner from "../../components/Spinner/Spinner";
 
 function Home() {
-  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const { city } = useSelector((state) => state.city);
+  const { generalEvents, topEventsCity, onlineEvents, status } = useSelector(
+    (store) => store.events
+  );
+
   const [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch] =
     useLoaderData();
 
-  const { generalEvents, topEventsCity, onlineEvents, closestEvents, status } =
-    useSelector((store) => store.events);
+  const { city } = useSelector((state) => state.city);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(updateGeneralEvents(generalEventsFetch));
@@ -44,7 +48,7 @@ function Home() {
   useEffect(() => {
     async function fetchCityEvents() {
       try {
-        const data = await getEventsCity(city);
+        const data = await getEventsByCity(city);
         dispatch(updateTopEventsCity(data));
       } catch (err) {
         console.log(err.message);
@@ -52,6 +56,10 @@ function Home() {
     }
     fetchCityEvents();
   }, [dispatch, city]);
+
+  // useEffect(()=>{
+  //   const
+  // },[])
 
   return (
     <div className={styles["container"]}>
@@ -69,49 +77,50 @@ function Home() {
         Топ події <span>{city}</span>
       </h2>
       <EventList events={topEventsCity} />
-      <Button
-        isHollow={true}
-        width={31.2}
-        height={6.4}
-        isCenter={true}>
-        Більше подій
-      </Button>
+      <Link to="/catalog">
+        <Button
+          isHollow={true}
+          width={31.2}
+          height={6.4}>
+          Більше подій
+        </Button>
+      </Link>
       <h2 className={styles["container__title"]}>
         <span>Онлайн</span> події
       </h2>
       <EventList events={onlineEvents} />
-      <Button
-        isHollow={true}
-        width={31.2}
-        height={6.4}
-        isCenter={true}>
-        Більше подій
-      </Button>
+      <Link to="/catalog">
+        <Button
+          isHollow={true}
+          width={31.2}
+          height={6.4}>
+          Більше подій
+        </Button>
+      </Link>
       <Organizer />
       <h2 className={styles["container__title"]}>
         <span>Найближчі</span> події
       </h2>
       <EventList events={topEventsCity} />
-      <Button
-        isHollow={true}
-        width={31.2}
-        height={6.4}
-        isCenter={true}>
-        Більше подій
-      </Button>
+      <Link to="/catalog">
+        <Button
+          isHollow={true}
+          width={31.2}
+          height={6.4}>
+          Більше подій
+        </Button>
+      </Link>
     </div>
   );
 }
 
-export async function loader() {
+export async function loader({ request }) {
+  const url = new URL(request.url);
+  const city = url.searchParams.get("city") || "Київ";
+
   const [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch] =
-    await Promise.all([getEvents(), getEventsCity("Київ"), getEventsOnline()]);
+    await Promise.all([getEvents(), getEventsByCity(city), getEventsOnline()]);
   return [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch];
 }
-// export async function loader() {
-//   const data = await getEvents();
-
-//   return data;
-// }
 
 export default Home;

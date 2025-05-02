@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -17,10 +18,9 @@ function Description({ tabs }) {
       {imgs.map((img, index) => {
         if (img) {
           return (
-            <>
+            <React.Fragment key={index}>
               {isLoading && (
                 <div
-                  key={index}
                   style={{
                     width: "100%",
                     height: "40%",
@@ -37,7 +37,7 @@ function Description({ tabs }) {
                 src={img}
                 alt={`description image ${index + 1}`}
               />
-            </>
+            </React.Fragment>
           );
         }
       })}
@@ -65,28 +65,28 @@ function Location({ tabs }) {
   );
 }
 
-function Contacts({ tabs }) {
+function Contacts({ tabs, scrollTo }) {
   const { contacts } = tabs.find((tab) => tab.id === "contacts");
 
   return (
-    <ul className={styles["container__contacts"]}>
+    <ul
+      className={styles["container__contacts"]}
+      ref={scrollTo}>
       {contacts.map(([key, value]) => {
         return (
           <li
             key={key}
             className={styles[`container__${key}`]}>
-            {key === "phoneNumber" && (
-              <Link href={`tel:${value}`}>{value}</Link>
-            )}
-            {key === "email" && <Link href={`mailto:${value}`}>{value}</Link>}
+            {key === "phoneNumber" && <a href={`tel:${value}`}>{value}</a>}
+            {key === "email" && <a href={`mailto:${value}`}>{value}</a>}
             {key === "instagram" && (
-              <Link href={`https://www.instagram.com/${value}`}>{value}</Link>
+              <a href={`https://www.instagram.com/${value}`}>{value}</a>
             )}
             {key === "telegram" && (
-              <Link href={`https://t.me/${value}`}>{value}</Link>
+              <a href={`https://t.me/${value}`}>{value}</a>
             )}
             {key === "facebook" && (
-              <Link href={`https://www.facebook.com/${value}`}>{value}</Link>
+              <a href={`https://www.facebook.com/${value}`}>{value}</a>
             )}
           </li>
         );
@@ -95,9 +95,7 @@ function Contacts({ tabs }) {
   );
 }
 
-function Content() {
-  const [selected, setSelected] = useState("details");
-
+function Content({ selected, onSetSelected, scrollTo }) {
   const eventData = useSelector((store) => store.currentEvent.data);
 
   if (eventData === null) {
@@ -141,7 +139,7 @@ function Content() {
                   ? styles["container__list-item--selected"]
                   : ""
               }`}
-              onClick={() => setSelected(tab.id)}
+              onClick={() => onSetSelected(tab.id)}
               role="button"
               tabIndex={0}>
               {tab.label}
@@ -152,7 +150,12 @@ function Content() {
       <div className={styles["container__description"]}>
         {selected === "details" && <Description tabs={tabs} />}
         {selected === "location" && <Location tabs={tabs} />}
-        {selected === "contacts" && <Contacts tabs={tabs} />}
+        {selected === "contacts" && (
+          <Contacts
+            tabs={tabs}
+            scrollTo={scrollTo}
+          />
+        )}
       </div>
     </div>
   );

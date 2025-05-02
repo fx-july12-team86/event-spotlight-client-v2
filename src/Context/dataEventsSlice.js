@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    status: 'loading', // 'loading', 'ready', 'error'
     error: null,
     generalEvents: [],
     topEventsCity: [],
     onlineEvents: [],
-    closestEvents: []
+    closestEvents: [],
+    catalogEvents: [],
 }
 
 const dataEventsSlice = createSlice({
@@ -15,18 +15,19 @@ const dataEventsSlice = createSlice({
     reducers: {
         setGeneralEvents(state, action) {
             state.generalEvents = action.payload
-            state.status = 'ready'
         },
         setTopEventsCity(state, action) {
             state.topEventsCity = action.payload
         },
         setOnlineEvents(state, action) {
             state.onlineEvents = action.payload
+        },
+        setCatalogEvents(state, action) {
+            state.catalogEvents = action.payload
         }
     }
 })
 
-export const { generalEvents, topEventsCity, onlineEvents, closestEvents, status } = dataEventsSlice.actions
 export default dataEventsSlice.reducer
 
 export function updateGeneralEvents(events) {
@@ -37,4 +38,7 @@ export function updateTopEventsCity(events) {
 }
 export function updateOnlineEvents(events) {
     return { type: 'dataEvents/setOnlineEvents', payload: events }
+}
+export function updateCatalogEvents(events) {
+    return { type: 'dataEvents/setCatalogEvents', payload: events }
 }

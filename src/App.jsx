@@ -6,14 +6,18 @@ import EventPage, {
   loader as eventPageLoader,
 } from "./pages/EventPage/EventPage";
 import Error from "./components/Error/Error";
+import Catalog from "./pages/Catalog/Catalog";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import Profile from "./pages/Profile/Profile";
 
 const router = createBrowserRouter(
   [
     {
       element: <AppLayout />,
+      path: "/",
       children: [
         {
-          path: "/",
+          path: "",
           element: <Home />,
           errorElement: <Error />,
           loader: eventsLoader,
@@ -23,6 +27,21 @@ const router = createBrowserRouter(
           element: <EventPage />,
           errorElement: <Error />,
           loader: eventPageLoader,
+        },
+        {
+          path: "catalog",
+          element: <Catalog />,
+          errorElement: <Error />,
+          // loader: catalogLoader,
+        },
+        {
+          path: "profile",
+          element: (
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          ),
+          errorElement: <Error />,
         },
         {
           path: "*",

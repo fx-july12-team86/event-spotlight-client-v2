@@ -1,8 +1,10 @@
 .box {
-    display: flex;
+    // display: flex;
+    display: grid;
     justify-content: space-between;
-    gap: 3.9rem;
-
+    // gap: 3.9rem;
+    column-gap: 3.9rem;
+    grid-template-columns: 1fr 1fr;
     height: auto;
 
 
