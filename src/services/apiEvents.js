@@ -87,7 +87,7 @@ export async function addFavorite(id) {
         method: "POST",
         headers: {
             "Content-Type": 'application/json',
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            "Authorization": `Bearer ${localStorage.getItem("token") || ""}`
         },
     })
     const data = await response.json()
@@ -100,7 +100,7 @@ export async function removeFavorite(id) {
         method: "DELETE",
         headers: {
             "Content-Type": 'application/json',
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            "Authorization": `Bearer ${localStorage.getItem("token") || ""}`
         },
     })
     const data = await response.json()
@@ -108,6 +108,19 @@ export async function removeFavorite(id) {
     return data
 }
 
+export async function getFavorites() {
+    const response = await fetch(`${VITE_API_URL}/favorites`, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem("token") || ""}`
+        }
+
+    })
+
+    const data = await response.json()
+    return data
+}
 // export async function getCategoryById(id) {
 //     const response = await fetch(`${VITE_API_URL}/categories/${id}`)
 //     const data = await response.json()

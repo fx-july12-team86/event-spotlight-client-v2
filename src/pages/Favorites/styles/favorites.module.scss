@@ -1,0 +1,14 @@
+.container {
+    &__favorites {
+        display: inline-block;
+
+        margin-top: 2rem;
+
+        font-weight: 600;
+        font-size: 6.4rem;
+
+        text-transform: uppercase;
+
+        color: $color-main-dark;
+    }
+}

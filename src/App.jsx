@@ -1,7 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AppLayout from "./appLayout/AppLayout";
+
 import Home, { loader as eventsLoader } from "./pages/Home/Home";
+
 import EventPage, {
   loader as eventPageLoader,
 } from "./pages/EventPage/EventPage";
@@ -9,6 +11,9 @@ import Error from "./components/Error/Error";
 import Catalog from "./pages/Catalog/Catalog";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Profile from "./pages/Profile/Profile";
+import Favorites, {
+  loader as favoritesLoader,
+} from "./pages/Favorites/Favorites";
 
 const router = createBrowserRouter(
   [
@@ -41,6 +46,16 @@ const router = createBrowserRouter(
               <Profile />
             </PrivateRoute>
           ),
+          errorElement: <Error />,
+        },
+        {
+          path: "favorites",
+          element: (
+            <PrivateRoute>
+              <Favorites />
+            </PrivateRoute>
+          ),
+          loader: favoritesLoader,
           errorElement: <Error />,
         },
         {

@@ -35,7 +35,7 @@ function AccountMenu({ isHidden, onHandleToggleLogin }) {
             Мій профіль
           </Link>
           <Link
-            to="/"
+            to="/favorites"
             className={styles["box__favorites"]}>
             Улюблене
           </Link>
