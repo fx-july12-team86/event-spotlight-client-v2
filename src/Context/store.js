@@ -5,6 +5,7 @@ import filtersReducer from './filtersSlice'
 import dataEventsReducer from './dataEventsSlice'
 import currentEventReducer from './currentEventSlice'
 import userReducer from './userSlice'
+import userEventsReducer from './userEventsSlice'
 
 const store = configureStore({
     reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
         events: dataEventsReducer,
         currentEvent: currentEventReducer,
         user: userReducer,
+        userEvents: userEventsReducer,
     }
 })
 

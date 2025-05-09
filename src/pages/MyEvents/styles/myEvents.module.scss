@@ -1,0 +1,13 @@
+.container {
+    margin-top: 2rem;
+
+    &__header {
+        font-weight: 600;
+        font-size: 6.4rem;
+        text-transform: uppercase;
+
+        color: $color-main-dark;
+    }
+
+
+}

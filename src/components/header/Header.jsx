@@ -16,7 +16,7 @@ import { getAddress } from "../../services/apiGeocoding";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-function Header() {
+function Header({ headerRef }) {
   const [isHiddenGeo, setIsHiddenGeo] = useState(true);
   const [isHiddenCalendar, setIsHiddedCalendar] = useState(true);
   const [isHiddenAccountMenu, setIsHiddenAccountMenu] = useState(true);
@@ -73,7 +73,9 @@ function Header() {
 
   return (
     <>
-      <header className={styles["header"]}>
+      <header
+        className={styles["header"]}
+        ref={headerRef}>
         <div className={styles["header__box-left"]}>
           <Link
             to={{ pathname: "/", search: "" }}

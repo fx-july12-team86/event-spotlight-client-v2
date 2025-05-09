@@ -10,10 +10,11 @@ import EventPage, {
 import Error from "./components/Error/Error";
 import Catalog from "./pages/Catalog/Catalog";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import Profile from "./pages/Profile/Profile";
+import Profile, { loader as profileLoader } from "./pages/Profile/Profile";
 import Favorites, {
   loader as favoritesLoader,
 } from "./pages/Favorites/Favorites";
+import MyEvents, { loader as myEventsLoader } from "./pages/MyEvents/MyEvents";
 
 const router = createBrowserRouter(
   [
@@ -47,6 +48,7 @@ const router = createBrowserRouter(
             </PrivateRoute>
           ),
           errorElement: <Error />,
+          loader: profileLoader,
         },
         {
           path: "favorites",
@@ -56,6 +58,16 @@ const router = createBrowserRouter(
             </PrivateRoute>
           ),
           loader: favoritesLoader,
+          errorElement: <Error />,
+        },
+        {
+          path: "my-events",
+          element: (
+            <PrivateRoute>
+              <MyEvents />
+            </PrivateRoute>
+          ),
+          loader: myEventsLoader,
           errorElement: <Error />,
         },
         {

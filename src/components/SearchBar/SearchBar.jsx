@@ -62,31 +62,12 @@ function SearchBar({ isError = false }) {
 
   const amountOfFilters = tottalFilters.length;
 
-  // async function handleSubmit(event) {
-  //   event.preventDefault();
-
-  //   if (!query && !filters && !datesRange) return;
-  //   const params = new URLSearchParams(searchParams);
-
-  //   params.set("search", query);
-
-  //   setSearchParams(params, { replace: true });
-  //   setQuery("");
-
-  //   const data = await getEventsCatalog(
-  //     { categories: filters, dateRange: [...datesRange.slice("-")] },
-  //     0
-  //   );
-  //   dispatch(updateCatalogEvents(data.events));
-  // }
-
   async function handleSubmit(event) {
     event.preventDefault();
 
     if (!query && !filters.length && !datesRange.length) return;
 
     const params = new URLSearchParams(searchParams);
-
     if (query) {
       params.set("search", query);
     }
@@ -98,15 +79,58 @@ function SearchBar({ isError = false }) {
     } else {
       setSearchParams(params, { replace: true });
     }
-
     setQuery("");
-
     const data = await getEventsCatalog(
-      { categories: filters, dateRange: [...datesRange.slice("-")] },
+      {
+        title: query,
+        categories: filters,
+        dateRange: [...datesRange.slice("-")],
+        cities: [city],
+      },
       0
     );
-    dispatch(updateCatalogEvents(data.events));
+    console.log(data);
+    dispatch(updateCatalogEvents(data));
   }
+
+  // async function handleSubmit(event) {
+  //   event.preventDefault();
+
+  //   if (!query && !filters.length && !datesRange.length) return;
+
+  //   const params = new URLSearchParams();
+  //   filters.forEach((filter) => {
+  //     params.append("filter", filter);
+  //   });
+  //   if (datesRange.length === 2) {
+  //     const [from, to] = datesRange;
+  //     params.set("dateFrom", from);
+  //     params.set("dateTo", to);
+  //   }
+  //   if (query) {
+  //     params.set("search", query);
+  //   }
+
+  //   if (location.pathname !== "/catalog") {
+  //     navigate(`/catalog?${params.toString()}`, { replace: true });
+  //   } else {
+  //     setSearchParams(params, { replace: true });
+  //   }
+  //   console.log("title", query);
+  //   console.log("filters", filters);
+  //   console.log("datesRange", datesRange);
+  //   console.log("city", city);
+  //   const data = await getEventsCatalog(
+  //     {
+  //       title: query,
+  //       categories: filters,
+  //       dateRange: [...datesRange.slice("-")],
+  //       cities: [city],
+  //     },
+  //     0
+  //   );
+  //   dispatch(updateCatalogEvents(data));
+  // }
 
   function handleUpdateFilters(filter) {
     if (isValidDateRange(filter)) {

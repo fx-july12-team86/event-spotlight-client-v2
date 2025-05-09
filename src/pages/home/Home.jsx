@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLoaderData, useSearchParams } from "react-router";
-import { get } from "lodash";
 
 import styles from "./styles/home.module.scss";
 

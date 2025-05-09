@@ -4,7 +4,7 @@ import styles from "./styles/registretion.module.scss";
 
 import Button from "../../../../Buttons/Button";
 
-import { AccountRegistration } from "../../../../../services/apiLogin";
+import { AccountRegistration } from "../../../../../services/apiUser";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

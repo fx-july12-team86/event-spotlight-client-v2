@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="trash" viewBox="0 0 16 18">
+    <path d="M1.00781 18V3H0.0078125V1H5.00781V0H11.0078V1H16.0078V3H15.0078V18H1.00781ZM3.00781 16H13.0078V3H3.00781V16ZM5.00781 14H7.00781V5H5.00781V14ZM9.00781 14H11.0078V5H9.00781V14Z" fill="currentColor"/>
+  </symbol>
+</svg>

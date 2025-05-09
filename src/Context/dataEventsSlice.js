@@ -40,5 +40,6 @@ export function updateOnlineEvents(events) {
     return { type: 'dataEvents/setOnlineEvents', payload: events }
 }
 export function updateCatalogEvents(events) {
+    console.log(events)
     return { type: 'dataEvents/setCatalogEvents', payload: events }
 }

@@ -40,7 +40,7 @@ function AccountMenu({ isHidden, onHandleToggleLogin }) {
             Улюблене
           </Link>
           <Link
-            to="/"
+            to="/my-events"
             className={styles["box__events"]}>
             Мої події
           </Link>

@@ -10,7 +10,7 @@ import {
   updateToken,
 } from "../../../../../context/userSlice";
 
-import { LogIn } from "../../../../../services/apiLogin";
+import { LogIn } from "../../../../../services/apiUser";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

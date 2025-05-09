@@ -1,5 +1,5 @@
-import { use, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLoaderData, useSearchParams } from "react-router";
 
 import styles from "./styles/catalog.module.scss";
@@ -9,6 +9,7 @@ import EventList from "../../components/Eventlist/EventList";
 import Pagination from "./components/Pagination/Pagination";
 
 import { getEventsCatalog } from "../../services/apiEvents";
+import { updateCatalogEvents } from "../../Context/dataEventsSlice";
 
 // { categories: filters, dateRange: datesRange, cities: city }
 
@@ -21,6 +22,9 @@ function Catalog() {
 
   const city = useSelector((store) => store.city.city);
   const { filters, sortBy, datesRange } = useSelector((store) => store.filters);
+  const { catalogEvents } = useSelector((store) => store.events);
+
+  const dispatch = useDispatch();
 
   const { pageCount: maxPages = 0 } = catalogData || {};
 
@@ -36,7 +40,8 @@ function Catalog() {
       setSearchParams(params, { replace: true });
       async function fetchEvents() {
         const data = await getEventsCatalog({}, 0);
-        setCatalogData(data);
+        // setCatalogData(data);
+        dispatch(updateCatalogEvents(data));
       }
       fetchEvents();
       setCurrentPage(1);
@@ -51,7 +56,8 @@ function Catalog() {
 
         async function fetchEvents() {
           const data = await getEventsCatalog({}, 0);
-          setCatalogData(data);
+          // setCatalogData(data);
+          dispatch(updateCatalogEvents(data));
         }
 
         fetchEvents();
@@ -60,7 +66,8 @@ function Catalog() {
         // Загружаем указанную страницу
         async function fetchEvents() {
           const data = await getEventsCatalog({}, pageFromUrl - 1);
-          setCatalogData(data);
+          // setCatalogData(data);
+          dispatch(updateCatalogEvents(data));
         }
         fetchEvents();
         setCurrentPage(pageFromUrl);
@@ -75,12 +82,15 @@ function Catalog() {
     setSearchParams(params, { replace: true });
   }, [currentPage]);
 
+  useEffect(() => {
+    setCatalogData(catalogEvents);
+  }, [catalogEvents]);
+
   const handleSetPage = (page) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", page);
     setSearchParams(params, { replace: true });
   };
-
   return (
     <div className={styles["container"]}>
       <h2 className={styles["container__city"]}>Події {city}</h2>

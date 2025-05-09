@@ -39,6 +39,7 @@ function EventItem({ data }) {
   const [date, time] = startTime.split("T");
 
   const formatedDate = formatUkrainianDate(date);
+
   const formatedTime = time.slice(0, -3);
 
   const location = address.cityName;

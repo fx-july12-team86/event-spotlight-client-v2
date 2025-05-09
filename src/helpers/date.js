@@ -1,22 +1,27 @@
 export function formatUkrainianDate(dateStr) {
-    // Разбиваем строку "01.01.2025" на [день, месяц, год]
-    const [day, month, year] = dateStr.split('-').map(Number);
+    // Разбиваем строку "2025-06-21" на [год, месяц, день]
+    const [year, month, day] = dateStr.split('-').map(Number);
 
     // Создаём объект Date
     const date = new Date(year, month - 1, day);
 
-    // Форматируем дату
-    const formatted = new Intl.DateTimeFormat('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' }).format(date).replace(" р.", "");
+    // Форматируем дату по-украински
+    const formatted = new Intl.DateTimeFormat('uk-UA', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    })
+        .format(date)
+        .replace(' р.', '');
 
-    // Розбиваємо на частини, щоб дістати місяць
-    const parts = formatted.split(" ");
+    // Розбиваємо на частини, щоб скоротити місяць
+    const parts = formatted.split(' ');
     const dayStr = parts[0];
     const monthStr = parts[1].slice(0, 3) + '.';
     const yearStr = parts[2];
 
     return `${dayStr} ${monthStr} ${yearStr}`;
 }
-
 export function isValidDateRange(str) {
     if (typeof str !== 'string') return false;
 

@@ -1,7 +1,11 @@
+import { useEffect, useState } from "react";
+import { useLoaderData } from "react-router";
+
 import styles from "./styles/profile.module.scss";
 
 import Button from "../../components/Buttons/Button";
-import { useState } from "react";
+
+import { getUserData, updateUserPassword } from "../../services/apiUser";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -9,14 +13,36 @@ function Profile() {
   const [nikname, setNickname] = useState("");
   const [email, setEmail] = useState("");
 
+  const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
+  const userData = useLoaderData();
+
   function handleToggleVisibility() {
     setIsVisiblePassword((prev) => !prev);
   }
+
+  function handleSubmitUserData(event) {
+    event.preventDefault();
+  }
+
+  function handleSubmitUserPassword(event) {
+    event.preventDefault();
+    console.log(1);
+    if (password !== repeatPassword || password.length <= 2) {
+      alert("Паролі не співпадають");
+      return;
+    }
+    updateUserPassword({ oldPassword, newPassword: password });
+  }
+
+  useEffect(() => {
+    setNickname(userData.userName);
+    setEmail(userData.email);
+  }, [userData]);
 
   return (
     <div className={styles["container"]}>
@@ -56,7 +82,31 @@ function Profile() {
       </div>
       <div className={styles["container__password"]}>
         <p className={styles["container__password-title"]}>Пароль</p>
-        <form className={styles["container__form"]}>
+        <form
+          className={styles["container__form"]}
+          onSubmit={handleSubmitUserPassword}>
+          <div className={styles["container__form-group"]}>
+            <label htmlFor="old-password">Старий пароль</label>
+            <div className={styles["container__password-container"]}>
+              <input
+                type={isVisiblePassword ? "text" : "password"}
+                id="old-password"
+                placeholder="qwerdx123456"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+                required
+              />
+              <img
+                className={styles["container__img"]}
+                src={
+                  !isVisiblePassword
+                    ? `${BASE_URL}/icons/Header/Authentication/eyeClose.svg`
+                    : `${BASE_URL}/icons/Header/Authentication/eye.svg`
+                }
+                onClick={handleToggleVisibility}
+              />
+            </div>
+          </div>
           <div className={styles["container__form-group"]}>
             <label htmlFor="profile-password">Новий пароль</label>
             <div className={styles["container__password-container"]}>
@@ -114,3 +164,8 @@ function Profile() {
 }
 
 export default Profile;
+
+export async function loader() {
+  const userData = await getUserData();
+  return userData;
+}

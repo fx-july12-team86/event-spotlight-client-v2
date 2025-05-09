@@ -67,7 +67,7 @@ export async function getEventsOnline() {
 }
 
 export async function getEventsCatalog(filterObj, page = 0) {
-    // console.log(filterObj)
+    console.log(filterObj)
     // &sort=${'title','asc'}
     const response = await fetch(`${VITE_API_URL}/events/search/grouped-by-month?page=${page}`, {
         method: "POST",
@@ -121,6 +121,8 @@ export async function getFavorites() {
     const data = await response.json()
     return data
 }
+
+
 // export async function getCategoryById(id) {
 //     const response = await fetch(`${VITE_API_URL}/categories/${id}`)
 //     const data = await response.json()

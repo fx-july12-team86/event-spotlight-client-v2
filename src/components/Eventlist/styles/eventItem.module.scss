@@ -95,7 +95,7 @@
     &__details-list {
         list-style: none;
 
-        & li:not(:last-child) {
+        &>li:not(:last-child) {
             margin-bottom: 1.7rem;
         }
     }
