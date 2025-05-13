@@ -15,6 +15,7 @@ import Favorites, {
   loader as favoritesLoader,
 } from "./pages/Favorites/Favorites";
 import MyEvents, { loader as myEventsLoader } from "./pages/MyEvents/MyEvents";
+import CreateEvent from "./pages/CreateEvent/CreateEvent";
 
 const router = createBrowserRouter(
   [
@@ -69,6 +70,14 @@ const router = createBrowserRouter(
           ),
           loader: myEventsLoader,
           errorElement: <Error />,
+        },
+        {
+          path: "create-event",
+          element: (
+            <PrivateRoute>
+              <CreateEvent />
+            </PrivateRoute>
+          ),
         },
         {
           path: "*",

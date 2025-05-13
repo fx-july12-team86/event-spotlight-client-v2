@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -23,7 +23,9 @@ function Header({ headerRef }) {
   const [isHiddenSearchInput, setIsHiddedSearchInput] = useState(true);
   const [isHiddenLogin, setIsHiddenLogin] = useState(true);
 
-  const [_, setSearchParams] = useSearchParams();
+  // const [_, setSearchParams] = useSearchParams();
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -58,6 +60,14 @@ function Header({ headerRef }) {
     }
   }
 
+  function handleAddEvent() {
+    if (!isAuthenticated) {
+      setIsHiddenLogin(false);
+    } else {
+      navigate("/create-event");
+    }
+  }
+
   useEffect(() => {
     async function fetchCity() {
       try {
@@ -77,11 +87,13 @@ function Header({ headerRef }) {
         className={styles["header"]}
         ref={headerRef}>
         <div className={styles["header__box-left"]}>
-          <Link
-            to={{ pathname: "/", search: "" }}
+          <p
+            onClick={() => {
+              navigate("/");
+            }}
             className={styles["header__box-left__logo"]}>
             EventSpotlight
-          </Link>
+          </p>
           <span
             className={`${styles["header__box-left__geolocation"]} ${
               !isHiddenGeo
@@ -139,9 +151,7 @@ function Header({ headerRef }) {
           </button>
           <button
             className={styles["header__box-right__addEvent"]}
-            onClick={() => {
-              !isAuthenticated ? setIsHiddenLogin(false) : "";
-            }}>
+            onClick={handleAddEvent}>
             Додати подію
           </button>
         </div>

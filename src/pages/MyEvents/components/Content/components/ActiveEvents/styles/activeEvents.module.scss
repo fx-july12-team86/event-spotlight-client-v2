@@ -1,0 +1,101 @@
+.event-item {
+    width: 30rem;
+    height: 63rem;
+
+    border-radius: 2px;
+    border: 2px solid $color-medium-grey;
+
+    transition: all .7s;
+    overflow: hidden;
+
+    text-decoration: none;
+    color: $color-main-dark;
+
+    cursor: pointer;
+
+    &:hover {
+        border: 2px solid $color-main-purple;
+
+    }
+
+    &__image {
+        width: 100%;
+        max-height: 45%;
+
+        transition: all .4s;
+
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    &__description {
+        padding: 2.4rem;
+        height: 54%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    &__category {
+        display: inline-block;
+
+        font-family: Inter, sans-serif;
+        color: $color-dark-grey;
+        font-weight: 400;
+        font-size: 1.6rem;
+        padding: 1.1rem 2.4rem;
+
+        border: 2px solid $color-medium-grey;
+        border-radius: 80rem;
+
+        transition: all .4s;
+
+        &:hover {
+            border: 2px solid $color-main-purple;
+            background-color: $color-main-purple;
+            color: #fff;
+        }
+    }
+
+    &__title {
+        font-weight: 600;
+        font-size: 2.8rem;
+        text-transform: uppercase;
+
+        margin-top: 1.6rem;
+    }
+
+    &__edit {
+        display: flex;
+        gap: 3.2rem;
+
+        &>button {
+            width: 4.4rem;
+            height: 4.4rem;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background-color: $color-light-grey;
+            border: 2px solid $color-light-grey;
+            border-radius: 50%;
+
+            cursor: pointer;
+
+            transition: all .4s ease-in-out;
+
+            &:hover {
+                border: 2px solid $color-main-purple;
+            }
+        }
+    }
+
+    &__svgSizeNormalize {
+        width: 2rem;
+        height: 1.9rem;
+    }
+}

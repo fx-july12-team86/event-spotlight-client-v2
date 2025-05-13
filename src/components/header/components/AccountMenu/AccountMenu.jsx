@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./styles/accountMenu.module.scss";
@@ -11,6 +11,8 @@ import {
 function AccountMenu({ isHidden, onHandleToggleLogin }) {
   const { isAuthenticated } = useSelector((state) => state.user);
 
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   function logOut() {
@@ -18,6 +20,8 @@ function AccountMenu({ isHidden, onHandleToggleLogin }) {
     localStorage.removeItem("isAuthenticated");
     dispatch(updateToken(null));
     dispatch(updateIsAuthenticated(false));
+
+    navigate("/");
   }
 
   return (
