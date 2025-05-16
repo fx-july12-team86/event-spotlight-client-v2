@@ -67,12 +67,16 @@ const Pagination = ({ totalPages = 1, currentPage, onSetCurrentPage }) => {
     <div className={styles["container"]}>
       <button
         className={styles["container__btn"]}
-        onClick={() =>
+        onClick={() => {
           // onSetCurrentPage((currentPage) =>
           //   currentPage > 1 ? currentPage - 1 : ""
           // )
-          onSetCurrentPage(currentPage > 1 ? currentPage - 1 : "")
-        }>
+
+          if (currentPage > 1) {
+            onSetCurrentPage(currentPage - 1);
+          }
+          // onSetCurrentPage(currentPage > 1 ? currentPage - 1 : "")
+        }}>
         <svg className={styles["svgSizeNormalize"]}>
           <use href={`${BASE_URL}/icons/General/arrows.svg#arrowPrev`}></use>
         </svg>
@@ -104,12 +108,15 @@ const Pagination = ({ totalPages = 1, currentPage, onSetCurrentPage }) => {
 
       <button
         className={styles["container__btn"]}
-        onClick={() =>
+        onClick={() => {
           // onSetCurrentPage((currentPage) =>
           //   currentPage < totalPages ? currentPage + 1 : ""
           // )
-          onSetCurrentPage(currentPage < totalPages ? currentPage + 1 : "")
-        }>
+          if (currentPage < totalPages) {
+            onSetCurrentPage(currentPage + 1);
+          }
+          // onSetCurrentPage(currentPage < totalPages ? currentPage + 1 : "")
+        }}>
         <svg className={styles["svgSizeNormalize"]}>
           <use href={`${BASE_URL}/icons/General/arrows.svg#arrowNext`}></use>
         </svg>

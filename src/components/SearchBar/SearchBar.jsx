@@ -48,7 +48,7 @@ function SearchBar({ isError = false }) {
 
   const location = useLocation();
 
-  const { city } = useSelector((state) => state.city);
+  const city = useSelector((state) => state.city.city);
   const { filters, datesRangeFormatted, datesRange } = useSelector(
     (store) => store.filters
   );
@@ -62,75 +62,41 @@ function SearchBar({ isError = false }) {
 
   const amountOfFilters = tottalFilters.length;
 
-  async function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!query && !filters.length && !datesRange.length) return;
-
     const params = new URLSearchParams(searchParams);
-    if (query) {
-      params.set("search", query);
+
+    if (query) params.set("search", query);
+    if (filters.length) filters.forEach((f) => params.append("filter", f));
+    if (datesRange.length === 2) {
+      const [from, to] = datesRange;
+      params.set("dateFrom", from);
+      params.set("dateTo", to);
     }
 
-    const paramsString = params.toString();
+    params.set("page", "1");
+    params.set("trigger", "1");
 
     if (location.pathname !== "/catalog") {
-      navigate(`/catalog?${paramsString}`, { replace: true });
+      navigate(`/catalog?${params.toString()}`, { replace: true });
     } else {
       setSearchParams(params, { replace: true });
     }
+
     setQuery("");
-    const data = await getEventsCatalog(
-      {
-        title: query,
-        categories: filters,
-        dateRange: [...datesRange.slice("-")],
-        cities: [city],
-      },
-      0
-    );
-    console.log(data);
-    dispatch(updateCatalogEvents(data));
+  };
+
+  function resetToCatalogStart() {
+    const newParams = new URLSearchParams();
+
+    newParams.set("page", "1");
+    newParams.set("trigger", "1");
+    const city = searchParams.get("city");
+    if (city) newParams.set("city", city);
+
+    setSearchParams(newParams, { replace: true });
   }
-
-  // async function handleSubmit(event) {
-  //   event.preventDefault();
-
-  //   if (!query && !filters.length && !datesRange.length) return;
-
-  //   const params = new URLSearchParams();
-  //   filters.forEach((filter) => {
-  //     params.append("filter", filter);
-  //   });
-  //   if (datesRange.length === 2) {
-  //     const [from, to] = datesRange;
-  //     params.set("dateFrom", from);
-  //     params.set("dateTo", to);
-  //   }
-  //   if (query) {
-  //     params.set("search", query);
-  //   }
-
-  //   if (location.pathname !== "/catalog") {
-  //     navigate(`/catalog?${params.toString()}`, { replace: true });
-  //   } else {
-  //     setSearchParams(params, { replace: true });
-  //   }
-  //   console.log("title", query);
-  //   console.log("filters", filters);
-  //   console.log("datesRange", datesRange);
-  //   console.log("city", city);
-  //   const data = await getEventsCatalog(
-  //     {
-  //       title: query,
-  //       categories: filters,
-  //       dateRange: [...datesRange.slice("-")],
-  //       cities: [city],
-  //     },
-  //     0
-  //   );
-  //   dispatch(updateCatalogEvents(data));
-  // }
 
   function handleUpdateFilters(filter) {
     if (isValidDateRange(filter)) {
@@ -145,6 +111,7 @@ function SearchBar({ isError = false }) {
       dispatch(updateFilters(category));
     });
   }
+
   useEffect(() => {
     const params = new URLSearchParams();
 
@@ -210,12 +177,14 @@ function SearchBar({ isError = false }) {
         </button>
         <button
           type="button"
-          className={styles["container__form__btnLocation"]}>
-          <svg className={styles["container__form__btnLocation__icon"]}>
+          className={styles["container__form__btnLocation"]}
+          onClick={resetToCatalogStart}>
+          {/* <svg className={styles["container__form__btnLocation__icon"]}>
             <use
               href={`${BASE_URL}/icons/Home/search/icons.svg#geolocation`}></use>
-          </svg>
-          {city}
+          </svg> */}
+          {/* {city} */}
+          На початок
         </button>
 
         <button

@@ -8,7 +8,7 @@ import { AccountRegistration } from "../../../../../services/apiUser";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-function Registration() {
+function Registration({ onSetToRegistrated }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
@@ -17,8 +17,11 @@ function Registration() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const data = AccountRegistration(userName, email, password);
-    console.log(data);
+    AccountRegistration(userName, email, password);
+    setEmail("");
+    setPassword("");
+    setUserName("");
+    onSetToRegistrated(false);
   }
 
   function handleTogglePassword() {

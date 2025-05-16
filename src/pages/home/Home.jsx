@@ -11,6 +11,8 @@ import EventList from "../../components/Eventlist/EventList";
 import Button from "../../components/Buttons/Button";
 import Organizer from "./components/Organizer/Organizer";
 
+import Spinner from "../../components/Spinner/Spinner";
+
 import {
   updateGeneralEvents,
   updateTopEventsCity,
@@ -22,43 +24,65 @@ import {
   getEventsByCity,
   getEventsOnline,
 } from "../../services/apiEvents";
-import Spinner from "../../components/Spinner/Spinner";
 
 function Home() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [loading, setLoading] = useState(true);
 
   const { generalEvents, topEventsCity, onlineEvents, status } = useSelector(
     (store) => store.events
   );
 
-  const [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch] =
-    useLoaderData();
+  // const [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch] =
+  //   useLoaderData();
 
-  const { city } = useSelector((state) => state.city);
+  const { city } = useSelector((store) => store.city);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(updateGeneralEvents(generalEventsFetch));
-    dispatch(updateTopEventsCity(topEventsCityFetch));
-    dispatch(updateOnlineEvents(eventsOnlineFetch));
-  }, [dispatch, generalEventsFetch, topEventsCityFetch, eventsOnlineFetch]);
+  // useEffect(() => {
+  //   dispatch(updateGeneralEvents(generalEventsFetch));
+  //   dispatch(updateTopEventsCity(topEventsCityFetch));
+  //   dispatch(updateOnlineEvents(eventsOnlineFetch));
+  // }, [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch]);
 
   useEffect(() => {
-    async function fetchCityEvents() {
+    async function fetchInitialData() {
       try {
-        const data = await getEventsByCity(city);
-        dispatch(updateTopEventsCity(data));
+        const [general, online] = await Promise.all([
+          getEvents(),
+          // getEventsByCity(city || "Київ"),
+          getEventsOnline(),
+        ]);
+        dispatch(updateGeneralEvents(general));
+        // dispatch(updateTopEventsCity(topCity));
+        dispatch(updateOnlineEvents(online));
+        console.log(1);
       } catch (err) {
-        console.log(err.message);
+        console.error("Помилка при завантаженні подій:", err.message);
+      } finally {
+        setLoading(false);
       }
     }
-    fetchCityEvents();
-  }, [dispatch, city]);
 
-  // useEffect(()=>{
-  //   const
-  // },[])
+    fetchInitialData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchInitialDataCity() {
+      try {
+        const topCity = await getEventsByCity(city || "Київ");
+
+        dispatch(updateTopEventsCity(topCity));
+        console.log(2);
+      } catch (err) {
+        console.error("Помилка при завантаженні подій:", err.message);
+      } finally {
+        // setLoading(false);
+      }
+    }
+
+    fetchInitialDataCity();
+  }, [city]);
 
   return (
     <div className={styles["container"]}>
@@ -111,15 +135,6 @@ function Home() {
       </Link>
     </div>
   );
-}
-
-export async function loader({ request }) {
-  const url = new URL(request.url);
-  const city = url.searchParams.get("city") || "Київ";
-
-  const [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch] =
-    await Promise.all([getEvents(), getEventsByCity(city), getEventsOnline()]);
-  return [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch];
 }
 
 export default Home;

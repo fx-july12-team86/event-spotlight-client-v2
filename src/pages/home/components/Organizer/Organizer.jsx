@@ -1,9 +1,13 @@
-import Button from "../../../../components/Buttons/Button";
 import styles from "./styles/organizer.module.scss";
+
+import Button from "../../../../components/Buttons/Button";
+import { useNavigate } from "react-router";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function Organizer() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles["organizer-container"]}>
       <div className={styles["organizer-container__left"]}>
@@ -15,7 +19,10 @@ function Organizer() {
         </p>
         <Button
           width={31.3}
-          height={6.4}>
+          height={6.4}
+          onClick={() => {
+            navigate("/create-event");
+          }}>
           Додати подію
         </Button>
       </div>

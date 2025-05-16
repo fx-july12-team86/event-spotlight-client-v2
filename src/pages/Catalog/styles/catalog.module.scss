@@ -14,6 +14,14 @@
         margin-bottom: 4rem;
     }
 
+    &__not-found-message {
+        display: block;
+
+        margin: 5rem auto;
+
+        font-size: 3rem;
+    }
+
     &__events-list {
         &>h2 {
             display: inline-block;

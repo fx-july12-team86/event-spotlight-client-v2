@@ -34,7 +34,7 @@ function Authentication({ isHidden, onHandleToggleLogin }) {
         {!toRegistrated ? (
           <Login onHandleToggleLogin={onHandleToggleLogin} />
         ) : (
-          <Registration />
+          <Registration onSetToRegistrated={setToRegistrated} />
         )}
 
         <button

@@ -23,7 +23,7 @@ function Header({ headerRef }) {
   const [isHiddenSearchInput, setIsHiddedSearchInput] = useState(true);
   const [isHiddenLogin, setIsHiddenLogin] = useState(true);
 
-  // const [_, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
@@ -73,8 +73,12 @@ function Header({ headerRef }) {
       try {
         const data = await getAddress();
         dispatch(toggleCurrentCity(data.city));
+
+        const params = new URLSearchParams(searchParams);
+        params.set("city", data.city);
+        setSearchParams(params, { replace: true });
       } catch (err) {
-        dispatch(toggleCurrentCity("Місто"));
+        dispatch(toggleCurrentCity("Київ"));
       }
     }
 

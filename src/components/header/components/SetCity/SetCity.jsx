@@ -6,6 +6,7 @@ import {
   toggleSelectCity,
   toggleCurrentCity,
 } from "../../../../context/citySlice";
+import { useSearchParams } from "react-router";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -46,8 +47,20 @@ const cities = [
 
 function SetCity() {
   const [chosenCity, setChosenCity] = useState("");
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const dispatch = useDispatch();
-  const { selectCity } = useSelector((store) => store.city);
+
+  const selectCity = useSelector((store) => store.city.selectCity);
+
+  function handleUpdateCity(city) {
+    dispatch(toggleCurrentCity(city));
+    const params = new URLSearchParams(searchParams);
+    params.set("city", city);
+    setSearchParams(params, { replace: true });
+  }
+
   return (
     <div
       className={`${styles["background"]} ${
@@ -79,7 +92,7 @@ function SetCity() {
           {cities.map((city) => (
             <li
               key={city.city}
-              onClick={() => dispatch(toggleCurrentCity(city.city))}>
+              onClick={() => handleUpdateCity(city.city)}>
               {city.city}
             </li>
           ))}

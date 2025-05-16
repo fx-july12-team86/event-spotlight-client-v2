@@ -14,6 +14,8 @@ import { updateCatalogEvents } from "../../Context/dataEventsSlice";
 // { categories: filters, dateRange: datesRange, cities: city }
 
 function Catalog() {
+  const [firstLoad, setFirstLoad] = useState(true);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,86 +33,88 @@ function Catalog() {
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
-    const pageParam = searchParams.get("page");
+    const trigger = searchParams.get("trigger");
+    const pageParam = searchParams.get("page") || "1";
+    const pageFromUrl = parseInt(pageParam);
 
-    if (!pageParam) {
-      // Устанавливаем page=1 в URL и загружаем первую страницу
-      const params = new URLSearchParams(searchParams);
-      params.set("page", "1");
-      setSearchParams(params, { replace: true });
-      async function fetchEvents() {
-        const data = await getEventsCatalog({}, 0);
-        // setCatalogData(data);
-        dispatch(updateCatalogEvents(data));
-      }
-      fetchEvents();
-      setCurrentPage(1);
-    } else {
-      const pageFromUrl = parseInt(pageParam);
-      if (isNaN(pageFromUrl) || pageFromUrl < 1) {
+    const rawParams = {
+      title: searchParams.get("search"),
+      categories: filters,
+      dateRange: datesRange.length ? [...datesRange] : undefined,
+      cities: city ? [city] : undefined,
+    };
+
+    const cleanedParams = Object.fromEntries(
+      Object.entries(rawParams).filter(
+        ([, value]) =>
+          value !== undefined &&
+          value !== null &&
+          !(typeof value === "string" && value.trim() === "") &&
+          !(Array.isArray(value) && value.length === 0)
+      )
+    );
+
+    const shouldFetch = firstLoad || trigger === "1";
+    if (!shouldFetch || !city) return;
+
+    // console.log(sortBy);
+
+    async function fetchEvents() {
+      const data = await getEventsCatalog(
+        cleanedParams,
+        pageFromUrl - 1,
+        sortBy
+      );
+      dispatch(updateCatalogEvents(data));
+      setCurrentPage(pageFromUrl);
+      setFirstLoad(false);
+
+      if (trigger === "1") {
         const params = new URLSearchParams(searchParams);
-
-        params.set("page", "1");
-
+        params.delete("trigger");
         setSearchParams(params, { replace: true });
-
-        async function fetchEvents() {
-          const data = await getEventsCatalog({}, 0);
-          // setCatalogData(data);
-          dispatch(updateCatalogEvents(data));
-        }
-
-        fetchEvents();
-        setCurrentPage(1);
-      } else {
-        // Загружаем указанную страницу
-        async function fetchEvents() {
-          const data = await getEventsCatalog({}, pageFromUrl - 1);
-          // setCatalogData(data);
-          dispatch(updateCatalogEvents(data));
-        }
-        fetchEvents();
-        setCurrentPage(pageFromUrl);
       }
     }
-  }, [searchParams]);
 
-  useEffect(() => {
-    // Обновляем URL при изменении currentPage
-    const params = new URLSearchParams(searchParams);
-    params.set("page", currentPage.toString());
-    setSearchParams(params, { replace: true });
-  }, [currentPage]);
+    fetchEvents();
+  }, [searchParams]);
 
   useEffect(() => {
     setCatalogData(catalogEvents);
   }, [catalogEvents]);
 
-  const handleSetPage = (page) => {
+  function handleSetPage(page) {
     const params = new URLSearchParams(searchParams);
     params.set("page", page);
     setSearchParams(params, { replace: true });
-  };
+    setCurrentPage(page);
+  }
   return (
     <div className={styles["container"]}>
       <h2 className={styles["container__city"]}>Події {city}</h2>
       <SearchBar />
 
-      {catalogData?.events?.map((period) => {
-        return (
-          <div
-            className={styles["container__events-list"]}
-            key={period.field}>
-            <h2>
-              {period.field} {currentYear}
-            </h2>
-            <EventList
-              events={period.events}
-              marginTop={4}
-            />
-          </div>
-        );
-      })}
+      {catalogData?.events?.length > 0 ? (
+        catalogData.events.map((period) => {
+          return (
+            <div
+              className={styles["container__events-list"]}
+              key={period.field}>
+              <h2>
+                {period.field} {currentYear}
+              </h2>
+              <EventList
+                events={period.events}
+                marginTop={4}
+              />
+            </div>
+          );
+        })
+      ) : (
+        <p className={styles["container__not-found-message"]}>
+          За даними філтрами нічого не знайдено
+        </p>
+      )}
       <Pagination
         totalPages={maxPages}
         currentPage={currentPage}

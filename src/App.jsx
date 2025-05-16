@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AppLayout from "./appLayout/AppLayout";
 
-import Home, { loader as eventsLoader } from "./pages/Home/Home";
+import Home from "./pages/Home/Home";
 
 import EventPage, {
   loader as eventPageLoader,
@@ -27,7 +27,6 @@ const router = createBrowserRouter(
           path: "",
           element: <Home />,
           errorElement: <Error />,
-          loader: eventsLoader,
         },
         {
           path: "event/:id",
@@ -39,7 +38,6 @@ const router = createBrowserRouter(
           path: "catalog",
           element: <Catalog />,
           errorElement: <Error />,
-          // loader: catalogLoader,
         },
         {
           path: "profile",

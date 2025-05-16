@@ -1,4 +1,18 @@
 export async function getAddress(/*{ latitude, longitude }*/) {
+    async function getCoords() {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    resolve({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                    });
+                },
+                (error) => reject(error) // Обработка ошибки
+            );
+        });
+    }
+
     const { latitude, longitude } = await getCoords()
 
     // console.log(latitude, longitude)
@@ -11,17 +25,5 @@ export async function getAddress(/*{ latitude, longitude }*/) {
     return data;
 }
 
-function getCoords() {
-    return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                resolve({
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                });
-            },
-            (error) => reject(error) // Обработка ошибки
-        );
-    });
-}
+
 
