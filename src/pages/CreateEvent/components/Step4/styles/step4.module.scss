@@ -1,0 +1,190 @@
+.container {
+    margin-top: 6rem;
+
+    width: fit-content;
+
+    &__header {
+        display: flex;
+
+        // align-items: center;
+        gap: 7rem;
+    }
+
+    &__step-number {
+        font-weight: 600;
+        font-size: 4rem;
+
+        color: $color-main-purple;
+    }
+
+    &__step-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        justify-content: center;
+    }
+
+    &__step-title {
+        font-weight: 600;
+        font-size: 4rem;
+        letter-spacing: .01rem;
+        text-transform: uppercase;
+
+        color: $color-dark-grey;
+    }
+
+    &__step-description {
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.8rem;
+        letter-spacing: .01rem;
+
+        color: $color-dark-grey;
+    }
+
+    &__content {
+        margin-top: 4rem;
+        margin-left: 8rem;
+
+        display: grid;
+        grid-template-columns: repeat(2, 43.8rem);
+        gap: 2.4rem;
+    }
+
+    &__phone,
+    &__email,
+    &__instagram,
+    &__telegram,
+    &__facebook {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        &>label {
+            font-family: Inter, sans-serif;
+            font-weight: 400;
+            font-size: 1.6rem;
+            letter-spacing: .01rem;
+
+            color: $color-dark-grey;
+        }
+
+        & input {
+            width: 100%;
+            height: 6.4rem;
+
+            padding-left: 6rem;
+
+            &::placeholder {
+                font-family: Inter, sans-serif;
+                font-weight: 400;
+                font-size: 1.8rem;
+                letter-spacing: .01rem;
+                color: $color-medium-grey;
+            }
+        }
+
+    }
+
+    &__phone-wrapper {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 1.8rem;
+            height: 1.8rem;
+
+            position: absolute;
+
+            background-image: url('/icons/General/phone.svg');
+
+            top: 50%;
+            left: 2.7rem;
+
+            transform: translateY(-50%);
+        }
+    }
+
+    &__email-wrapper {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 2.4rem;
+            height: 2.4rem;
+
+            position: absolute;
+
+            background-image: url('/icons/General/email.svg');
+            background-size: 200%;
+
+            top: 55%;
+            left: 2.7rem;
+
+            transform: translateY(-55%);
+        }
+    }
+
+    &__instagram-wrapper {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 2.4rem;
+            height: 2.4rem;
+
+            position: absolute;
+
+            background-image: url('/icons/General/instagram.svg');
+
+            top: 50%;
+            left: 2.7rem;
+
+            transform: translateY(-50%);
+        }
+    }
+
+    &__telegram-wrapper {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 2.4rem;
+            height: 2.4rem;
+
+            position: absolute;
+
+            background-image: url('/icons/General/telegram.svg');
+
+            top: 50%;
+            left: 2.7rem;
+
+            transform: translateY(-50%);
+        }
+    }
+
+    &__facebook-wrapper {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 2.4rem;
+            height: 2.4rem;
+
+            position: absolute;
+
+            background-image: url('/icons/General/facebook.svg');
+
+            top: 50%;
+            left: 2.7rem;
+
+            transform: translateY(-50%);
+        }
+    }
+}

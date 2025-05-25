@@ -8,7 +8,7 @@ import Step3 from "./components/Step3/Step3";
 import Step4 from "./components/Step4/Step4";
 
 function CreateEvent() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(4);
 
   const steps = [
     { step: 1, description: "Зображення" },
@@ -43,10 +43,22 @@ function CreateEvent() {
           );
         })}
       </ul>
-      {currentStep === 1 && <Step1 />}
-      {currentStep === 2 && <Step2 />}
-      {currentStep === 3 && <Step3 />}
-      {currentStep === 4 && <Step4 />}
+      <form>
+        {currentStep === 1 && <Step1 onSetCurrentStep={setCurrentStep} />}
+        {currentStep === 2 && (
+          <Step2
+            currentStep={currentStep}
+            onSetCurrentStep={setCurrentStep}
+          />
+        )}
+        {currentStep === 3 && (
+          <Step3
+            currentStep={currentStep}
+            onSetCurrentStep={setCurrentStep}
+          />
+        )}
+        {currentStep === 4 && <Step4 />}
+      </form>
     </div>
   );
 }

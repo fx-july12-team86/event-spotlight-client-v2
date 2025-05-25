@@ -12,9 +12,13 @@ function Description({ tabs }) {
 
   const { description, imgs } = tabs.find((tab) => tab.id === "details");
 
+  const descriptionFormatted = description.split("\n");
+
   return (
     <>
-      <p>{description}</p>
+      {descriptionFormatted.map((description) => {
+        return <p>{description}</p>;
+      })}
       {imgs.map((img, index) => {
         if (img) {
           return (
@@ -73,25 +77,63 @@ function Contacts({ tabs, scrollTo }) {
       className={styles["container__contacts"]}
       ref={scrollTo}>
       {contacts.map(([key, value]) => {
+        if (!value) return null; // 🔥 Пропускаємо
+
+        let href = "#";
+        if (key === "phoneNumber") href = `tel:${value}`;
+        else if (key === "email") href = `mailto:${value}`;
+        else if (key === "instagram")
+          href = `https://www.instagram.com/${value}`;
+        else if (key === "telegram") href = `https://t.me/${value}`;
+        else if (key === "facebook") href = `https://www.facebook.com/${value}`;
+        else if (key === "officialWebsite") href = `${value}`;
+
         return (
           <li
             key={key}
             className={styles[`container__${key}`]}>
-            {key === "phoneNumber" && <a href={`tel:${value}`}>{value}</a>}
-            {key === "email" && <a href={`mailto:${value}`}>{value}</a>}
-            {key === "instagram" && (
-              <a href={`https://www.instagram.com/${value}`}>{value}</a>
-            )}
-            {key === "telegram" && (
-              <a href={`https://t.me/${value}`}>{value}</a>
-            )}
-            {key === "facebook" && (
-              <a href={`https://www.facebook.com/${value}`}>{value}</a>
-            )}
+            <a
+              href={href}
+              target="blank">
+              {value}
+            </a>
           </li>
         );
       })}
     </ul>
+    // <ul
+    //   className={styles["container__contacts"]}
+    //   ref={scrollTo}>
+    //   {contacts.map(([key, value]) => {
+    //     return (
+    //       <li
+    //         key={key}
+    //         className={styles[`container__${key}`]}>
+    //         {!value
+    //           ? key === "phoneNumber" && <a href={`tel:${value}`}>{value}</a>
+    //           : ""}
+    //         {!value
+    //           ? key === "email" && <a href={`mailto:${value}`}>{value}</a>
+    //           : ""}
+    //         {!value
+    //           ? key === "instagram" && (
+    //               <a href={`https://www.instagram.com/${value}`}>{value}</a>
+    //             )
+    //           : ""}
+    //         {!value
+    //           ? key === "telegram" && (
+    //               <a href={`https://t.me/${value}`}>{value}</a>
+    //             )
+    //           : ""}
+    //         {!value
+    //           ? key === "facebook" && (
+    //               <a href={`https://www.facebook.com/${value}`}>{value}</a>
+    //             )
+    //           : ""}
+    //       </li>
+    //     );
+    //   })}
+    // </ul>
   );
 }
 

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./styles/searchBar.module.scss";
 
-import Select from "../../pages/Home/components/Select/Select";
+import Select from "../../components/Select/Select";
 import CalendarComp from "../Calendar/CalendarComp";
 
 import {
@@ -48,6 +48,8 @@ function SearchBar({ isError = false }) {
 
   const location = useLocation();
 
+  const catalogEvents = useSelector((state) => state.events.catalogEvents);
+
   const city = useSelector((state) => state.city.city);
   const { filters, datesRangeFormatted, datesRange } = useSelector(
     (store) => store.filters
@@ -62,7 +64,7 @@ function SearchBar({ isError = false }) {
 
   const amountOfFilters = tottalFilters.length;
 
-  const handleSubmit = async (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const params = new URLSearchParams(searchParams);
@@ -85,7 +87,7 @@ function SearchBar({ isError = false }) {
     }
 
     setQuery("");
-  };
+  }
 
   function resetToCatalogStart() {
     const newParams = new URLSearchParams();

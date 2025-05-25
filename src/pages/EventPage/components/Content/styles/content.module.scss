@@ -118,7 +118,7 @@
             content: '';
             display: inline-block;
 
-            background-image: url('/icons/EventPage/phone.svg');
+            background-image: url('/icons/General/phone.svg');
             background-repeat: no-repeat;
 
             width: 1.8rem;
@@ -137,7 +137,8 @@
             content: '';
             display: inline-block;
 
-            background-image: url('/icons/EventPage/email.svg');
+            background-image: url('/icons/General/email.svg');
+            background-size: 200%;
             background-repeat: no-repeat;
 
             width: 2.4rem;
@@ -155,7 +156,7 @@
             content: '';
             display: inline-block;
 
-            background-image: url('/icons/EventPage/instagram.svg');
+            background-image: url('/icons/General/instagram.svg');
             background-repeat: no-repeat;
 
             width: 2.4rem;
@@ -174,7 +175,7 @@
             content: '';
             display: inline-block;
 
-            background-image: url('/icons/EventPage/telegram.svg');
+            background-image: url('/icons/General/telegram.svg');
             background-repeat: no-repeat;
 
             width: 2.4rem;
@@ -192,7 +193,25 @@
             content: '';
             display: inline-block;
 
-            background-image: url('/icons/EventPage/facebook.svg');
+            background-image: url('/icons/General/facebook.svg');
+            background-repeat: no-repeat;
+
+            width: 2.4rem;
+            height: 2.4rem;
+
+
+            margin-right: 1.4rem;
+
+            transform: translateY(7px);
+        }
+    }
+
+    &__officialWebsite {
+        &::before {
+            content: '';
+            display: inline-block;
+
+            background-image: url('/icons/EventPage/www.svg');
             background-repeat: no-repeat;
 
             width: 2.4rem;

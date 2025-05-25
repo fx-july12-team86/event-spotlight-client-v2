@@ -11,9 +11,7 @@ import Spinner from "../Spinner/Spinner";
 import FavoriteIcon from "../../assets/favorite/favorite.svg?react";
 
 import { addFavorite, removeFavorite } from "../../services/apiEvents";
-import { set } from "lodash";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { truncateByWords } from "../../helpers/workWithStrings";
 
 function EventItem({ data }) {
   const {
@@ -34,6 +32,8 @@ function EventItem({ data }) {
 
   const { isAuthenticated } = useSelector((state) => state.user);
 
+  const titleCheckedLength = truncateByWords(title, 40);
+
   const coverImgURL = photo.sharedUrl.replace("dl=0", "raw=1");
 
   const [date, time] = startTime.split("T");
@@ -47,14 +47,12 @@ function EventItem({ data }) {
   async function handleUpdateFavorite(event) {
     event.stopPropagation();
 
-    let response;
-
     if (!isAuthenticated) return;
 
     if (isFavorite) {
-      response = await removeFavorite(id);
+      removeFavorite(id);
     } else {
-      response = await addFavorite(id);
+      addFavorite(id);
     }
 
     setIsFavorite((prev) => !prev);
@@ -88,10 +86,6 @@ function EventItem({ data }) {
           <p className={styles["event-item__category"]}>{categoryName}</p>
 
           <div className={styles["event-item__icon"]}>
-            {/* <svg className={`${styles["event-item__svgSizeNormalize"]}`}>
-              <use
-                href={`${BASE_URL}/icons/Home/event/favorite.svg#filled`}></use>
-            </svg> */}
             <FavoriteIcon
               onClick={handleUpdateFavorite}
               className={isFavorite ? styles["event-item__icon-fill"] : ""}
@@ -99,7 +93,7 @@ function EventItem({ data }) {
           </div>
         </div>
         <div className={styles["event-item__content"]}>
-          <h3 className={styles["event-item__title"]}>{title}</h3>
+          <h3 className={styles["event-item__title"]}>{titleCheckedLength}</h3>
           <article className={styles["event-item__details"]}>
             <ul className={styles["event-item__details-list"]}>
               <li className={styles["event-item__datetime"]}>

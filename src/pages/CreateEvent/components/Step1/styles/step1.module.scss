@@ -1,4 +1,5 @@
 .container {
+    display: inline-block;
     margin-top: 6rem;
 
     &__header {
@@ -39,5 +40,132 @@
         letter-spacing: .01rem;
 
         color: $color-dark-grey;
+    }
+
+    &__content {
+
+        display: flex;
+        gap: 1.6rem;
+
+        margin-top: 4rem;
+        margin-left: 8rem;
+    }
+
+    &__input-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 29rem;
+        height: 29rem;
+
+        border: 2px solid $color-light-grey-3;
+        border-radius: 2px;
+
+        background-image: url('/icons/CreateEvent/Step1/title.png');
+        background-size: contain;
+        // background-repeat: no-repeat;
+
+        transition: all .4s ease-in-out;
+
+        &:hover {
+            border: 2px solid $color-main-purple;
+        }
+
+        cursor: pointer;
+
+        &>input {
+            display: none;
+        }
+
+        &>button {
+            font-size: 3rem;
+
+            width: 7.2rem;
+            height: 7.2rem;
+
+            border-radius: 50%;
+
+            background-color: $color-main-purple;
+
+            color: #fff;
+
+            border: 2px solid $color-main-purple;
+
+            cursor: pointer;
+
+            margin-bottom: 8px;
+
+            transition: all .4s ease-in-out;
+
+            pointer-events: none;
+
+            // &:hover {
+            //     background-color: transparent;
+            //     color: $color-main-purple;
+            // }
+        }
+    }
+
+    &__input-imgs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 29rem;
+        height: 29rem;
+
+
+
+        border: 2px solid $color-light-grey-3;
+        border-radius: 2px;
+
+
+        transition: all .4s ease-in-out;
+
+        &:hover {
+            border: 2px solid $color-main-purple;
+        }
+
+        cursor: pointer;
+
+        &>input {
+            display: none;
+        }
+
+        &>button {
+            font-size: 3rem;
+
+            width: 7.2rem;
+            height: 7.2rem;
+
+            border-radius: 50%;
+
+            background-color: $color-main-purple;
+
+            color: #fff;
+
+            border: 2px solid $color-main-purple;
+
+            cursor: pointer;
+
+            margin-bottom: 8px;
+
+            transition: all .4s ease-in-out;
+
+            pointer-events: none;
+
+            // &:hover {
+            //     background-color: transparent;
+            //     color: $color-main-purple;
+            // }
+        }
+    }
+
+    &__btn {
+        display: flex;
+        justify-content: flex-end;
+
+        margin-top: 6.4rem;
     }
 }

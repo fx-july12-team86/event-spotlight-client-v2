@@ -55,7 +55,7 @@
                 &::before {
                     content: '';
                     display: inline-block;
-                    mask-image: url('/icons/Home/eventDetails/calendar.svg');
+                    mask-image: url('/icons/General/calendar.svg');
                     width: 2rem;
                     height: 2rem;
                     background-color: #F5F5F7;
@@ -87,7 +87,7 @@
             &::before {
                 content: '';
                 display: inline-block;
-                mask-image: url('/icons/Home/eventDetails/geolocation.svg');
+                mask-image: url('/icons/General/geolocation.svg');
                 width: 1.4rem;
                 height: 2rem;
                 background-color: #F5F5F7;
@@ -113,7 +113,7 @@
                 width: 2rem;
                 height: 1.4rem;
 
-                mask-image: url('/icons/Home/eventDetails/currency.svg');
+                mask-image: url('/icons/General/currency.svg');
                 mask-size: contain;
                 mask-repeat: no-repeat;
                 background-repeat: no-repeat;

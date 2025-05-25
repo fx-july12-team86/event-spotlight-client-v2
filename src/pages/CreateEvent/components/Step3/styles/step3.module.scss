@@ -1,0 +1,138 @@
+.container {
+    margin-top: 6rem;
+
+    width: fit-content;
+
+    &__header {
+        display: flex;
+
+        // align-items: center;
+        gap: 7rem;
+    }
+
+    &__step-number {
+        font-weight: 600;
+        font-size: 4rem;
+
+        color: $color-main-purple;
+    }
+
+    &__step-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        justify-content: center;
+    }
+
+    &__step-title {
+        font-weight: 600;
+        font-size: 4rem;
+        letter-spacing: .01rem;
+        text-transform: uppercase;
+
+        color: $color-dark-grey;
+    }
+
+    &__step-description {
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.8rem;
+        letter-spacing: .01rem;
+
+        color: $color-dark-grey;
+    }
+
+    &__content {
+        margin-top: 4rem;
+        margin-left: 8rem;
+
+        position: relative;
+
+        width: fit-content;
+
+        &>textarea {
+
+            width: 90rem;
+            height: 29rem;
+
+            border-width: 1px solid $color-medium-grey;
+            border-radius: 2px;
+            resize: none;
+
+
+            padding-top: 1.6rem;
+            padding-left: 1.6rem;
+
+            font-family: Inter, sans-serif;
+            font-weight: 400;
+            font-size: 1.8rem;
+            color: $color-dark-grey;
+
+            &::placeholder {
+                font-family: Inter, sans-serif;
+                font-weight: 400;
+                font-size: 1.8rem;
+                letter-spacing: .01rem;
+
+                color: $color-dark-grey;
+            }
+        }
+    }
+
+    &__count {
+        color: $color-main-purple;
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.6rem;
+        letter-spacing: .01rem;
+
+
+
+
+        position: absolute;
+
+        bottom: 1.6rem;
+        right: 2.4rem;
+    }
+
+    &__btns {
+        margin-top: 6.4rem;
+
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+        justify-content: end;
+
+    }
+
+    &__beforeBtn {
+        width: 13rem;
+        height: 2.4rem;
+
+        border: none;
+        background-color: transparent;
+
+
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.6rem;
+        letter-spacing: .01rem;
+        text-align: center;
+
+        color: $color-dark-grey;
+
+        text-decoration: underline;
+        text-underline-offset: 4px;
+
+        cursor: pointer;
+
+        transition: all .4s ease-in-out;
+
+        &:hover {
+            color: $color-medium-grey;
+        }
+    }
+
+
+}

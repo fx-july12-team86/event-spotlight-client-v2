@@ -65,6 +65,7 @@ function Catalog() {
         pageFromUrl - 1,
         sortBy
       );
+      console.log(data);
       dispatch(updateCatalogEvents(data));
       setCurrentPage(pageFromUrl);
       setFirstLoad(false);
@@ -86,6 +87,7 @@ function Catalog() {
   function handleSetPage(page) {
     const params = new URLSearchParams(searchParams);
     params.set("page", page);
+    params.set("trigger", "1");
     setSearchParams(params, { replace: true });
     setCurrentPage(page);
   }

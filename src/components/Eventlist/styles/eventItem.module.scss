@@ -1,6 +1,7 @@
 .event-item {
     width: 30rem;
-    height: 67.5rem;
+    // height: 67.5rem;
+    height: 80rem;
     border-radius: 2px;
     border: 2px solid $color-medium-grey;
 
@@ -84,12 +85,13 @@
     }
 
     &__content {
-        height: 85%;
+        // height: 85%;
+        height: 70%;
 
         display: flex;
         flex-direction: column;
-        // justify-content: space-between;
-        gap: 6rem;
+        justify-content: space-between;
+        // gap: 6rem;
     }
 
     &__details-list {
@@ -138,7 +140,7 @@
         &::before {
             content: '';
             display: inline-block;
-            mask-image: url('/icons/Home/eventDetails/calendar.svg');
+            mask-image: url('/icons/General/calendar.svg');
             width: 2rem;
             height: 2rem;
             background-color: $color-main-dark;
@@ -168,7 +170,7 @@
         &::before {
             content: '';
             display: inline-block;
-            mask-image: url('/icons/Home/eventDetails/geolocation.svg');
+            mask-image: url('/icons/General/geolocation.svg');
             width: 1.4rem;
             height: 2rem;
             background-color: $color-main-dark;
@@ -197,7 +199,7 @@
             width: 2rem;
             height: 1.4rem;
 
-            mask-image: url('/icons/Home/eventDetails/currency.svg');
+            mask-image: url('/icons/General/currency.svg');
             mask-size: contain;
             mask-repeat: no-repeat;
             background-repeat: no-repeat;

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import styles from "./styles/select.module.scss";
 
-import { updateSortBy } from "../../../../context/filtersSlice";
+import { updateSortBy } from "../../context/filtersSlice";
 const options = [
   "За датою",
   "За назвою (від А до Я)",
@@ -23,24 +23,24 @@ function Select() {
   }
 
   return (
-    <ul
+    <div
       onClick={() => setIsOpen((isOpen) => !isOpen)}
-      className={`${styles.select} ${isOpen ? styles.isOpen : ""}`}>
-      <div className={styles.select__header}>{selected}</div>
-      <ul className={styles.select__options}>
+      className={`${styles["select"]} ${isOpen ? styles["isOpen"] : ""}`}>
+      <div className={styles["select__header"]}>{selected}</div>
+      <ul className={styles["select__options"]}>
         {options.map((option) => (
           <li
             onClick={() => {
               SetSelected(option);
               handleUpdateSortBy(option);
             }}
-            className={styles.select__options__item}
+            className={styles["select__options__item"]}
             key={option}>
             {option}
           </li>
         ))}
       </ul>
-    </ul>
+    </div>
   );
 }
 

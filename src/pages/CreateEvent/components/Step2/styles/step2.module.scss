@@ -1,0 +1,314 @@
+.container {
+    margin-top: 6rem;
+
+    width: fit-content;
+
+    &__header {
+        display: flex;
+
+        // align-items: center;
+        gap: 7rem;
+    }
+
+    &__step-number {
+        font-weight: 600;
+        font-size: 4rem;
+
+        color: $color-main-purple;
+    }
+
+    &__step-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        justify-content: center;
+    }
+
+    &__step-title {
+        font-weight: 600;
+        font-size: 4rem;
+        letter-spacing: .01rem;
+        text-transform: uppercase;
+
+        color: $color-dark-grey;
+    }
+
+    &__step-description {
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.8rem;
+        letter-spacing: .01rem;
+
+        color: $color-dark-grey;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+
+
+        margin-top: 4rem;
+        margin-left: 8rem;
+    }
+
+    &__event-name,
+    &__adress,
+    &__price,
+    &__adress--online,
+    &__price--online,
+    &__date,
+    &__time {
+        &>label {
+            font-family: Inter, sans-serif;
+            font-weight: 400;
+            font-size: 1.8rem;
+            letter-spacing: .01rem;
+            color: $color-dark-grey;
+        }
+    }
+
+    &__event-name {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        &>input {
+            height: 6.4rem;
+
+            text-indent: 2.4rem;
+
+            font-family: Inter, sans-serif;
+            font-weight: 400;
+            font-size: 1.8rem;
+            letter-spacing: .01rem;
+
+            border: 1px solid $color-medium-grey;
+
+            &::placeholder {
+                // padding-left: 2.4rem;
+
+                font-family: Inter, sans-serif;
+                font-weight: 400;
+                font-size: 1.8rem;
+                letter-spacing: .01rem;
+
+                color: $color-medium-grey;
+            }
+        }
+    }
+
+    &__container-adress,
+    &__container-price,
+    &__container-date,
+    &__container-date-time {
+        display: flex;
+        align-items: center;
+        gap: 2.4rem;
+    }
+
+    &__adress,
+    &__price,
+    &__date,
+    &__time {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    &__adress-wrapper,
+    &__price-wrapper,
+    &__date-wrapper,
+    &__time-wrapper {
+        &>input[type="text"] {
+            width: 43.7rem;
+            height: 6.4rem;
+
+            text-indent: 4.6rem;
+
+            &::placeholder {
+                font-family: Inter, sans-serif;
+                font-weight: 400;
+                font-size: 1.8rem;
+                letter-spacing: .01rem;
+                color: $color-medium-grey;
+            }
+        }
+    }
+
+    &__adress-wrapper {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: inline-block;
+
+            width: 1.4rem;
+            height: 2rem;
+
+            mask-image: url('/icons/General/geolocation.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-repeat: no-repeat;
+
+            background-color: $color-main-dark;
+
+            position: absolute;
+            top: 50%;
+            left: 2.2rem;
+            transform: translateY(-50%);
+
+        }
+
+
+    }
+
+    &__adress--online,
+    &__price--online {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+
+        transform: translateY(1.1rem);
+
+        &>input[type="checkbox"] {
+            width: 2.4rem;
+            height: 2.4rem;
+        }
+    }
+
+    &__price-wrapper {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: inline-block;
+
+            width: 2rem;
+            height: 1.4rem;
+
+            mask-image: url('/icons/General/currency.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-repeat: no-repeat;
+
+            background-color: $color-main-dark;
+
+            position: absolute;
+            top: 50%;
+            left: 2.2rem;
+            transform: translateY(-50%);
+
+        }
+
+        &::after {
+            content: '';
+            display: inline-block;
+
+            width: 2.4rem;
+            height: 2.4rem;
+
+            background-image: url('/icons/General/UAH.svg');
+
+            position: absolute;
+            top: 50%;
+            right: 2.2rem;
+            transform: translateY(-50%);
+        }
+    }
+
+    &__container-date-time {
+        display: flex;
+        gap: 2.4rem;
+    }
+
+    &__date-wrapper {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: inline-block;
+
+            width: 2rem;
+            height: 2rem;
+
+            mask-image: url('/icons/General/calendar.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-repeat: no-repeat;
+
+            background-color: $color-main-dark;
+
+            position: absolute;
+            top: 50%;
+            left: 2.2rem;
+            transform: translateY(-50%);
+
+        }
+    }
+
+    &__time-wrapper {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: inline-block;
+
+            width: 2rem;
+            height: 2rem;
+
+            mask-image: url('/icons/General/clock.svg');
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            background-repeat: no-repeat;
+
+            background-color: $color-main-dark;
+
+            position: absolute;
+            top: 50%;
+            left: 2.2rem;
+            transform: translateY(-50%);
+
+        }
+    }
+
+    &__btns {
+        margin-top: 6.4rem;
+
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+        justify-content: end;
+
+    }
+
+    &__beforeBtn {
+        width: 13rem;
+        height: 2.4rem;
+
+        border: none;
+        background-color: transparent;
+
+
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.6rem;
+        letter-spacing: .01rem;
+        text-align: center;
+
+        color: $color-dark-grey;
+
+        text-decoration: underline;
+        text-underline-offset: 4px;
+
+        cursor: pointer;
+
+        transition: all .4s ease-in-out;
+
+        &:hover {
+            color: $color-medium-grey;
+        }
+    }
+}
