@@ -3,29 +3,36 @@ import { useState } from "react";
 import styles from "./styles/step3.module.scss";
 
 import Button from "../../../../components/Buttons/Button";
+import Header from "../Header/Header";
 
-function Step3({ currentStep, onSetCurrentStep }) {
-  const [description, setDescription] = useState("");
+function Step3({ onSetCurrentStep, description, onSetDescription }) {
+  const [errorMessage, setErrorMessage] = useState("");
+
+  function handleNextStep() {
+    if (!description) {
+      setErrorMessage("Створіть опис до івента");
+      return;
+    }
+    onSetCurrentStep((step) => step + 1);
+  }
 
   return (
     <div className={styles["container"]}>
-      <header className={styles["container__header"]}>
-        <span className={styles["container__step-number"]}>3</span>
-        <div className={styles["container__step-info"]}>
-          <h3 className={styles["container__step-title"]}>Опис події</h3>
-          <p className={styles["container__step-description"]}>
-            Опис повинен мати усі ключові деталі події, окрім тих, що були
-            заповнені на кроці 2
-          </p>
-        </div>
-      </header>
+      <Header
+        step={3}
+        title={"Опис події"}
+        description={
+          "Опис повинен мати усі ключові деталі події, окрім тих, що були заповнені на кроці 2"
+        }
+        errorMessage={errorMessage}
+      />
       <div className={styles["container__content"]}>
         <textarea
           placeholder="Майстер-клас з миловаріння для дорослих та дітей"
           maxLength={1000}
           value={description}
           onChange={(event) => {
-            setDescription(event.target.value);
+            onSetDescription(event.target.value);
           }}
         />
         <p className={styles["container__count"]}>{description.length}/1000</p>
@@ -39,7 +46,7 @@ function Step3({ currentStep, onSetCurrentStep }) {
         <Button
           width={36}
           height={6.4}
-          onClick={() => onSetCurrentStep((step) => step + 1)}>
+          onClick={handleNextStep}>
           Наступний крок
         </Button>
       </div>

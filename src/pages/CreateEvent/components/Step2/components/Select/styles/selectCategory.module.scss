@@ -1,5 +1,12 @@
 .container {
+    &--blocked {
+        background-color: $color-light-grey-5;
+        pointer-events: none;
+    }
+
     &__selected {
+        position: relative;
+
         width: 43.7rem;
         height: 6.4rem;
 
@@ -23,7 +30,7 @@
             mask-repeat: no-repeat;
             background-color: #494A4E;
 
-            transform: translateY(-2px) rotate(-180deg);
+            transform: translateY(2px) rotate(-180deg);
 
             transition: all 0.4s ease-in-out;
 
@@ -47,11 +54,14 @@
         border-bottom: none;
 
         &::after {
-            transform: translateY(-2px) rotate(0);
+            transform: translateY(2px) rotate(0);
         }
     }
 
     &__list-container {
+        position: absolute;
+        z-index: 2;
+
         width: 43.7rem;
 
         overflow: hidden;
@@ -59,6 +69,7 @@
         border: 1px solid $color-medium-grey;
         border-top: none;
         border-bottom: none;
+        background-color: #fff;
 
         transition: max-height 0.4s ease-in-out;
 
@@ -67,10 +78,15 @@
     }
 
     &__list-container--open {
+        position: absolute;
+        z-index: 2;
+
         max-height: 61.3rem;
 
         border: 1px solid $color-medium-grey;
         border-top: none;
+        background-color: #fff;
+
     }
 
     &__list {

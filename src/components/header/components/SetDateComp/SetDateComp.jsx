@@ -1,15 +1,9 @@
-import { useDispatch } from "react-redux";
-
-import { updateRangeDate } from "../../../../context/filtersSlice";
-
 import styles from "./styles/setDateComp.module.scss";
 
 import Button from "../../../Buttons/Button";
 import CalendarComp from "../../../Calendar/CalendarComp";
 
 function SetDateComp({ isHidden }) {
-  const dispatch = useDispatch();
-
   return (
     <div
       className={`${styles["total-box"]} ${

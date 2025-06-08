@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./styles/accountMenu.module.scss";
 
-import {
-  updateIsAuthenticated,
-  updateToken,
-} from "../../../../context/userSlice";
+import { logOut as logOutAction } from "../../../../context/userSlice";
 
 function AccountMenu({ isHidden, onHandleToggleLogin }) {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -16,11 +13,9 @@ function AccountMenu({ isHidden, onHandleToggleLogin }) {
   const dispatch = useDispatch();
 
   function logOut() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("isAuthenticated");
-    dispatch(updateToken(null));
-    dispatch(updateIsAuthenticated(false));
-
+    // dispatch(updateToken(null));
+    // dispatch(updateIsAuthenticated(false));
+    dispatch(logOutAction());
     navigate("/");
   }
 

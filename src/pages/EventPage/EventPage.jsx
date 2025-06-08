@@ -11,7 +11,7 @@ import EventList from "../../components/Eventlist/EventList";
 import Button from "../../components/Buttons/Button";
 
 import { getEventById, getEventsByFilter } from "../../services/apiEvents";
-import { updateCurrentEventData } from "../../Context/currentEventSlice";
+import { setCurrentEventData } from "../../context/currentEventSlice";
 
 function EventPage() {
   const [selected, setSelected] = useState("details");
@@ -20,7 +20,7 @@ function EventPage() {
   const [eventDataFetch, similarEventsWithoutCurrent] = useLoaderData();
 
   useEffect(() => {
-    dispatch(updateCurrentEventData(eventDataFetch));
+    dispatch(setCurrentEventData(eventDataFetch));
   }, [dispatch, eventDataFetch]);
 
   const scrollTo = useRef(null);

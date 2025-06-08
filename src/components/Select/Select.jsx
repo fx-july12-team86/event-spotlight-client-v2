@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import styles from "./styles/select.module.scss";
 
-import { updateSortBy } from "../../context/filtersSlice";
+import { setSortBy } from "../../context/filtersSlice";
 const options = [
   "За датою",
   "За назвою (від А до Я)",
@@ -19,7 +19,7 @@ function Select() {
   const dispatch = useDispatch();
 
   function handleUpdateSortBy(option) {
-    dispatch(updateSortBy(option));
+    dispatch(setSortBy(option));
   }
 
   return (

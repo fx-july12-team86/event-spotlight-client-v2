@@ -2,7 +2,7 @@ import styles from "./styles/geolocation.module.scss";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { toggleSelectCity } from "../../../../context/citySlice";
+import { updateSelectCity } from "../../../../context/citySlice";
 
 function Geolocation({ isHidden, onSetIsHiddenGeo }) {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ function Geolocation({ isHidden, onSetIsHiddenGeo }) {
         type="button"
         className={styles["box__change"]}
         onClick={() => {
-          dispatch(toggleSelectCity(true));
+          dispatch(updateSelectCity(true));
           onSetIsHiddenGeo(true);
         }}>
         Обрати інше місто

@@ -80,6 +80,11 @@ function EventItem({ data }) {
         src={coverImgURL}
         alt="Photo of event"
         onLoad={() => setIsLoading(false)}
+        onError={(e) => {
+          e.currentTarget.src =
+            "https://www.dropbox.com/scl/fi/lnbtdy7h2mz8osirh6qbw/template.jpg?rlkey=3l439e4cauh42lg0ie5b4aqcq&raw=1";
+          setIsLoading(false);
+        }}
       />
       <div className={styles["event-item__description"]}>
         <div className={styles["event-item__header"]}>
@@ -96,10 +101,12 @@ function EventItem({ data }) {
           <h3 className={styles["event-item__title"]}>{titleCheckedLength}</h3>
           <article className={styles["event-item__details"]}>
             <ul className={styles["event-item__details-list"]}>
-              <li className={styles["event-item__datetime"]}>
-                <p className={styles["event-item__date"]}>{formatedDate}</p>
-                <p className={styles["event-item__time"]}>{formatedTime}</p>
-              </li>
+              {!formatedDate.includes("1970") && (
+                <li className={styles["event-item__datetime"]}>
+                  <p className={styles["event-item__date"]}>{formatedDate}</p>
+                  <p className={styles["event-item__time"]}>{formatedTime}</p>
+                </li>
+              )}
               <li className={styles["event-item__location"]}>{location}</li>
               <li className={styles["event-item__price"]}>{price} ₴</li>
             </ul>

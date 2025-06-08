@@ -121,10 +121,18 @@ export async function getFavorites() {
     return data
 }
 
-
-// export async function getCategoryById(id) {
-//     const response = await fetch(`${VITE_API_URL}/categories/${id}`)
-//     const data = await response.json()
-
-//     return data
-// }
+export async function deleteEvent(id) {
+    const response = await fetch(`${VITE_API_URL}/events/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization": `Bearer ${localStorage.getItem("token") || ""}`
+        }
+    })
+    if (response.ok) {
+        return true
+    }
+    else {
+        console.error("Помилка при видаленні івента")
+    }
+}

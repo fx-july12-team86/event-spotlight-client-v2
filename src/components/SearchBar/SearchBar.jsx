@@ -8,8 +8,8 @@ import Select from "../../components/Select/Select";
 import CalendarComp from "../Calendar/CalendarComp";
 
 import {
-  updateFilters,
-  updateRangeDate,
+  setFilters,
+  setDateRange,
   toggleFilters,
 } from "../../context/filtersSlice";
 
@@ -17,30 +17,21 @@ import { getEventsCatalog } from "../../services/apiEvents";
 
 import { isValidDateRange } from "../../helpers/date";
 
-import { updateCatalogEvents } from "../../Context/dataEventsSlice";
+import { setCatalogEvents } from "../../context/dataEventsSlice";
+
+import { getAllCategories } from "../../services/apiCategories";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const categories = [
-  "Концерти",
-  "Театр",
-  "Стендап",
-  "Діти",
-  "Фестивалі",
-  "Танці",
-  "Вечірки",
-  "Семінари і тренінги",
-  "Спорт",
-  "Екскурсії",
-  "Творчій вечір",
-  "Інше",
-];
-
 function SearchBar({ isError = false }) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [showAllCategories, setShowAllCategories] = useState(false);
+
+  const [categories, setCategories] = useState([]);
 
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
 
@@ -48,12 +39,14 @@ function SearchBar({ isError = false }) {
 
   const location = useLocation();
 
-  const catalogEvents = useSelector((state) => state.events.catalogEvents);
-
-  const city = useSelector((state) => state.city.city);
   const { filters, datesRangeFormatted, datesRange } = useSelector(
     (store) => store.filters
   );
+
+  const visibleCategories = showAllCategories
+    ? categories
+    : categories.slice(0, 12);
+
   let tottalFilters;
 
   if (datesRangeFormatted) {
@@ -102,7 +95,7 @@ function SearchBar({ isError = false }) {
 
   function handleUpdateFilters(filter) {
     if (isValidDateRange(filter)) {
-      dispatch(updateRangeDate([]));
+      dispatch(setDateRange([]));
     } else {
       dispatch(toggleFilters(filter));
     }
@@ -110,8 +103,13 @@ function SearchBar({ isError = false }) {
 
   function handleAddAllFilters() {
     categories.forEach((category) => {
-      dispatch(updateFilters(category));
+      dispatch(setFilters(category.name));
     });
+  }
+
+  async function fetchCategories() {
+    const categories = await getAllCategories();
+    setCategories(categories);
   }
 
   useEffect(() => {
@@ -136,12 +134,14 @@ function SearchBar({ isError = false }) {
     const dateTo = searchParams.get("dateTo");
 
     if (JSON.stringify(filtersFromUrl) !== JSON.stringify(filters)) {
-      filtersFromUrl.forEach((filter) => dispatch(updateFilters(filter)));
+      filtersFromUrl.forEach((filter) => dispatch(setFilters(filter)));
     }
 
     if (dateFrom && dateTo) {
-      dispatch(updateRangeDate([dateFrom, dateTo]));
+      dispatch(setDateRange([dateFrom, dateTo]));
     }
+
+    fetchCategories();
   }, []);
 
   return (
@@ -241,18 +241,24 @@ function SearchBar({ isError = false }) {
                 }`}>
                 Всі події
               </li>
-              {categories.map((event) => (
+              {visibleCategories.map((event) => (
                 <li
-                  onClick={() => handleUpdateFilters(event)}
-                  key={event}
+                  onClick={() => handleUpdateFilters(event.name)}
+                  key={event.id}
                   className={`${styles["container__containerFilters__event"]} ${
-                    filters.includes(event)
+                    filters.includes(event.name)
                       ? styles["container__containerFilters__event__selected"]
                       : ""
                   }`}>
-                  {event}
+                  {event.name}
                 </li>
               ))}
+              <li
+                key="перемикач"
+                className={styles["container__containerFilters__event"]}
+                onClick={() => setShowAllCategories((state) => !state)}>
+                {!showAllCategories ? "Показати усі" : "Сховати"}
+              </li>
             </ul>
             <h4>Сортування</h4>
             <Select />

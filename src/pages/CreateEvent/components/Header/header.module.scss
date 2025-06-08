@@ -1,0 +1,42 @@
+.header {
+
+    display: inline-grid;
+    grid-template-columns: max-content max-content;
+
+    column-gap: 7rem;
+
+
+    &__step-number {
+        font-weight: 600;
+        font-size: 4rem;
+        grid-column: 1;
+        color: $color-main-purple;
+    }
+
+    &__step-info {
+        grid-column: 2;
+
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    &__step-title {
+        font-weight: 600;
+        font-size: 4rem;
+        letter-spacing: .01rem;
+        text-transform: uppercase;
+
+        color: $color-dark-grey;
+    }
+
+    &__step-description {
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.8rem;
+        letter-spacing: .01rem;
+
+        color: $color-dark-grey;
+    }
+}

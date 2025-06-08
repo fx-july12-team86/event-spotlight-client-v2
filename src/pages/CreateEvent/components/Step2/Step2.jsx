@@ -2,36 +2,68 @@ import { useState } from "react";
 
 import styles from "./styles/step2.module.scss";
 
-import SelectCategory from "./components/SelectCategory/SelectCategory";
+import Select from "./components/Select/Select";
+
 import Button from "../../../../components/Buttons/Button";
+import Header from "../Header/Header";
 
-function Step2({ currentStep, onSetCurrentStep }) {
-  const [title, setTitle] = useState("");
+function Step2({
+  onSetCurrentStep,
+  title,
+  allCategories,
+  allCities,
+  onSetTitle,
+  category,
+  onSetCategory,
+  street,
+  onSetStreet,
+  city,
+  onSetCity,
+  isOnline,
+  onSetIsOnline,
+  price,
+  onSetPrice,
+  isFree,
+  onSetIsFree,
+  date,
+  onSetDate,
+  time,
+  onSetTime,
+}) {
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [category, setCategory] = useState("Оберіть категорію");
+  function hasEmptyRequiredFields() {
+    if (!title.trim()) return true;
 
-  const [adress, setAdress] = useState("");
-  const [isOnline, setIsOnline] = useState(false);
+    if (!category?.id) return true;
 
-  const [price, setPrice] = useState("");
-  const [isFree, setIsFree] = useState(false);
+    if (!date || !time) return true;
 
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+    if (!isFree && !price.trim()) return true;
+
+    if (!isOnline) {
+      if (!street.trim() || !city?.id) return true;
+    }
+
+    return false;
+  }
+  function handleNextPage() {
+    if (hasEmptyRequiredFields()) {
+      setErrorMessage("Заповніть необхідні поля");
+      return;
+    }
+
+    onSetCurrentStep((step) => step + 1);
+  }
 
   return (
     <div className={styles["container"]}>
-      <header className={styles["container__header"]}>
-        <span className={styles["container__step-number"]}>2</span>
-        <div className={styles["container__step-info"]}>
-          <h3 className={styles["container__step-title"]}>
-            інформація про подію
-          </h3>
-          <p className={styles["container__step-description"]}>
-            Усі поля обов’язкові до заповнення!
-          </p>
-        </div>
-      </header>
+      <Header
+        step={2}
+        title={"інформація про подію"}
+        description={"Усі поля обов’язкові до заповнення!"}
+        errorMessage={errorMessage}
+      />
       <div className={styles["container__content"]}>
         <div className={styles["container__event-name"]}>
           <label htmlFor="title">Назва події</label>
@@ -39,35 +71,45 @@ function Step2({ currentStep, onSetCurrentStep }) {
             type="text"
             id="title"
             placeholder="Майстер-клас з миловаріння"
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => onSetTitle(event.target.value)}
             value={title}
             required
           />
         </div>
-        <SelectCategory
-          category={category}
-          onSetCategory={setCategory}
+        <Select
+          currentOption={category}
+          allOptions={allCategories}
+          onSetOption={onSetCategory}
         />
-        <div className={styles["container__container-adress"]}>
-          <div className={styles["container__adress"]}>
-            <label htmlFor="adress">Адреса проведення</label>
-            <div className={styles["container__adress-wrapper"]}>
+        <div className={styles["container__container-address"]}>
+          <div className={styles["container__street"]}>
+            <label htmlFor="street">Адреса проведення</label>
+            <div className={styles["container__street-wrapper"]}>
               <input
                 type="text"
-                id="adress"
-                placeholder="вул. Добровольска 34а, Київ"
+                id="street"
+                placeholder="вул. Добровольска 34а"
                 disabled={isOnline}
-                value={adress}
-                onChange={(event) => setAdress(event.target.value)}
+                value={street}
+                onChange={(event) => onSetStreet(event.target.value)}
               />
             </div>
           </div>
-          <div className={styles["container__adress--online"]}>
+          <div className={styles["container__city"]}>
+            <label>Місто проведення</label>
+            <Select
+              currentOption={city}
+              allOptions={allCities}
+              onSetOption={onSetCity}
+              isBlocked={isOnline}
+            />
+          </div>
+          <div className={styles["container__address--online"]}>
             <input
               id="isOnline"
               type="checkbox"
               checked={isOnline}
-              onChange={(event) => setIsOnline(event.target.checked)}
+              onChange={(event) => onSetIsOnline(event.target.checked)}
             />
             <label htmlFor="isOnline">Онлайн</label>
           </div>
@@ -82,7 +124,7 @@ function Step2({ currentStep, onSetCurrentStep }) {
                 placeholder="350"
                 disabled={isFree}
                 value={price}
-                onChange={(event) => setPrice(event.target.value)}
+                onChange={(event) => onSetPrice(event.target.value)}
               />
             </div>
           </div>
@@ -91,7 +133,7 @@ function Step2({ currentStep, onSetCurrentStep }) {
               id="isFree"
               type="checkbox"
               checked={isFree}
-              onChange={(event) => setIsFree(event.target.checked)}
+              onChange={(event) => onSetIsFree(event.target.checked)}
             />
             <label htmlFor="isFree">Безкоштовно</label>
           </div>
@@ -105,7 +147,7 @@ function Step2({ currentStep, onSetCurrentStep }) {
                 id="date"
                 placeholder="21.07.2024"
                 value={date}
-                onChange={(event) => setDate(event.target.value)}
+                onChange={(event) => onSetDate(event.target.value)}
               />
             </div>
           </div>
@@ -117,7 +159,7 @@ function Step2({ currentStep, onSetCurrentStep }) {
                 id="time"
                 placeholder="18:30"
                 value={time}
-                onChange={(event) => setTime(event.target.value)}
+                onChange={(event) => onSetTime(event.target.value)}
               />
             </div>
           </div>
@@ -132,7 +174,7 @@ function Step2({ currentStep, onSetCurrentStep }) {
         <Button
           width={36}
           height={6.4}
-          onClick={() => onSetCurrentStep((step) => step + 1)}>
+          onClick={handleNextPage}>
           Наступний крок
         </Button>
       </div>

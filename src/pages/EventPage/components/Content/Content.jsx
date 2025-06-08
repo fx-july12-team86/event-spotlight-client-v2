@@ -77,7 +77,7 @@ function Contacts({ tabs, scrollTo }) {
       className={styles["container__contacts"]}
       ref={scrollTo}>
       {contacts.map(([key, value]) => {
-        if (!value) return null; // 🔥 Пропускаємо
+        if (!value) return null;
 
         let href = "#";
         if (key === "phoneNumber") href = `tel:${value}`;
@@ -101,39 +101,6 @@ function Contacts({ tabs, scrollTo }) {
         );
       })}
     </ul>
-    // <ul
-    //   className={styles["container__contacts"]}
-    //   ref={scrollTo}>
-    //   {contacts.map(([key, value]) => {
-    //     return (
-    //       <li
-    //         key={key}
-    //         className={styles[`container__${key}`]}>
-    //         {!value
-    //           ? key === "phoneNumber" && <a href={`tel:${value}`}>{value}</a>
-    //           : ""}
-    //         {!value
-    //           ? key === "email" && <a href={`mailto:${value}`}>{value}</a>
-    //           : ""}
-    //         {!value
-    //           ? key === "instagram" && (
-    //               <a href={`https://www.instagram.com/${value}`}>{value}</a>
-    //             )
-    //           : ""}
-    //         {!value
-    //           ? key === "telegram" && (
-    //               <a href={`https://t.me/${value}`}>{value}</a>
-    //             )
-    //           : ""}
-    //         {!value
-    //           ? key === "facebook" && (
-    //               <a href={`https://www.facebook.com/${value}`}>{value}</a>
-    //             )
-    //           : ""}
-    //       </li>
-    //     );
-    //   })}
-    // </ul>
   );
 }
 

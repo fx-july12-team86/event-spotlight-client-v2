@@ -6,7 +6,11 @@ import styles from "./styles/content.module.scss";
 
 import ActiveEvents from "./components/ActiveEvents/ActiveEvents";
 
-function Content() {
+function Content({
+  approveDeleteEvent,
+  onSetApproveDeleteEvent,
+  onSetIdEventDelete,
+}) {
   const [activeTab, setActiveTab] = useState("active");
 
   const navigate = useNavigate();
@@ -69,7 +73,14 @@ function Content() {
             <p>Додати подію</p>
           </div>
         </div>
-        {activeTab === "active" && <ActiveEvents events={userEventsData} />}
+        {activeTab === "active" && (
+          <ActiveEvents
+            approveDeleteEvent={approveDeleteEvent}
+            onSetApproveDeleteEvent={onSetApproveDeleteEvent}
+            onSetIdEventDelete={onSetIdEventDelete}
+            events={userEventsData}
+          />
+        )}
       </div>
     </div>
   );

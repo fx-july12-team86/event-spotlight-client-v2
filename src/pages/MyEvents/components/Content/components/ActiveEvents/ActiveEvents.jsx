@@ -2,15 +2,23 @@ import { useState } from "react";
 
 import styles from "./styles/activeEvents.module.scss";
 
+import { deleteEvent } from "../../../../../../services/apiEvents";
+
 import Spinner from "../../../../../../components/Spinner/Spinner";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-function ActiveEvents({ events }) {
+function ActiveEvents({
+  approveDeleteEvent,
+  onSetApproveDeleteEvent,
+  onSetIdEventDelete,
+  events,
+}) {
   const [isLoading, setIsLoading] = useState(true);
 
   return events.map((event) => {
     const imgUrl = event.photo.sharedUrl.replace("dl=0", "raw=1");
+
     return (
       <div
         key={event.id}
@@ -54,7 +62,11 @@ function ActiveEvents({ events }) {
                 <use href={`${BASE_URL}/icons/MyEvents/pause.svg#pause`}></use>
               </svg>
             </button>
-            <button>
+            <button
+              onClick={() => {
+                onSetApproveDeleteEvent(true);
+                onSetIdEventDelete(event.id);
+              }}>
               <svg className={styles["event-item__svgSizeNormalize"]}>
                 <use href={`${BASE_URL}/icons/MyEvents/delete.svg#trash`}></use>
               </svg>

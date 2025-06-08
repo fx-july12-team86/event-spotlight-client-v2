@@ -8,7 +8,7 @@ import Button from "../Buttons/Button";
 import styles from "./styles/calendarComp.module.scss";
 import "./styles/Calendar.css";
 
-import { updateRangeDate } from "../../context/filtersSlice";
+import { setDateRange } from "../../context/filtersSlice";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -37,7 +37,7 @@ function CalendarComp() {
   const [localDateRange, setLocalDateRange] = useState(datesRange);
 
   useEffect(() => {
-    dispatch(updateRangeDate(localDateRange));
+    dispatch(setDateRange(localDateRange));
   }, [dispatch, localDateRange]);
 
   useEffect(() => {
@@ -100,7 +100,7 @@ function CalendarComp() {
   }
 
   function handleClearDateRange() {
-    dispatch(updateRangeDate([]));
+    dispatch(setDateRange([]));
   }
 
   return (

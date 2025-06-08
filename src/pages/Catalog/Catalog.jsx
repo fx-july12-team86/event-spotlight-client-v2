@@ -9,9 +9,7 @@ import EventList from "../../components/Eventlist/EventList";
 import Pagination from "./components/Pagination/Pagination";
 
 import { getEventsCatalog } from "../../services/apiEvents";
-import { updateCatalogEvents } from "../../Context/dataEventsSlice";
-
-// { categories: filters, dateRange: datesRange, cities: city }
+import { setCatalogEvents } from "../../context/dataEventsSlice";
 
 function Catalog() {
   const [firstLoad, setFirstLoad] = useState(true);
@@ -57,16 +55,13 @@ function Catalog() {
     const shouldFetch = firstLoad || trigger === "1";
     if (!shouldFetch || !city) return;
 
-    // console.log(sortBy);
-
     async function fetchEvents() {
       const data = await getEventsCatalog(
         cleanedParams,
         pageFromUrl - 1,
         sortBy
       );
-      console.log(data);
-      dispatch(updateCatalogEvents(data));
+      dispatch(setCatalogEvents(data));
       setCurrentPage(pageFromUrl);
       setFirstLoad(false);
 
@@ -76,6 +71,8 @@ function Catalog() {
         setSearchParams(params, { replace: true });
       }
     }
+
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 
     fetchEvents();
   }, [searchParams]);

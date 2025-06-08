@@ -14,10 +14,10 @@ import Organizer from "./components/Organizer/Organizer";
 import Spinner from "../../components/Spinner/Spinner";
 
 import {
-  updateGeneralEvents,
-  updateTopEventsCity,
-  updateOnlineEvents,
-} from "../../Context/dataEventsSlice";
+  setGeneralEvents,
+  setTopEventsCity,
+  setOnlineEvents,
+} from "../../context/dataEventsSlice";
 
 import {
   getEvents,
@@ -39,23 +39,15 @@ function Home() {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(updateGeneralEvents(generalEventsFetch));
-  //   dispatch(updateTopEventsCity(topEventsCityFetch));
-  //   dispatch(updateOnlineEvents(eventsOnlineFetch));
-  // }, [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch]);
-
   useEffect(() => {
     async function fetchInitialData() {
       try {
         const [general, online] = await Promise.all([
           getEvents(),
-          // getEventsByCity(city || "Київ"),
           getEventsOnline(),
         ]);
-        dispatch(updateGeneralEvents(general));
-        // dispatch(updateTopEventsCity(topCity));
-        dispatch(updateOnlineEvents(online));
+        dispatch(setGeneralEvents(general));
+        dispatch(setOnlineEvents(online));
         console.log(1);
       } catch (err) {
         console.error("Помилка при завантаженні подій:", err.message);
@@ -72,7 +64,7 @@ function Home() {
       try {
         const topCity = await getEventsByCity(city || "Київ");
 
-        dispatch(updateTopEventsCity(topCity));
+        dispatch(setTopEventsCity(topCity));
         console.log(2);
       } catch (err) {
         console.error("Помилка при завантаженні подій:", err.message);

@@ -55,13 +55,14 @@
     }
 
     &__event-name,
-    &__adress,
+    &__street,
+    &__city,
     &__price,
-    &__adress--online,
+    &__address--online,
     &__price--online,
     &__date,
     &__time {
-        &>label {
+        & label {
             font-family: Inter, sans-serif;
             font-weight: 400;
             font-size: 1.8rem;
@@ -100,7 +101,7 @@
         }
     }
 
-    &__container-adress,
+    &__container-address,
     &__container-price,
     &__container-date,
     &__container-date-time {
@@ -109,7 +110,9 @@
         gap: 2.4rem;
     }
 
-    &__adress,
+
+    &__street,
+    &__city,
     &__price,
     &__date,
     &__time {
@@ -118,7 +121,8 @@
         gap: 1rem;
     }
 
-    &__adress-wrapper,
+    &__street-wrapper,
+    &__city-wrapper,
     &__price-wrapper,
     &__date-wrapper,
     &__time-wrapper {
@@ -138,7 +142,7 @@
         }
     }
 
-    &__adress-wrapper {
+    &__street-wrapper {
         position: relative;
 
         &::before {
@@ -165,7 +169,7 @@
 
     }
 
-    &__adress--online,
+    &__address--online,
     &__price--online {
         display: flex;
         align-items: center;
@@ -178,6 +182,7 @@
             height: 2.4rem;
         }
     }
+
 
     &__price-wrapper {
         position: relative;

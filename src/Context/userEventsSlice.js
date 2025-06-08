@@ -26,8 +26,6 @@ const userEventsSlice = createSlice({
     },
 })
 
-export default userEventsSlice.reducer
+export const { setActiveEvents } = userEventsSlice.actions
 
-export function updateActiveEvents(events) {
-    return { type: "userEvents/setActiveEvents", payload: events }
-}
+export default userEventsSlice.reducer

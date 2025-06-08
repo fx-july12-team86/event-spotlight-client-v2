@@ -51,43 +51,33 @@ const filtersSlice = createSlice({
             state.datesRangeFormatted = formatted;
         },
         setSortBy(state, action) {
-            state.sortBy = action.payload;
+            let optionFilter;
+
+            switch (action.payload) {
+                case "За датою":
+                    optionFilter = ["startTime", "asc"];
+                    break;
+                case "За назвою (від А до Я)":
+                    optionFilter = ["title", "asc"];
+                    break;
+                case "За популярністю":
+                    optionFilter = ["popularity", "asc"];
+                    break;
+                case "За ціною (від найменшої)":
+                    optionFilter = ["price", 'asc'];
+                    break;
+                case "За ціною (від найбільшої)":
+                    optionFilter = ["price", 'desc'];
+                    break;
+                default:
+                    optionFilter = ["startTime", "asc"];
+            }
+            state.sortBy = optionFilter;
         }
     }
 })
 
 
-export default filtersSlice.reducer
+export const { setFilters, toggleFilters, setDateRange, setSortBy } = filtersSlice.actions
 
-export function updateFilters(element) {
-    return { type: 'filter/setFilters', payload: element }
-}
-export function toggleFilters(element) {
-    return { type: 'filter/toggleFilters', payload: element }
-}
-export function updateRangeDate(range) {
-    return { type: 'filter/setDateRange', payload: range }
-}
-export function updateSortBy(option) {
-    let optionFilter;;
-
-    switch (option) {
-        case "За датою":
-            optionFilter = ["startTime", "asc"];
-            break;
-        case "За назвою (від А до Я)":
-            optionFilter = ["title", "asc"];
-            break;
-        case "За популярністю":
-            optionFilter = ["popularity", "asc"];
-            break;
-        case "За ціною (від найменшої)":
-            optionFilter = ["price", 'asc'];
-            break;
-        case "За ціною (від найбільшої)":
-            optionFilter = ["price", 'desc'];
-            break;
-    }
-
-    return { type: 'filter/setSortBy', payload: optionFilter }
-}
+export default filtersSlice.reducer;

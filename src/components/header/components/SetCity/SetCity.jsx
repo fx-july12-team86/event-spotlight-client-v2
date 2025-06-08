@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./styles/setCity.module.scss";
 import {
-  toggleSelectCity,
-  toggleCurrentCity,
+  updateSelectCity,
+  updateCurrentCity,
 } from "../../../../context/citySlice";
+
 import { useSearchParams } from "react-router";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -55,7 +56,7 @@ function SetCity() {
   const selectCity = useSelector((store) => store.city.selectCity);
 
   function handleUpdateCity(city) {
-    dispatch(toggleCurrentCity(city));
+    dispatch(updateCurrentCity(city));
     const params = new URLSearchParams(searchParams);
     params.set("city", city);
     setSearchParams(params, { replace: true });
@@ -71,7 +72,7 @@ function SetCity() {
           <h2>Обери місто</h2>
           <button
             className={styles["background__box__closeBtn"]}
-            onClick={() => dispatch(toggleSelectCity(false))}>
+            onClick={() => dispatch(updateSelectCity(false))}>
             <svg className={styles.svgSizeNormalize}>
               <use
                 href={`${BASE_URL}/icons/Header/navBar/icons.svg#cross`}></use>
@@ -85,7 +86,7 @@ function SetCity() {
           value={chosenCity}
           onChange={(event) => {
             setChosenCity(event.target.value);
-            dispatch(toggleCurrentCity(event.target.value));
+            dispatch(updateSelectCity(event.target.value));
           }}
         />
         <ul className={styles["background__box__cities-list"]}>

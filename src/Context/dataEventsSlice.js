@@ -28,17 +28,10 @@ const dataEventsSlice = createSlice({
     }
 })
 
+export const {
+    setGeneralEvents,
+    setTopEventsCity,
+    setOnlineEvents,
+    setCatalogEvents
+} = dataEventsSlice.actions
 export default dataEventsSlice.reducer
-
-export function updateGeneralEvents(events) {
-    return { type: 'dataEvents/setGeneralEvents', payload: events }
-}
-export function updateTopEventsCity(events) {
-    return { type: 'dataEvents/setTopEventsCity', payload: events }
-}
-export function updateOnlineEvents(events) {
-    return { type: 'dataEvents/setOnlineEvents', payload: events }
-}
-export function updateCatalogEvents(events) {
-    return { type: 'dataEvents/setCatalogEvents', payload: events }
-}

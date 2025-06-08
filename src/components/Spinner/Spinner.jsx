@@ -1,10 +1,10 @@
 import { BallTriangle } from "react-loader-spinner";
 
-function Spinner() {
+function Spinner({ width = 100, height = 100 }) {
   return (
     <BallTriangle
-      height={100}
-      width={100}
+      width={width}
+      height={height}
       radius={5}
       color="#4fa94d"
       ariaLabel="ball-triangle-loading"

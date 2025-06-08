@@ -11,7 +11,7 @@ import SetCity from "./components/SetCity/SetCity";
 import SetDateComp from "./components/SetDateComp/SetDateComp";
 import Authentication from "./components/Authentication/Authentication";
 
-import { toggleCurrentCity } from "../../context/citySlice";
+import { updateCurrentCity } from "../../context/citySlice";
 import { getAddress } from "../../services/apiGeocoding";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -72,13 +72,13 @@ function Header({ headerRef }) {
     async function fetchCity() {
       try {
         const data = await getAddress();
-        dispatch(toggleCurrentCity(data.city));
+        dispatch(updateCurrentCity(data.city));
 
         const params = new URLSearchParams(searchParams);
         params.set("city", data.city);
         setSearchParams(params, { replace: true });
       } catch (err) {
-        dispatch(toggleCurrentCity("Київ"));
+        dispatch(updateCurrentCity("Київ"));
       }
     }
 

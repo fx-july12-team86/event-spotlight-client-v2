@@ -7,18 +7,6 @@ import { formatUkrainianDate } from "../../../../helpers/date";
 
 import Spinner from "../../../../components/Spinner/Spinner";
 
-function copyCurrentUrl() {
-  const currentUrl = window.location.href;
-  navigator.clipboard
-    .writeText(currentUrl)
-    .then(() => {
-      alert("Посилання скопійовано!");
-    })
-    .catch((err) => {
-      console.error("Помилка копіювання: ", err);
-    });
-}
-
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function Header({ onSetSelected, scrollTo }) {
@@ -44,6 +32,18 @@ function Header({ onSetSelected, scrollTo }) {
 
   const location = `${address.street} ${address.number}, м. ${address.cityName}`;
 
+  function copyCurrentUrl() {
+    const currentUrl = window.location.href;
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => {
+        alert("Посилання скопійовано!");
+      })
+      .catch((err) => {
+        console.error("Помилка копіювання: ", err);
+      });
+  }
+
   return (
     <div className={styles["container"]}>
       {!eventData ? (
@@ -66,6 +66,11 @@ function Header({ onSetSelected, scrollTo }) {
             src={photoURL}
             alt="Event photo"
             onLoad={() => setIsLoading(false)}
+            onError={(e) => {
+              e.currentTarget.src =
+                "https://www.dropbox.com/scl/fi/lnbtdy7h2mz8osirh6qbw/template.jpg?rlkey=3l439e4cauh42lg0ie5b4aqcq&raw=1";
+              setIsLoading(false);
+            }}
           />
           <div className={styles["container__description"]}>
             <article className={styles["container__article"]}>

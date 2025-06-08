@@ -45,3 +45,23 @@ export function isValidDateRange(str) {
 
     return isValidDate(parts[0]) && isValidDate(parts[1]);
 }
+
+export function formatTimeCreateEvent(dateStr, timeStr) {
+    if (!dateStr || !timeStr) return null;
+
+    const [day, month, year] = dateStr.split(".");
+    const [hours, minutes] = timeStr.split(":");
+
+    const date = new Date(
+        Date.UTC(
+            Number(year.length === 2 ? "20" + year : year),
+            Number(month) - 1,
+            Number(day),
+            Number(hours),
+            Number(minutes),
+            0
+        )
+    );
+
+    return date.toISOString();
+}

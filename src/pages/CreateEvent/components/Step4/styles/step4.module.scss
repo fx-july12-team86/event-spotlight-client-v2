@@ -56,7 +56,8 @@
     &__email,
     &__instagram,
     &__telegram,
-    &__facebook {
+    &__facebook,
+    &__website {
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -185,6 +186,64 @@
             left: 2.7rem;
 
             transform: translateY(-50%);
+        }
+    }
+
+    &__website-wrapper {
+        position: relative;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 2.4rem;
+            height: 2.4rem;
+
+            position: absolute;
+
+            background-image: url('/icons/General/www.svg');
+
+            top: 50%;
+            left: 2.7rem;
+
+            transform: translateY(-50%);
+        }
+    }
+
+    &__btns {
+        margin-top: 6.4rem;
+
+        display: flex;
+        gap: 2.5rem;
+        align-items: center;
+        justify-content: end;
+
+    }
+
+    &__beforeBtn {
+        width: 13rem;
+        height: 2.4rem;
+
+        border: none;
+        background-color: transparent;
+
+
+        font-family: Inter, sans-serif;
+        font-weight: 400;
+        font-size: 1.6rem;
+        letter-spacing: .01rem;
+        text-align: center;
+
+        color: $color-dark-grey;
+
+        text-decoration: underline;
+        text-underline-offset: 4px;
+
+        cursor: pointer;
+
+        transition: all .4s ease-in-out;
+
+        &:hover {
+            color: $color-medium-grey;
         }
     }
 }

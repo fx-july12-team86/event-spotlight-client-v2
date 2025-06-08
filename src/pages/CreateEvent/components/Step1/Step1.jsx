@@ -3,12 +3,29 @@ import { useState } from "react";
 import styles from "./styles/step1.module.scss";
 
 import Button from "../../../../components/Buttons/Button";
+import Header from "../Header/Header";
 
-function Step1({ onSetCurrentStep }) {
-  const [titlePhoto, setTitlePhoto] = useState(null);
-  const [photo1, setPhoto1] = useState(null);
-  const [photo2, setPhoto2] = useState(null);
+function Step1({
+  onSetCurrentStep,
+  titlePhoto,
+  onSetTitlePhoto,
+  photo1,
+  onSetPhoto1,
+  photo2,
+  onSetPhoto2,
+}) {
+  const [errorMessage, setErrorMessage] = useState("");
 
+  function handleToNextPage() {
+    if (!titlePhoto) {
+      setErrorMessage(
+        "Для переходу на наступний крок повинно бути фото на обкладинку"
+      );
+      return;
+    }
+
+    onSetCurrentStep((step) => step + 1);
+  }
   function handleAddPhoto(event, setPhoto) {
     const file = event.target.files[0];
     if (file) {
@@ -18,43 +35,88 @@ function Step1({ onSetCurrentStep }) {
 
   return (
     <div className={styles["container"]}>
-      <header className={styles["container__header"]}>
-        <span className={styles["container__step-number"]}>1</span>
-        <div className={styles["container__step-info"]}>
-          <h3 className={styles["container__step-title"]}>Зображення події</h3>
-          <p className={styles["container__step-description"]}>
-            Перше зображення буде обкладинкою
-          </p>
-        </div>
-      </header>
+      <Header
+        step={1}
+        title={"зображення події"}
+        description={"Перше зображення буде обкладинкою"}
+        errorMessage={errorMessage}
+      />
       <div className={styles["container__content"]}>
-        <label className={styles["container__input-title"]}>
+        <label
+          className={styles["container__input-title"]}
+          style={
+            titlePhoto
+              ? {
+                  backgroundImage: `url(${URL.createObjectURL(titlePhoto)})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : {}
+          }>
           <input
             type="file"
-            onChange={(event) => handleAddPhoto(event, setTitlePhoto)}
+            onChange={(event) => handleAddPhoto(event, onSetTitlePhoto)}
           />
-          <button type="button">+</button>
+          <button
+            type="button"
+            className={`${
+              titlePhoto ? styles["container__input-btn-hidden"] : ""
+            }`}>
+            +
+          </button>
         </label>
-        <label className={styles["container__input-imgs"]}>
+        <label
+          className={styles["container__input-imgs"]}
+          style={
+            photo1
+              ? {
+                  backgroundImage: `url(${URL.createObjectURL(photo1)})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : {}
+          }>
           <input
             type="file"
-            onChange={(event) => handleAddPhoto(event, setPhoto1)}
+            onChange={(event) => handleAddPhoto(event, onSetPhoto1)}
           />
-          <button type="button">+</button>
+          <button
+            type="button"
+            className={`${
+              photo1 ? styles["container__input-btn-hidden"] : ""
+            }`}>
+            +
+          </button>
         </label>
-        <label className={styles["container__input-imgs"]}>
+        <label
+          className={styles["container__input-imgs"]}
+          style={
+            photo2
+              ? {
+                  backgroundImage: `url(${URL.createObjectURL(photo2)})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : {}
+          }>
           <input
             type="file"
-            onChange={(event) => handleAddPhoto(event, setPhoto2)}
+            onChange={(event) => handleAddPhoto(event, onSetPhoto2)}
           />
-          <button type="button">+</button>
+          <button
+            type="button"
+            className={`${
+              photo2 ? styles["container__input-btn-hidden"] : ""
+            }`}>
+            +
+          </button>
         </label>
       </div>
       <div className={styles["container__btn"]}>
         <Button
           width={36}
           height={6.4}
-          onClick={() => onSetCurrentStep((step) => step + 1)}>
+          onClick={handleToNextPage}>
           Наступний крок
         </Button>
       </div>

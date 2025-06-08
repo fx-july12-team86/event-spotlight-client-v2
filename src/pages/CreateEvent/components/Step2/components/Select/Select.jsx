@@ -2,26 +2,14 @@ import { useState } from "react";
 
 import styles from "./styles/selectCategory.module.scss";
 
-const categories = [
-  "Концерти",
-  "Театр",
-  "Стендап",
-  "Діти",
-  "Фестивалі",
-  "Танці",
-  "Вечірки",
-  "Семінари і тренінги",
-  "Спорт",
-  "Екскурсії",
-  "Творчій вечір",
-  "Інше",
-];
-
-function SelectCategory({ category, onSetCategory }) {
+function Select({ currentOption, allOptions, onSetOption, isBlocked = false }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={styles["container"]}>
+    <div
+      className={`${styles["container"]} ${
+        isBlocked ? styles["container--blocked"] : ""
+      }`}>
       <div
         className={`${styles["container__selected"]} ${
           isOpen ? styles["container__selected--open"] : ""
@@ -30,22 +18,22 @@ function SelectCategory({ category, onSetCategory }) {
         onClick={() => {
           setIsOpen((state) => !state);
         }}>
-        <p>{category}</p>
+        <p>{currentOption.name}</p>
       </div>
       <div
         className={`${styles["container__list-container"]} ${
           isOpen ? styles["container__list-container--open"] : ""
         }`}>
         <ul className={styles["container__list"]}>
-          {categories.map((category) => (
+          {allOptions.map((category) => (
             <li
-              key={category}
+              key={category.id}
               className={styles["container__list-item"]}
               onClick={() => {
-                onSetCategory(category);
+                onSetOption(category);
                 setIsOpen(false);
               }}>
-              {category}
+              {category.name}
             </li>
           ))}
         </ul>
@@ -54,4 +42,4 @@ function SelectCategory({ category, onSetCategory }) {
   );
 }
 
-export default SelectCategory;
+export default Select;

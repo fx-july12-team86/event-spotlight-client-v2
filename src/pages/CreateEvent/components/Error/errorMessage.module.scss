@@ -1,0 +1,16 @@
+.message {
+    display: inline-block;
+
+    font-family: Oswald, sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+
+    color: $color-error-2;
+    background-color: $color-error-4;
+
+
+    margin-top: 2rem;
+    padding: 1rem;
+
+    border: 1px solid $color-error-3;
+}

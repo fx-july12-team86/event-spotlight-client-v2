@@ -14,8 +14,5 @@ const CurrentEventSlice = createSlice({
     }
 })
 
+export const { setCurrentEventData } = CurrentEventSlice.actions
 export default CurrentEventSlice.reducer
-
-export function updateCurrentEventData(data) {
-    return { type: 'currentEvent/setCurrentEventData', payload: data }
-}
