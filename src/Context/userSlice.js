@@ -1,10 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+
+import { checkUserToken } from "../services/apiUser"
 
 const initialState = {
     token: localStorage.getItem("token") || null,
     isAuthenticated: localStorage.getItem("isAuthenticated") ? true : false,
     userId: localStorage.getItem("userId") || null,
 }
+
+export const verifyToken = createAsyncThunk("user/verifyToken", async function (_, thunkAPI) {
+    try {
+        const response = await checkUserToken()
+        console.log(response)
+        return response
+    }
+    catch (error) {
+        return thunkAPI.rejectWithValue('token invalid')
+    }
+})
 
 const userSlice = createSlice({
     name: 'user',
@@ -29,39 +42,18 @@ const userSlice = createSlice({
             localStorage.removeItem("isAuthenticated");
             localStorage.removeItem("userId");
         }
-    }
-    // reducers: {
-    //     updateIsAuthenticated(state, action) {
-    //         if (action) {
-    //             localStorage.setItem("isAuthenticated", true);
-    //         }
-    //         else {
-    //             localStorage.removeItem("isAuthenticated");
-    //         }
-    //         state.isAuthenticated = action.payload
-    //     },
-    //     updateToken(state, action) {
-    //         if (action.payload) {
-    //             localStorage.setItem("token", action.payload);
-    //         }
-    //         else {
-    //             localStorage.removeItem("token");
-    //         }
-    //         state.token = action.payload
-    //     },
-    //     updateUserId(state, action) {
-    //         if (action.payload) {
-    //             localStorage.setItem("userId", action.payload);
-    //         }
-    //         else {
-    //             localStorage.removeItem("userId");
-    //         }
-    //         state.userId = action.payload
+    },
+    extraReducers: (builder) => builder.addCase(verifyToken.rejected, (state) => {
+        state.token = null;
+        state.isAuthenticated = false;
+        state.userId = null;
 
-    //     },
+        localStorage.removeItem("token");
+        localStorage.removeItem("isAuthenticated");
+        localStorage.removeItem("userId");
+    })
 },
 )
 
-// export const { updateIsAuthenticated, updateToken, updateUserId } = userSlice.actions
 export const { logIn, logOut } = userSlice.actions
 export default userSlice.reducer

@@ -32,9 +32,6 @@ function Home() {
     (store) => store.events
   );
 
-  // const [generalEventsFetch, topEventsCityFetch, eventsOnlineFetch] =
-  //   useLoaderData();
-
   const { city } = useSelector((store) => store.city);
 
   const dispatch = useDispatch();
@@ -48,7 +45,6 @@ function Home() {
         ]);
         dispatch(setGeneralEvents(general));
         dispatch(setOnlineEvents(online));
-        console.log(1);
       } catch (err) {
         console.error("Помилка при завантаженні подій:", err.message);
       } finally {
@@ -65,7 +61,6 @@ function Home() {
         const topCity = await getEventsByCity(city || "Київ");
 
         dispatch(setTopEventsCity(topCity));
-        console.log(2);
       } catch (err) {
         console.error("Помилка при завантаженні подій:", err.message);
       } finally {

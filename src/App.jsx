@@ -9,11 +9,12 @@ import EventPage, {
 } from "./pages/EventPage/EventPage";
 import Error from "./components/Error/Error";
 import Catalog from "./pages/Catalog/Catalog";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./providers/PrivateRoute/PrivateRoute";
 import Profile, { loader as profileLoader } from "./pages/Profile/Profile";
 import Favorites, {
   loader as favoritesLoader,
 } from "./pages/Favorites/Favorites";
+
 import MyEvents, { loader as myEventsLoader } from "./pages/MyEvents/MyEvents";
 import CreateEvent from "./pages/CreateEvent/CreateEvent";
 

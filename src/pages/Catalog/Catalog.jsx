@@ -12,8 +12,6 @@ import { getEventsCatalog } from "../../services/apiEvents";
 import { setCatalogEvents } from "../../context/dataEventsSlice";
 
 function Catalog() {
-  const [firstLoad, setFirstLoad] = useState(true);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +29,7 @@ function Catalog() {
   const currentYear = new Date().getFullYear();
 
   useEffect(() => {
+    // debugger;
     const trigger = searchParams.get("trigger");
     const pageParam = searchParams.get("page") || "1";
     const pageFromUrl = parseInt(pageParam);
@@ -52,18 +51,25 @@ function Catalog() {
       )
     );
 
-    const shouldFetch = firstLoad || trigger === "1";
+    const shouldFetch = trigger === "1";
     if (!shouldFetch || !city) return;
-
+    console.log(
+      `trigger:${trigger}`,
+      `pageParam:${pageParam}`,
+      `pageFromUrl:${pageFromUrl}`,
+      `rawParams:`,
+      rawParams
+    );
     async function fetchEvents() {
+      // debugger;
       const data = await getEventsCatalog(
         cleanedParams,
         pageFromUrl - 1,
         sortBy
       );
+      console.log(data);
       dispatch(setCatalogEvents(data));
       setCurrentPage(pageFromUrl);
-      setFirstLoad(false);
 
       if (trigger === "1") {
         const params = new URLSearchParams(searchParams);

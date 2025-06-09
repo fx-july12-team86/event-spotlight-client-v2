@@ -84,3 +84,14 @@ export async function getUserEvents() {
 
     return response.json()
 }
+
+export async function checkUserToken() {
+    const response = await fetch(`${VITE_API_URL}/auth/ping`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    })
+    const data = await response.json()
+    return data
+}

@@ -25,11 +25,6 @@
         border: 2px solid $color-main-purple;
     }
 
-    // &:not(:focus):not(:placeholder-shown) {
-    //     background-color: $color-light-grey;
-    //     // background-color: aquamarine;
-    // }
-
     transform: translateX(3.5rem);
 }
 
@@ -41,7 +36,7 @@
 
         display: inline-block;
 
-        background-image: url('/public/icons/Header/navBar/cross.svg');
+        background-image: url('/public/icons/General/cross.svg');
 
         background-repeat: no-repeat;
 

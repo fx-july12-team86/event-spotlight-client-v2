@@ -20,6 +20,7 @@ import { isValidDateRange } from "../../helpers/date";
 import { setCatalogEvents } from "../../context/dataEventsSlice";
 
 import { getAllCategories } from "../../services/apiCategories";
+import { replace } from "lodash";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -60,8 +61,11 @@ function SearchBar({ isError = false }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    for (const [key, value] of searchParams.entries()) {
+      console.log(key, ":", value);
+    }
     const params = new URLSearchParams(searchParams);
-
+    // debugger;
     if (query) params.set("search", query);
     if (filters.length) filters.forEach((f) => params.append("filter", f));
     if (datesRange.length === 2) {
@@ -73,10 +77,15 @@ function SearchBar({ isError = false }) {
     params.set("page", "1");
     params.set("trigger", "1");
 
+    console.log("После изменений:", Object.fromEntries(params.entries()));
     if (location.pathname !== "/catalog") {
-      navigate(`/catalog?${params.toString()}`, { replace: true });
+      navigate(`/catalog?${params.toString()}`);
     } else {
-      setSearchParams(params, { replace: true });
+      // setSearchParams(params, { replace: true });
+
+      if (location.search !== `?${params.toString()}`) {
+        setSearchParams(params, { replace: true });
+      }
     }
 
     setQuery("");

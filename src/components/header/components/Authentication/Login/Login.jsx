@@ -5,13 +5,7 @@ import styles from "./styles/login.module.scss";
 
 import Button from "../../../../Buttons/Button";
 
-import {
-  // updateIsAuthenticated,
-  // updateToken,
-  // updateUserId,
-  logIn,
-  logOut,
-} from "../../../../../context/userSlice";
+import { logIn, logOut } from "../../../../../context/userSlice";
 
 import { LogIn } from "../../../../../services/apiUser";
 
@@ -32,11 +26,6 @@ function Login({ onHandleToggleLogin }) {
 
     try {
       const data = await LogIn(email, password);
-
-      // dispatch(updateIsAuthenticated(true));
-      // dispatch(updateToken(data.token));
-      console.log(data);
-      // dispatch(updateUserId(data.userId));
       dispatch(logIn({ token: data.token, userId: data.id }));
       onHandleToggleLogin();
 
