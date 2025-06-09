@@ -5,7 +5,7 @@ import styles from "./styles/login.module.scss";
 
 import Button from "../../../../Buttons/Button";
 
-import { logIn, logOut } from "../../../../../context/userSlice";
+import { logIn, logOut } from "../../../../../Context/userSlice";
 
 import { LogIn } from "../../../../../services/apiUser";
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 import styles from "./styles/activeEvents.module.scss";
 
@@ -16,13 +17,20 @@ function ActiveEvents({
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
+  const navigate = useNavigate();
+
+  function handleNavigateToEventPage(id) {
+    navigate(`/event/${id}`);
+  }
+
   return events.map((event) => {
     const imgUrl = event.photo.sharedUrl.replace("dl=0", "raw=1");
 
     return (
       <div
         key={event.id}
-        className={styles["event-item"]}>
+        className={styles["event-item"]}
+        onClick={() => handleNavigateToEventPage(event.id)}>
         {isLoading && (
           <div
             style={{

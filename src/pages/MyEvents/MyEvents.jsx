@@ -23,7 +23,7 @@ function MyEvents() {
 
   const dispatch = useDispatch();
 
-  const userEvents = useLoaderData();
+  let userEvents = useLoaderData();
 
   useEffect(() => {
     dispatch(setActiveEvents(userEvents.eventDtos));
@@ -42,6 +42,8 @@ function MyEvents() {
 
     if (response) {
       setIsDeletingEvent(false);
+      setApproveDeleteEvent(false);
+      userEvents = userEvents.filter((event) => event.id !== idEventDelete);
     }
   }
 

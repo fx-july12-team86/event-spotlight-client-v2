@@ -1,6 +1,6 @@
 .event-item {
     width: 30rem;
-    height: 63rem;
+    height: 80rem;
 
     border-radius: 2px;
     border: 2px solid $color-medium-grey;
@@ -32,7 +32,7 @@
 
     &__description {
         padding: 2.4rem;
-        height: 54%;
+        height: 46%;
 
         display: flex;
         flex-direction: column;
