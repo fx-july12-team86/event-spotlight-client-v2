@@ -17,7 +17,8 @@ export async function deletePhotos(id) {
 }
 
 export async function updateAddress(cityId, street, number, addressId) {
-    const response = await fetch(`${VITE_API_URL}/addresses${addressId}`, {
+    debugger
+    const response = await fetch(`${VITE_API_URL}/addresses/${addressId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
