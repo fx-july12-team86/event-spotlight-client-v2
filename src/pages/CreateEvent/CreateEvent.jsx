@@ -9,6 +9,8 @@ import Step2 from "./components/Step2/Step2";
 import Step3 from "./components/Step3/Step3";
 import Step4 from "./components/Step4/Step4";
 
+import Spinner from "../../components/Spinner/Spinner";
+
 import { getAllCategories } from "../../services/apiCategories";
 import { getAllCities } from "../../services/apiCities";
 import {
@@ -30,6 +32,7 @@ import { formatTimeCreateEvent } from "../../helpers/date";
 function CreateEvent({ mode }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [isValidStep4, setIsValidStep4] = useState(null);
+  const [isUploadingData, setIsUploadingData] = useState(false);
 
   const navigate = useNavigate();
 
@@ -184,6 +187,7 @@ function CreateEvent({ mode }) {
   }
 
   async function uploadAddress(cityId, street) {
+    debugger;
     if (!cityId || !street) return;
 
     const trimmedStreet = street.trim();
@@ -239,7 +243,6 @@ function CreateEvent({ mode }) {
 
   async function updateOldAddress(cityId, street) {
     if (!cityId || !street) return;
-    // debugger;
 
     const trimmedStreet = street.trim();
     const match = trimmedStreet.match(/^(.+)\s+(\S+)$/);
@@ -268,6 +271,7 @@ function CreateEvent({ mode }) {
   }
 
   async function handleSubmit() {
+    setIsUploadingData(true);
     if (mode === "create") {
       if (!category?.id) return;
       const photosIds = await uploadPhotos(titlePhoto, photo1, photo2);
@@ -309,11 +313,11 @@ function CreateEvent({ mode }) {
       const CreatedEvent = await createEvent(eventData);
 
       if (CreatedEvent) {
+        setIsUploadingData(false);
         navigate("/my-events", { state: { showModal: true } });
       }
     }
     if (mode === "edit") {
-      debugger;
       if (!category?.id) return;
       const previousPhotoIds = eventDataGlobal.photos.map((photo) => photo.id);
       const photosIds = await updatePhotos(
@@ -361,6 +365,7 @@ function CreateEvent({ mode }) {
       const UpdatedEvent = await updateEvent(eventDataGlobal.id, eventData);
 
       if (UpdatedEvent) {
+        setIsUploadingData(false);
         navigate("/my-events", { state: { showModal: true } });
       }
     }
@@ -373,99 +378,108 @@ function CreateEvent({ mode }) {
   }, [isValidStep4]);
 
   return (
-    <div className={styles["container"]}>
-      <h2 className={styles["container__title"]}>Додати подію</h2>
-      <ul className={styles["container__steps"]}>
-        {steps.map((step) => {
-          return (
-            <li
-              key={step.step}
-              className={`${styles["container__step"]} ${
-                step.step === currentStep
-                  ? styles["container__step--active"]
-                  : ""
-              }`}>
-              <span className={styles["container__step-order"]}>
-                {step.step}
-              </span>
-              <p className={styles["container__step-label"]}>
-                крок {step.step}
-              </p>
-              <p className={styles["container__step-description"]}>
-                {step.description}
-              </p>
-            </li>
-          );
-        })}
-      </ul>
-      <form onSubmit={handleSubmit}>
-        {currentStep === 1 && (
-          <Step1
-            onSetCurrentStep={setCurrentStep}
-            titlePhoto={titlePhoto}
-            onSetTitlePhoto={setTitlePhoto}
-            photo1={photo1}
-            onSetPhoto1={setPhoto1}
-            photo2={photo2}
-            onSetPhoto2={setPhoto2}
-          />
-        )}
-        {currentStep === 2 && (
-          <Step2
-            currentStep={currentStep}
-            onSetCurrentStep={setCurrentStep}
-            allCategories={allCategories}
-            allCities={allCities}
-            title={title}
-            onSetTitle={setTitle}
-            category={category}
-            onSetCategory={setCategory}
-            street={street}
-            onSetStreet={setStreet}
-            city={city}
-            onSetCity={setCity}
-            isOnline={isOnline}
-            onSetIsOnline={setIsOnline}
-            price={price}
-            onSetPrice={setPrice}
-            isFree={isFree}
-            onSetIsFree={setIsFree}
-            date={date}
-            onSetDate={setDate}
-            time={time}
-            onSetTime={setTime}
-          />
-        )}
-        {currentStep === 3 && (
-          <Step3
-            currentStep={currentStep}
-            onSetCurrentStep={setCurrentStep}
-            description={description}
-            onSetDescription={setDescription}
-          />
-        )}
-        {currentStep === 4 && (
-          <Step4
-            currentStep={currentStep}
-            onSetCurrentStep={setCurrentStep}
-            phone={phone}
-            onSetPhone={setPhone}
-            email={email}
-            onSetEmail={setEmail}
-            instagram={instagram}
-            onSetInstagram={setInstagram}
-            telegram={telegram}
-            onSetTelegram={setTelegram}
-            facebook={facebook}
-            onSetFacebook={setFacebook}
-            webSite={webSite}
-            onSetWebsite={setWebsite}
-            isValidStep4={isValidStep4}
-            onSetIsValidStep4={setIsValidStep4}
-          />
-        )}
-      </form>
-    </div>
+    <>
+      {isUploadingData ? (
+        <div className={styles["spinner"]}>
+          <Spinner />
+        </div>
+      ) : (
+        ""
+      )}
+      <div className={styles["container"]}>
+        <h2 className={styles["container__title"]}>Додати подію</h2>
+        <ul className={styles["container__steps"]}>
+          {steps.map((step) => {
+            return (
+              <li
+                key={step.step}
+                className={`${styles["container__step"]} ${
+                  step.step === currentStep
+                    ? styles["container__step--active"]
+                    : ""
+                }`}>
+                <span className={styles["container__step-order"]}>
+                  {step.step}
+                </span>
+                <p className={styles["container__step-label"]}>
+                  крок {step.step}
+                </p>
+                <p className={styles["container__step-description"]}>
+                  {step.description}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+        <form onSubmit={handleSubmit}>
+          {currentStep === 1 && (
+            <Step1
+              onSetCurrentStep={setCurrentStep}
+              titlePhoto={titlePhoto}
+              onSetTitlePhoto={setTitlePhoto}
+              photo1={photo1}
+              onSetPhoto1={setPhoto1}
+              photo2={photo2}
+              onSetPhoto2={setPhoto2}
+            />
+          )}
+          {currentStep === 2 && (
+            <Step2
+              currentStep={currentStep}
+              onSetCurrentStep={setCurrentStep}
+              allCategories={allCategories}
+              allCities={allCities}
+              title={title}
+              onSetTitle={setTitle}
+              category={category}
+              onSetCategory={setCategory}
+              street={street}
+              onSetStreet={setStreet}
+              city={city}
+              onSetCity={setCity}
+              isOnline={isOnline}
+              onSetIsOnline={setIsOnline}
+              price={price}
+              onSetPrice={setPrice}
+              isFree={isFree}
+              onSetIsFree={setIsFree}
+              date={date}
+              onSetDate={setDate}
+              time={time}
+              onSetTime={setTime}
+            />
+          )}
+          {currentStep === 3 && (
+            <Step3
+              currentStep={currentStep}
+              onSetCurrentStep={setCurrentStep}
+              description={description}
+              onSetDescription={setDescription}
+            />
+          )}
+          {currentStep === 4 && (
+            <Step4
+              currentStep={currentStep}
+              onSetCurrentStep={setCurrentStep}
+              phone={phone}
+              onSetPhone={setPhone}
+              email={email}
+              onSetEmail={setEmail}
+              instagram={instagram}
+              onSetInstagram={setInstagram}
+              telegram={telegram}
+              onSetTelegram={setTelegram}
+              facebook={facebook}
+              onSetFacebook={setFacebook}
+              webSite={webSite}
+              onSetWebsite={setWebsite}
+              isValidStep4={isValidStep4}
+              onSetIsValidStep4={setIsValidStep4}
+            />
+          )}
+        </form>
+      </div>
+    </>
   );
 }
 

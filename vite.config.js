@@ -12,7 +12,7 @@ export default defineConfig({
       scss: {
         additionalData: `
         @import "/src/sass/variables.scss";
-        @import "/public/fonts/OswaldFont.scss";
+        @import "/src/sass/OswaldFont.scss";
         `
       }
     }
