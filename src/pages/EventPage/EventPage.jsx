@@ -57,7 +57,7 @@ export async function loader({ params }) {
   const { id } = params;
 
   const eventDataFetch = await getEventById(id);
-
+  console.log(eventDataFetch);
   const similarEventsFetch = await getEventsByFilter({
     categories: [`${eventDataFetch.categories.at(0).name}`],
   });

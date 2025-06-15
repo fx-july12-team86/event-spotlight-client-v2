@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
@@ -18,15 +18,26 @@ import {
   addContacts,
   createEvent,
 } from "../../services/apiCreateEvent";
+import { getEventById } from "../../services/apiEvents";
+import {
+  deletePhotos,
+  updateContacts,
+  updateEvent,
+  updateAddress,
+} from "../../services/apiUpdateEvents";
 import { formatTimeCreateEvent } from "../../helpers/date";
 
-function CreateEvent() {
+function CreateEvent({ mode }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [isValidStep4, setIsValidStep4] = useState(null);
 
   const navigate = useNavigate();
 
   const userId = Number(useSelector((state) => state.user.userId));
+
+  const { id } = useParams();
+
+  const [eventDataGlobal, setEventDataGlobal] = useState(null);
 
   // Step1
   const [titlePhoto, setTitlePhoto] = useState(null);
@@ -80,6 +91,75 @@ function CreateEvent() {
   ];
 
   useEffect(() => {
+    async function fetchEventData() {
+      if (mode === "edit" && id) {
+        try {
+          const eventData = await getEventById(id);
+          setEventDataGlobal(eventData);
+          // Step 1
+          setTitlePhoto(
+            eventData.photos?.[0].sharedUrl?.replace("dl=0", "raw=1") || null
+          );
+          setPhoto1(
+            eventData.photos?.[1]?.sharedUrl?.replace("dl=0", "raw=1") || null
+          );
+          setPhoto2(
+            eventData.photos?.[2]?.sharedUrl?.replace("dl=0", "raw=1") || null
+          );
+
+          // Step 2
+          setTitle(eventData.title);
+          setCategory({
+            id: eventData.categories[0].id,
+            name: eventData.categories[0].name,
+          });
+          if (eventData.address) {
+            setCity({
+              id: eventData.address.cityId,
+              name: eventData.address.cityName,
+            });
+            setStreet(
+              `${eventData.address.street} ${eventData.address.number}`
+            );
+          }
+
+          setIsOnline(eventData.isOnline);
+          setIsFree(eventData.price === 0);
+          setPrice(eventData.price.toString());
+          const dateObj = new Date(eventData.startTime);
+
+          setDate(
+            dateObj
+              .toISOString()
+              .slice(0, 10)
+              .replaceAll("-", ".")
+              .split(".")
+              .reverse()
+              .join(".")
+          );
+          setTime(dateObj.toTimeString().slice(0, 5));
+
+          // Step 3
+          setDescription(eventData.description.description);
+
+          // Step 4
+          const contact = eventData.contact;
+          setPhone(contact.phoneNumber || "");
+          setEmail(contact.email || "");
+          setInstagram(contact.instagram || "");
+          setTelegram(contact.telegram || "");
+          setFacebook(contact.facebook || "");
+          setWebsite(contact.officialWebsite || "");
+        } catch (err) {
+          console.error("Помилка завантаження даних події:", err);
+        }
+      }
+    }
+
+    fetchEventData();
+  }, [mode, id]);
+
+  useEffect(() => {
     async function fetchSelectData() {
       try {
         const categories = await getAllCategories();
@@ -121,49 +201,168 @@ function CreateEvent() {
     return descriptionId.id;
   }
 
-  async function handleSubmit(event) {
-    // event.preventDefault();
-    if (!category?.id) return;
-    const photosIds = await uploadPhotos(titlePhoto, photo1, photo2);
-    const normalizedPrice = isFree ? 0 : parseFloat(price || 0);
-    const startTime = formatTimeCreateEvent(date, time);
+  async function updatePhotos(
+    titlePhoto,
+    photo1,
+    photo2,
+    previousPhotoIds = []
+  ) {
+    const currentPhotos = [titlePhoto, photo1, photo2];
 
-    const eventData = {
-      userId,
-      title,
-      photosIds,
-      categoryIds: [category.id],
-      price: normalizedPrice,
-      isOnline,
-      startTime,
-    };
+    const changedPhotos = currentPhotos
+      .map((photo, idx) => {
+        if (photo instanceof File) return { index: idx, file: photo };
+        return null;
+      })
+      .filter(Boolean);
 
-    if (!isOnline) {
-      const addressId = await uploadAddress(city.id, street);
-      if (addressId) {
-        eventData.addressId = addressId;
+    if (changedPhotos.length === 0) return previousPhotoIds;
+
+    const idsToDelete = changedPhotos
+      .map(({ index }) => previousPhotoIds[index])
+      .filter(Boolean);
+
+    await Promise.all(idsToDelete.map((id) => deletePhotos(id)));
+
+    const newFiles = changedPhotos.map(({ file }) => file);
+    const newPhotoIds = await addSeveralPhotos(newFiles).then((res) =>
+      res.map((p) => p.id)
+    );
+
+    const updatedPhotoIds = [...previousPhotoIds];
+    changedPhotos.forEach(({ index }, i) => {
+      updatedPhotoIds[index] = newPhotoIds[i];
+    });
+
+    return updatedPhotoIds;
+  }
+
+  async function updateOldAddress(cityId, street) {
+    if (!cityId || !street) return;
+    // debugger;
+
+    const trimmedStreet = street.trim();
+    const match = trimmedStreet.match(/^(.+)\s+(\S+)$/);
+    const streetName = match ? match[1] : trimmedStreet;
+    const number = match ? match[2] : "";
+
+    let address;
+    console.log(eventDataGlobal);
+    if (eventDataGlobal?.address?.id) {
+      address = await updateAddress(
+        cityId,
+        streetName,
+        number,
+        eventDataGlobal.address.id
+      );
+    } else {
+      address = await addAddress(cityId, streetName, number);
+    }
+    return address?.id;
+  }
+
+  async function updateDescription(description) {
+    if (description.length === 0) return;
+    const descriptionId = await addDescription(description);
+    return descriptionId.id;
+  }
+
+  async function handleSubmit() {
+    if (mode === "create") {
+      if (!category?.id) return;
+      const photosIds = await uploadPhotos(titlePhoto, photo1, photo2);
+      const normalizedPrice = isFree ? 0 : parseFloat(price || 0);
+      const startTime = formatTimeCreateEvent(date, time);
+
+      const eventData = {
+        userId,
+        title,
+        photosIds,
+        categoryIds: [category.id],
+        price: normalizedPrice,
+        isOnline,
+        startTime,
+      };
+
+      if (!isOnline) {
+        const addressId = await uploadAddress(city.id, street);
+        if (addressId) {
+          eventData.addressId = addressId;
+        }
+      }
+
+      const descriptionId = await uploadDescription(description);
+      if (descriptionId) eventData.descriptionId = descriptionId;
+
+      const contactData = {
+        phoneNumber: phone,
+        email,
+        instagram,
+        telegram,
+        facebook,
+        officialWebsite: webSite,
+      };
+
+      const contact = await addContacts(contactData);
+      if (contact?.id) eventData.contactId = contact.id;
+
+      const CreatedEvent = await createEvent(eventData);
+
+      if (CreatedEvent) {
+        navigate("/my-events", { state: { showModal: true } });
       }
     }
+    if (mode === "edit") {
+      debugger;
+      if (!category?.id) return;
+      const previousPhotoIds = eventDataGlobal.photos.map((photo) => photo.id);
+      const photosIds = await updatePhotos(
+        titlePhoto,
+        photo1,
+        photo2,
+        previousPhotoIds
+      );
 
-    const descriptionId = await uploadDescription(description);
-    if (descriptionId) eventData.descriptionId = descriptionId;
+      const normalizedPrice = isFree ? 0 : parseFloat(price || 0);
+      const startTime = formatTimeCreateEvent(date, time);
 
-    const contactData = {
-      phoneNumber: phone,
-      email,
-      instagram,
-      telegram,
-      facebook,
-      officialWebsite: webSite,
-    };
+      const eventData = {
+        userId,
+        title,
+        photosIds,
+        categoryIds: [category.id],
+        price: normalizedPrice,
+        isOnline,
+        startTime,
+      };
 
-    const contact = await addContacts(contactData);
-    if (contact?.id) eventData.contactId = contact.id;
+      if (!isOnline) {
+        const updatedAddressId = await updateOldAddress(city.id, street);
+        if (updatedAddressId) {
+          eventData.addressId = updatedAddressId;
+        }
+      }
+      const descriptionId = await updateDescription(description);
 
-    const CreatedEvent = await createEvent(eventData);
+      if (descriptionId) eventData.descriptionId = descriptionId;
+      const contactData = {
+        phoneNumber: phone,
+        email,
+        instagram,
+        telegram,
+        facebook,
+        officialWebsite: webSite,
+      };
+      const contact = await updateContacts(
+        eventDataGlobal.contact.id,
+        contactData
+      );
+      if (contact?.id) eventData.contactId = contact.id;
+      const UpdatedEvent = await updateEvent(eventDataGlobal.id, eventData);
 
-    if (CreatedEvent) {
-      navigate("/my-events", { state: { showModal: true } });
+      if (UpdatedEvent) {
+        navigate("/my-events", { state: { showModal: true } });
+      }
     }
   }
 

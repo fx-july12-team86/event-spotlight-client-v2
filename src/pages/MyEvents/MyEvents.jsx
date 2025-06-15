@@ -14,19 +14,22 @@ import ApproveDeleteEvent from "./components/ApproveDeleteModal/ApproveDeleteEve
 import Spinner from "../../components/Spinner/Spinner";
 
 function MyEvents() {
+  const [activeEventsLocal, setActiveEventsLocal] = useState("");
+
   const [isActiveModal, setIsActiveModal] = useState(false);
 
   const [approveDeleteEvent, setApproveDeleteEvent] = useState(false);
   const [isDeletingEvent, setIsDeletingEvent] = useState(false);
 
-  const [idEventDelete, setIdEventDelete] = useState("");
+  const [idEventDelete, setIdEventDelete] = useState([]);
 
   const dispatch = useDispatch();
 
-  let userEvents = useLoaderData();
+  const userEvents = useLoaderData();
 
   useEffect(() => {
     dispatch(setActiveEvents(userEvents.eventDtos));
+    setActiveEventsLocal(userEvents.eventDtos);
   }, [userEvents]);
 
   useEffect(() => {
@@ -43,7 +46,11 @@ function MyEvents() {
     if (response) {
       setIsDeletingEvent(false);
       setApproveDeleteEvent(false);
-      userEvents = userEvents.filter((event) => event.id !== idEventDelete);
+      const updatedEvents = activeEventsLocal.filter(
+        (event) => event.id !== idEventDelete
+      );
+      setActiveEventsLocal(updatedEvents);
+      dispatch(setActiveEvents(updatedEvents));
     }
   }
 

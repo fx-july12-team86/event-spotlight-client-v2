@@ -4,8 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./styles/accountMenu.module.scss";
 
 import { logOut as logOutAction } from "../../../../context/userSlice";
+import { useEffect } from "react";
 
-function AccountMenu({ isHidden, onHandleToggleLogin }) {
+function AccountMenu({
+  isHidden,
+  onHandleToggleLogin,
+  onSetIsHiddenAccountMenu,
+}) {
   const { isAuthenticated } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
@@ -13,11 +18,13 @@ function AccountMenu({ isHidden, onHandleToggleLogin }) {
   const dispatch = useDispatch();
 
   function logOut() {
-    // dispatch(updateToken(null));
-    // dispatch(updateIsAuthenticated(false));
     dispatch(logOutAction());
     navigate("/");
   }
+
+  useEffect(() => {
+    onSetIsHiddenAccountMenu(true);
+  }, [location.search]);
 
   return (
     <div

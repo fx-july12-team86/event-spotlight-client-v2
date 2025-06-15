@@ -74,7 +74,15 @@ const router = createBrowserRouter(
           path: "create-event",
           element: (
             <PrivateRoute>
-              <CreateEvent />
+              <CreateEvent mode="create" />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "edit-event/:id",
+          element: (
+            <PrivateRoute>
+              <CreateEvent mode="edit" />
             </PrivateRoute>
           ),
         },

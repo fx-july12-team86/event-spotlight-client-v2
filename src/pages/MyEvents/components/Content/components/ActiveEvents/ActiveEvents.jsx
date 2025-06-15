@@ -19,12 +19,23 @@ function ActiveEvents({
 
   const navigate = useNavigate();
 
+  function handleDeleteEvent(event, id) {
+    event.stopPropagation();
+    onSetApproveDeleteEvent(true);
+    onSetIdEventDelete(id);
+  }
+
   function handleNavigateToEventPage(id) {
     navigate(`/event/${id}`);
   }
 
+  function handleNavigateToEditPage(event, id) {
+    event.stopPropagation();
+    navigate(`/edit-event/${id}`);
+  }
+
   return events.map((event) => {
-    const imgUrl = event.photo.sharedUrl.replace("dl=0", "raw=1");
+    const imgUrl = event.photo?.sharedUrl?.replace("dl=0", "raw=1");
 
     return (
       <div
@@ -59,7 +70,7 @@ function ActiveEvents({
             <p className={styles["event-item__title"]}>{event.title}</p>
           </div>
           <div className={styles["event-item__edit"]}>
-            <button>
+            <button onClick={(e) => handleNavigateToEditPage(e, event.id)}>
               <svg className={styles["event-item__svgSizeNormalize"]}>
                 <use
                   href={`${BASE_URL}/icons/MyEvents/pencil.svg#pencil`}></use>
@@ -70,11 +81,7 @@ function ActiveEvents({
                 <use href={`${BASE_URL}/icons/MyEvents/pause.svg#pause`}></use>
               </svg>
             </button>
-            <button
-              onClick={() => {
-                onSetApproveDeleteEvent(true);
-                onSetIdEventDelete(event.id);
-              }}>
+            <button onClick={(e) => handleDeleteEvent(e, event.id)}>
               <svg className={styles["event-item__svgSizeNormalize"]}>
                 <use href={`${BASE_URL}/icons/MyEvents/delete.svg#trash`}></use>
               </svg>

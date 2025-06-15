@@ -18,7 +18,8 @@ function Header({ onSetSelected, scrollTo }) {
     return;
   }
 
-  const { title, photos, startTime, categories, address, price } = eventData;
+  const { title, photos, startTime, categories, address, price, isOnline } =
+    eventData;
 
   const photoURL = photos?.at(0)?.sharedUrl?.replace("dl=0", "raw=1");
 
@@ -30,8 +31,14 @@ function Header({ onSetSelected, scrollTo }) {
   const formatedtime = time.slice(0, -3);
   const formatedDate = formatUkrainianDate(date);
 
-  const location = `${address.street} ${address.number}, м. ${address.cityName}`;
+  const displayPrice = price === 0 ? "Безкоштовно" : price + " ₴";
+  let location;
 
+  if (isOnline) {
+    location = "Online";
+  } else {
+    location = `${address.street} ${address.number}, м. ${address.cityName}`;
+  }
   function copyCurrentUrl() {
     const currentUrl = window.location.href;
     navigator.clipboard
@@ -88,7 +95,7 @@ function Header({ onSetSelected, scrollTo }) {
                 <p>{formatedtime}</p>
               </div>
               <p className={styles["container__location"]}>{location}</p>
-              <p className={styles["container__price"]}>{price} ₴</p>
+              <p className={styles["container__price"]}>{displayPrice}</p>
             </article>
             <div className={styles["container__buttons"]}>
               <button

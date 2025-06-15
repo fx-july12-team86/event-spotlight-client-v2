@@ -12,7 +12,11 @@ function Favorites() {
   return (
     <div className={styles["container"]}>
       <h2 className={styles["container__favorites"]}>Улюблене</h2>
-      <EventList events={events} />
+      {events.length > 0 ? (
+        <EventList events={events} />
+      ) : (
+        <p>На даний момен у вас немає улюблених івентів</p>
+      )}
     </div>
   );
 }

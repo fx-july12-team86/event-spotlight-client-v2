@@ -1,27 +1,24 @@
-const VITE_API_URL = import.meta.env.VITE_API_URL;
+const VITE_API_URL = import.meta.env.VITE_API_URL
 
-export async function addSeveralPhotos(photos) {
-    const formData = new FormData();
+export async function deletePhotos(id) {
+    const response = await fetch(`${VITE_API_URL}/photos/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${localStorage.getItem("token") || ""}` }
+    })
 
-    photos.forEach((photo) => {
-        formData.append("photos", photo);
-    });
+    if (!response.ok) {
 
-    const response = await fetch(`${VITE_API_URL}/photos/several`, {
-        method: "POST",
-        headers: {
+        const text = await response.text();
+        throw new Error(`Failed to delete photo (${response.status}): ${text}`);
+    }
 
-            Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
-        },
-        body: formData,
-    });
-    const data = await response.json();
-    return data;
+
+    return true;
 }
 
-export async function addAddress(cityId, street, number) {
-    const response = await fetch(`${VITE_API_URL}/addresses`, {
-        method: "POST",
+export async function updateAddress(cityId, street, number, addressId) {
+    const response = await fetch(`${VITE_API_URL}/addresses${addressId}`, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${localStorage.getItem("token") || ""}`
@@ -41,9 +38,9 @@ export async function addAddress(cityId, street, number) {
     return data;
 }
 
-export async function addDescription(description) {
-    const response = await fetch(`${VITE_API_URL}/descriptions`, {
-        method: "POST",
+export async function updateDescription(description, descriptionId) {
+    const response = await fetch(`${VITE_API_URL}/descriptions/${descriptionId}`, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${localStorage.getItem("token") || ""}`
@@ -61,13 +58,13 @@ export async function addDescription(description) {
     return data;
 }
 
-export async function addContacts({
+export async function updateContacts(contactsId, {
     phoneNumber,
     email,
     instagram,
     telegram,
     facebook,
-    officialWebsite
+    officialWebsite,
 }) {
     const contactData = {
         phoneNumber: phoneNumber.trim(),
@@ -78,8 +75,8 @@ export async function addContacts({
         officialWebsite: officialWebsite.trim()
     };
 
-    const response = await fetch(`${VITE_API_URL}/contacts`, {
-        method: "POST",
+    const response = await fetch(`${VITE_API_URL}/contacts/${contactsId}`, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${localStorage.getItem("token") || ""}`
@@ -92,9 +89,9 @@ export async function addContacts({
 }
 
 
-export async function createEvent(eventData) {
-    const response = await fetch(`${VITE_API_URL}/events`, {
-        method: "POST",
+export async function updateEvent(eventId, eventData) {
+    const response = await fetch(`${VITE_API_URL}/events/${eventId}`, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${localStorage.getItem("token") || ""}`
@@ -120,4 +117,3 @@ export async function createEvent(eventData) {
     const data = await response.json();
     return data;
 }
-

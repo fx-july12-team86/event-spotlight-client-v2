@@ -11,7 +11,6 @@ const initialState = {
 export const verifyToken = createAsyncThunk("user/verifyToken", async function (_, thunkAPI) {
     try {
         const response = await checkUserToken()
-        console.log(response)
         return response
     }
     catch (error) {

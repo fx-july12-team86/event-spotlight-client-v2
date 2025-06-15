@@ -33,6 +33,16 @@ function Step1({
     }
   }
 
+  function getBackgroundStyle(photo) {
+    if (!photo) return {};
+    const url = typeof photo === "string" ? photo : URL.createObjectURL(photo);
+    return {
+      backgroundImage: `url(${url})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    };
+  }
+
   return (
     <div className={styles["container"]}>
       <Header
@@ -44,15 +54,7 @@ function Step1({
       <div className={styles["container__content"]}>
         <label
           className={styles["container__input-title"]}
-          style={
-            titlePhoto
-              ? {
-                  backgroundImage: `url(${URL.createObjectURL(titlePhoto)})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }
-              : {}
-          }>
+          style={getBackgroundStyle(titlePhoto)}>
           <input
             type="file"
             onChange={(event) => handleAddPhoto(event, onSetTitlePhoto)}
@@ -67,15 +69,7 @@ function Step1({
         </label>
         <label
           className={styles["container__input-imgs"]}
-          style={
-            photo1
-              ? {
-                  backgroundImage: `url(${URL.createObjectURL(photo1)})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }
-              : {}
-          }>
+          style={getBackgroundStyle(photo1)}>
           <input
             type="file"
             onChange={(event) => handleAddPhoto(event, onSetPhoto1)}
@@ -90,15 +84,7 @@ function Step1({
         </label>
         <label
           className={styles["container__input-imgs"]}
-          style={
-            photo2
-              ? {
-                  backgroundImage: `url(${URL.createObjectURL(photo2)})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }
-              : {}
-          }>
+          style={getBackgroundStyle(photo2)}>
           <input
             type="file"
             onChange={(event) => handleAddPhoto(event, onSetPhoto2)}

@@ -111,6 +111,8 @@ function Content({ selected, onSetSelected, scrollTo }) {
     return;
   }
 
+  const { isOnline } = eventData;
+
   const tabs = [
     {
       id: "details",
@@ -124,10 +126,18 @@ function Content({ selected, onSetSelected, scrollTo }) {
     {
       id: "location",
       label: "Локація",
-      location: `${eventData.address.street} ${eventData.address.number}, м. ${eventData.address.cityName}`,
-      cityName: eventData.address.cityName,
-      street: eventData.address.street,
-      number: eventData.address.number,
+      location: !isOnline
+        ? `${eventData.address.street} ${eventData.address.number}, м. ${eventData.address.cityName}`
+        : "Ця подія проходить онлайн",
+      cityName: !isOnline
+        ? eventData.address.cityName
+        : "Ця подія проходить онлайн",
+      street: !isOnline
+        ? eventData.address.street
+        : "Ця подія проходить онлайн",
+      number: !isOnline
+        ? eventData.address.number
+        : "Ця подія проходить онлайн",
     },
     {
       id: "contacts",

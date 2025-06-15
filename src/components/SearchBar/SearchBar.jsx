@@ -13,11 +13,7 @@ import {
   toggleFilters,
 } from "../../context/filtersSlice";
 
-import { getEventsCatalog } from "../../services/apiEvents";
-
 import { isValidDateRange } from "../../helpers/date";
-
-import { setCatalogEvents } from "../../context/dataEventsSlice";
 
 import { getAllCategories } from "../../services/apiCategories";
 
@@ -38,6 +34,8 @@ function SearchBar({ isError = false }) {
   const dispatch = useDispatch();
 
   const location = useLocation();
+
+  const city = useSelector((store) => store.city.city);
 
   const { filters, datesRangeFormatted, datesRange } = useSelector(
     (store) => store.filters
@@ -114,16 +112,15 @@ function SearchBar({ isError = false }) {
   //   setQuery("");
   // }
 
-  function resetToCatalogStart() {
-    const newParams = new URLSearchParams();
+  // function resetToCatalogStart() {
+  //   const newParams = new URLSearchParams();
 
-    newParams.set("page", "1");
-    newParams.set("trigger", "1");
-    const city = searchParams.get("city");
-    if (city) newParams.set("city", city);
+  //   newParams.set("page", "1");
+  //   const city = searchParams.get("city");
+  //   if (city) newParams.set("city", city);
 
-    setSearchParams(newParams, { replace: true });
-  }
+  //   setSearchParams(newParams, { replace: true });
+  // }
 
   function handleUpdateFilters(filter) {
     if (isValidDateRange(filter)) {
@@ -228,13 +225,14 @@ function SearchBar({ isError = false }) {
         <button
           type="button"
           className={styles["container__form__btnLocation"]}
-          onClick={resetToCatalogStart}>
-          {/* <svg className={styles["container__form__btnLocation__icon"]}>
+          // onClick={resetToCatalogStart}
+        >
+          <svg className={styles["container__form__btnLocation__icon"]}>
             <use
               href={`${BASE_URL}/icons/Home/search/icons.svg#geolocation`}></use>
-          </svg> */}
-          {/* {city} */}
-          На початок
+          </svg>
+          {city}
+          {/* На початок */}
         </button>
 
         <button

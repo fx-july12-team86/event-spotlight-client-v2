@@ -164,6 +164,7 @@ function Header({ headerRef }) {
       <AccountMenu
         isHidden={isHiddenAccountMenu}
         onHandleToggleLogin={handleToggleLogin}
+        onSetIsHiddenAccountMenu={setIsHiddenAccountMenu}
       />
       <SetCity />
       <Authentication
