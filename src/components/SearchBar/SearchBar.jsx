@@ -76,51 +76,9 @@ function SearchBar({ isError = false }) {
     } else {
       setSearchParams(params, { replace: true });
     }
-
+    setIsOpen(false);
     setQuery("");
   }
-
-  // async function handleSubmit(event) {
-  //   event.preventDefault();
-
-  //   for (const [key, value] of searchParams.entries()) {
-  //     console.log(key, ":", value);
-  //   }
-  //   const params = new URLSearchParams(searchParams);
-  //   // debugger;
-  //   if (query) params.set("search", query);
-  //   if (filters.length) filters.forEach((f) => params.append("filter", f));
-  //   if (datesRange.length === 2) {
-  //     const [from, to] = datesRange;
-  //     params.set("dateFrom", from);
-  //     params.set("dateTo", to);
-  //   }
-
-  //   params.set("page", "1");
-  //   params.set("trigger", "1");
-
-  //   if (location.pathname !== "/catalog") {
-  //     navigate(`/catalog?${params.toString()}`);
-  //   } else {
-  //     // setSearchParams(params, { replace: true });
-
-  //     if (location.search !== `?${params.toString()}`) {
-  //       setSearchParams(params, { replace: true });
-  //     }
-  //   }
-
-  //   setQuery("");
-  // }
-
-  // function resetToCatalogStart() {
-  //   const newParams = new URLSearchParams();
-
-  //   newParams.set("page", "1");
-  //   const city = searchParams.get("city");
-  //   if (city) newParams.set("city", city);
-
-  //   setSearchParams(newParams, { replace: true });
-  // }
 
   function handleUpdateFilters(filter) {
     if (isValidDateRange(filter)) {
@@ -141,22 +99,6 @@ function SearchBar({ isError = false }) {
     setCategories(categories);
   }
 
-  // useEffect(() => {
-  //   const params = new URLSearchParams();
-
-  //   filters.forEach((filter) => {
-  //     params.append("filter", filter);
-  //   });
-
-  //   if (datesRange.length === 2) {
-  //     const [from, to] = datesRange;
-  //     params.set("dateFrom", from);
-  //     params.set("dateTo", to);
-  //   }
-
-  //   setSearchParams(params, { replace: true });
-  // }, [filters, datesRange]);
-
   useEffect(() => {
     const filtersFromUrl = searchParams.getAll("filter");
     const dateFrom = searchParams.get("dateFrom");
@@ -172,22 +114,6 @@ function SearchBar({ isError = false }) {
 
     fetchCategories();
   }, []);
-
-  // useEffect(() => {
-  //   const filtersFromUrl = searchParams.getAll("filter");
-  //   const dateFrom = searchParams.get("dateFrom");
-  //   const dateTo = searchParams.get("dateTo");
-
-  //   if (JSON.stringify(filtersFromUrl) !== JSON.stringify(filters)) {
-  //     filtersFromUrl.forEach((filter) => dispatch(setFilters(filter)));
-  //   }
-
-  //   if (dateFrom && dateTo) {
-  //     dispatch(setDateRange([dateFrom, dateTo]));
-  //   }
-
-  //   fetchCategories();
-  // }, []);
 
   return (
     <nav

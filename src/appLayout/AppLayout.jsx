@@ -12,32 +12,6 @@ function AppLayout() {
 
   const headerRef = useRef(null);
 
-  // useEffect(() => {
-  //   const options = {
-  //     root: null,
-  //     rootMargin: "0px",
-  //     threshold: 0.1,
-  //   };
-
-  //   const observer = new IntersectionObserver((entries) => {
-  //     if (!entries[0].isIntersecting) {
-  //       headerRef.current.classList.add(stylesHeader["header-sticky"]);
-  //     } else {
-  //       headerRef.current.classList.remove(stylesHeader["header-sticky"]);
-  //     }
-  //   }, options);
-
-  //   if (headerRef.current) {
-  //     observer.observe(headerRef.current);
-  //   }
-
-  //   return () => {
-  //     if (headerRef.current) {
-  //       observer.unobserve(headerRef.current);
-  //     }
-  //   };
-  // }, []);
-
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -47,13 +21,15 @@ function AppLayout() {
   }, [location.pathname]);
 
   return (
-    <>
+    <div className={styles["layout"]}>
       <Header headerRef={headerRef} />
-      <main className={styles["layout-main"]}>
-        <Outlet />
-      </main>
-      <Footer />
-    </>
+      <div className={styles["layout__content"]}>
+        <main className={styles["layout__main"]}>
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </div>
   );
 }
 

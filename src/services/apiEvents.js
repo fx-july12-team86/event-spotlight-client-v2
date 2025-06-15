@@ -67,7 +67,6 @@ export async function getEventsOnline() {
 }
 
 export async function getEventsCatalog(filterObj, page = 0, sort = ["startTime", "asc"]) {
-    // console.log(filterObj)
     const response = await fetch(`${VITE_API_URL}/events/search/grouped-by-month?page=${page}&innerSortBy=${sort.at(0)}&innerSortDir=${sort.at(1)}`, {
         method: "POST",
         headers: {

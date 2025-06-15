@@ -66,71 +66,10 @@ function Catalog() {
 
     fetchEvents();
   }, [searchParams, city, filters, datesRange, sortBy, dispatch]);
-
-  // useEffect(() => {
-  //   const trigger = searchParams.get("trigger");
-  //   const pageParam = searchParams.get("page") || "1";
-  //   const pageFromUrl = parseInt(pageParam);
-
-  //   const rawParams = {
-  //     title: searchParams.get("search"),
-  //     categories: filters,
-  //     dateRange: datesRange.length ? [...datesRange] : undefined,
-  //     cities: city ? [city] : undefined,
-  //   };
-
-  //   const cleanedParams = Object.fromEntries(
-  //     Object.entries(rawParams).filter(
-  //       ([, value]) =>
-  //         value !== undefined &&
-  //         value !== null &&
-  //         !(typeof value === "string" && value.trim() === "") &&
-  //         !(Array.isArray(value) && value.length === 0)
-  //     )
-  //   );
-
-  //   const shouldFetch = trigger === "1";
-  //   if (!shouldFetch || !city) return;
-  //   console.log(
-  //     `trigger:${trigger}`,
-  //     `pageParam:${pageParam}`,
-  //     `pageFromUrl:${pageFromUrl}`,
-  //     `rawParams:`,
-  //     rawParams
-  //   );
-  //   async function fetchEvents() {
-  //     const data = await getEventsCatalog(
-  //       cleanedParams,
-  //       pageFromUrl - 1,
-  //       sortBy
-  //     );
-  //     console.log(data);
-  //     dispatch(setCatalogEvents(data));
-  //     setCurrentPage(pageFromUrl);
-
-  //     if (trigger === "1") {
-  //       const params = new URLSearchParams(searchParams);
-  //       params.delete("trigger");
-  //       setSearchParams(params, { replace: true });
-  //     }
-  //   }
-
-  //   window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-
-  //   fetchEvents();
-  // }, [searchParams]);
-
   useEffect(() => {
     setCatalogData(catalogEvents);
   }, [catalogEvents]);
 
-  // function handleSetPage(page) {
-  //   const params = new URLSearchParams(searchParams);
-  //   params.set("page", page);
-  //   params.set("trigger", "1");
-  //   setSearchParams(params, { replace: true });
-  //   setCurrentPage(page);
-  // }
   function handleSetPage(page) {
     const params = new URLSearchParams(searchParams);
     params.set("page", page);

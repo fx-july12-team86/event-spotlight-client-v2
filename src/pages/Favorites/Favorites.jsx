@@ -15,7 +15,7 @@ function Favorites() {
       {events.length > 0 ? (
         <EventList events={events} />
       ) : (
-        <p>На даний момен у вас немає улюблених івентів</p>
+        <p>На даний момент у вас немає улюблених івентів</p>
       )}
     </div>
   );

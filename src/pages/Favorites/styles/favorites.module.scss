@@ -12,5 +12,9 @@
         color: $color-main-dark;
     }
 
-    &>p {}
+    &>p {
+        font-size: 2rem;
+        padding-top: 5rem;
+        // padding-bottom: ;
+    }
 }
