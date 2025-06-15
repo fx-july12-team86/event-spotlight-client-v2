@@ -213,18 +213,22 @@ function SearchBar({ isError = false }) {
                 }`}>
                 Всі події
               </li>
-              {visibleCategories.map((event) => (
-                <li
-                  onClick={() => handleUpdateFilters(event.name)}
-                  key={event.id}
-                  className={`${styles["container__containerFilters__event"]} ${
-                    filters.includes(event.name)
-                      ? styles["container__containerFilters__event__selected"]
-                      : ""
-                  }`}>
-                  {event.name}
-                </li>
-              ))}
+              {visibleCategories
+                .filter((category) => category.name !== "Стендап")
+                .map((category) => (
+                  <li
+                    onClick={() => handleUpdateFilters(category.name)}
+                    key={category.id}
+                    className={`${
+                      styles["container__containerFilters__event"]
+                    } ${
+                      filters.includes(category.name)
+                        ? styles["container__containerFilters__event__selected"]
+                        : ""
+                    }`}>
+                    {category.name}
+                  </li>
+                ))}
               <li
                 key="перемикач"
                 className={styles["container__containerFilters__event"]}

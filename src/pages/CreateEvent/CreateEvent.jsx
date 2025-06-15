@@ -187,7 +187,6 @@ function CreateEvent({ mode }) {
   }
 
   async function uploadAddress(cityId, street) {
-    debugger;
     if (!cityId || !street) return;
 
     const trimmedStreet = street.trim();
@@ -211,6 +210,7 @@ function CreateEvent({ mode }) {
     photo2,
     previousPhotoIds = []
   ) {
+    // debugger;
     const currentPhotos = [titlePhoto, photo1, photo2];
 
     const changedPhotos = currentPhotos
@@ -250,7 +250,6 @@ function CreateEvent({ mode }) {
     const number = match ? match[2] : "";
 
     let address;
-    console.log(eventDataGlobal);
     if (eventDataGlobal?.address?.id) {
       address = await updateAddress(
         cityId,

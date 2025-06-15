@@ -42,7 +42,7 @@ function EventItem({ data }) {
 
   const formatedTime = time.slice(0, -3);
 
-  const location = address.cityName;
+  const location = address?.cityName;
 
   async function handleUpdateFavorite(event) {
     event.stopPropagation();
@@ -75,17 +75,19 @@ function EventItem({ data }) {
           <Spinner />
         </div>
       )}
-      <img
-        className={styles["event-item__image"]}
-        src={coverImgURL}
-        alt="Photo of event"
-        onLoad={() => setIsLoading(false)}
-        onError={(e) => {
-          e.currentTarget.src =
-            "https://www.dropbox.com/scl/fi/lnbtdy7h2mz8osirh6qbw/template.jpg?rlkey=3l439e4cauh42lg0ie5b4aqcq&raw=1";
-          setIsLoading(false);
-        }}
-      />
+      <div className={styles["event-item__image--container"]}>
+        <img
+          className={styles["event-item__image"]}
+          src={coverImgURL}
+          alt="Photo of event"
+          onLoad={() => setIsLoading(false)}
+          onError={(e) => {
+            e.currentTarget.src =
+              "https://www.dropbox.com/scl/fi/lnbtdy7h2mz8osirh6qbw/template.jpg?rlkey=3l439e4cauh42lg0ie5b4aqcq&raw=1";
+            setIsLoading(false);
+          }}
+        />
+      </div>
       <div className={styles["event-item__description"]}>
         <div className={styles["event-item__header"]}>
           <p className={styles["event-item__category"]}>{categoryName}</p>

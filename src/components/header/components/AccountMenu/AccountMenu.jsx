@@ -23,6 +23,7 @@ function AccountMenu({
   }
 
   useEffect(() => {
+    console.log(location.search);
     onSetIsHiddenAccountMenu(true);
   }, [location.search]);
 

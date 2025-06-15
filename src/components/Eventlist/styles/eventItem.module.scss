@@ -18,6 +18,12 @@
 
     }
 
+    &__image--container {
+        overflow: hidden;
+        width: 29.6rem;
+        height: 41.8rem;
+    }
+
     &__image {
         transition: all .7s;
         max-width: 100%;

@@ -91,7 +91,7 @@ function Profile() {
               <input
                 type={isVisiblePassword ? "text" : "password"}
                 id="old-password"
-                placeholder="qwerdx123456"
+                placeholder="password"
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
                 required
@@ -113,7 +113,7 @@ function Profile() {
               <input
                 type={isVisiblePassword ? "text" : "password"}
                 id="profile-password"
-                placeholder="qwerdx123456"
+                placeholder="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -135,7 +135,7 @@ function Profile() {
               <input
                 type={isVisiblePassword ? "text" : "password"}
                 id="repeat-password"
-                placeholder="qwerdx123456"
+                placeholder="password"
                 value={repeatPassword}
                 onChange={(e) => setRepeatPassword(e.target.value)}
                 required

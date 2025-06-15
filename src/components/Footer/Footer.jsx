@@ -43,7 +43,7 @@ function Footer() {
         <hr />
         <div className={styles["footer__copyright"]}>
           <p className={styles["footer__copyright-text"]}>
-            © 2024 EventSpotlight
+            © 2025 EventSpotlight
           </p>
           <p className={styles["footer__copyright-text"]}>
             Всі права захищені.
