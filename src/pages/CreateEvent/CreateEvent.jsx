@@ -243,7 +243,6 @@ function CreateEvent({ mode }) {
 
   async function updateOldAddress(cityId, street) {
     if (!cityId || !street) return;
-    debugger;
     const trimmedStreet = street.trim();
     const match = trimmedStreet.match(/^(.+)\s+(\S+)$/);
     const streetName = match ? match[1] : trimmedStreet;

@@ -50,16 +50,21 @@ export async function getUserData() {
 }
 
 export async function updateUserData(obj) {
-    // const response = await fetch(`${VITE_API_URL}/auth/login`, {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //     },
-    //     body: JSON.stringify(obj),
-    // })
+    const response = await fetch(`${VITE_API_URL}/auth/username`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(obj),
+    })
 
-    // return response.json()
+    if (response.ok) {
+        return true
+    }
+    else {
+        throw new Error("error in updating username")
+    }
 }
 
 export async function updateUserPassword(obj) {

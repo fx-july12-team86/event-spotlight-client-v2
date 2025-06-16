@@ -5,7 +5,11 @@ import styles from "./styles/profile.module.scss";
 
 import Button from "../../components/Buttons/Button";
 
-import { getUserData, updateUserPassword } from "../../services/apiUser";
+import {
+  getUserData,
+  updateUserData,
+  updateUserPassword,
+} from "../../services/apiUser";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -25,8 +29,12 @@ function Profile() {
     setIsVisiblePassword((prev) => !prev);
   }
 
-  function handleSubmitUserData(event) {
+  async function handleSubmitUserData(event) {
     event.preventDefault();
+    const respose = await updateUserData({ username: nikname });
+    if (respose) {
+      alert("Ім'я змінено!");
+    }
   }
 
   function handleSubmitUserPassword(event) {
@@ -49,7 +57,9 @@ function Profile() {
       <h2 className={styles["container__title"]}>Мій профіль</h2>
       <div className={styles["container__info"]}>
         <p className={styles["container__info-title"]}>Інформація</p>
-        <form className={styles["container__form"]}>
+        <form
+          className={styles["container__form"]}
+          onSubmit={handleSubmitUserData}>
           <div className={styles["container__form-group"]}>
             <label htmlFor="profile-name">Ваше ім’я / нік / псевдонім</label>
             <input
@@ -69,6 +79,7 @@ function Profile() {
               placeholder="myemail@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled
               required
             />
           </div>

@@ -73,6 +73,7 @@ function Step2({
             placeholder="Майстер-клас з миловаріння"
             onChange={(event) => onSetTitle(event.target.value)}
             value={title}
+            maxLength={14}
             required
           />
         </div>
