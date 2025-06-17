@@ -49,7 +49,7 @@ function Description({ tabs }) {
   );
 }
 
-function Location({ tabs }) {
+function Location({ tabs, isOnline }) {
   const { location, cityName, street, number } = tabs.find(
     (tab) => tab.id === "location"
   );
@@ -57,14 +57,18 @@ function Location({ tabs }) {
   return (
     <>
       <p className={styles["container__location"]}>{location}</p>
-      <iframe
-        width="100%"
-        height="450"
-        style={{ border: "1px solid #9B9CA2" }}
-        loading="lazy"
-        allowFullScreen
-        referrerPolicy="no-referrer-when-downgrade"
-        src={`https://www.google.com/maps?q=${cityName},+вул.+${street},+${number}&output=embed`}></iframe>
+      {!isOnline ? (
+        <iframe
+          width="100%"
+          height="450"
+          style={{ border: "1px solid #9B9CA2" }}
+          loading="lazy"
+          allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade"
+          src={`https://www.google.com/maps?q=${cityName},+вул.+${street},+${number}&output=embed`}></iframe>
+      ) : (
+        ""
+      )}
     </>
   );
 }
@@ -168,7 +172,12 @@ function Content({ selected, onSetSelected, scrollTo }) {
       </nav>
       <div className={styles["container__description"]}>
         {selected === "details" && <Description tabs={tabs} />}
-        {selected === "location" && <Location tabs={tabs} />}
+        {selected === "location" && (
+          <Location
+            tabs={tabs}
+            isOnline={isOnline}
+          />
+        )}
         {selected === "contacts" && (
           <Contacts
             tabs={tabs}
